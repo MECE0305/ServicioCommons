@@ -16,59 +16,58 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "cliente")
 @XmlRootElement
-public class Cliente implements Serializable{
+public class Cliente implements Serializable {
 	private static final long serialVersionUID = -7385488079840951957L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente")
 	private Long id;
-	
+
 	@Column(name = "nombre_cliente")
 	private String nombre;
-	
+
 	@Column(name = "ci_cliente")
 	private String ci;
-	
+
 	@Column(name = "telefono_cliente")
 	private String telefono;
-	
+
 	@Column(name = "mail_cliente")
 	private String mail;
-	
+
 	@Column(name = "ceo_cliente")
 	private String ceo;
-	
+
 	@Column(name = "foto_cliente")
 	private String foto;
-	
+
 	@Column(name = "direccion_cliente")
 	private String direccion;
-	
+
 	@Column(name = "url_cliente")
 	private String ur;
-	
+
 	@Column(name = "activo_cliente")
 	private Boolean activo;
-	
+
 	@Column(name = "crea_cliente")
 	private Date crea;
-	
+
 	@Column(name = "actualiza_cliente")
 	private Date actualiza;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-	//@JoinColumn(name = "cliente_id_cliente")
 	private List<Empresa> listaEmpresas;
-	
-	/*@OneToMany
-	@JoinColumn(name = "cliente_id_cliente")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
 	private List<Promedio> listaPromedios;
-*/
+
 	public Long getId() {
 		return id;
 	}
@@ -174,13 +173,12 @@ public class Cliente implements Serializable{
 		this.listaEmpresas = listaEmpresas;
 	}
 
-	/*public List<Promedio> getListaPromedios() {
+	public List<Promedio> getListaPromedios() {
 		return listaPromedios;
 	}
 
 	public void setListaPromedios(List<Promedio> listaPromedios) {
 		this.listaPromedios = listaPromedios;
 	}
-*/
-	
+
 }

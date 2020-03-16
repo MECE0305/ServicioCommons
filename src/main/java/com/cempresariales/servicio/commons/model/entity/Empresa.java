@@ -18,11 +18,12 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "empresa")
 @XmlRootElement
-public class Empresa implements Serializable{
+public class Empresa implements Serializable {
 
 	/**
 	 * 
@@ -33,20 +34,22 @@ public class Empresa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_empresa")
 	private Long id;
-	
+
 	@Column(name = "nombre_empresa")
 	private String nombre;
-	
+
 	@Column(name = "activo_empresa")
 	private Boolean activo;
-	
+
 	@Column(name = "crea_empresa")
 	private Date crea;
-	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "listaEmpresas")
-	@JsonBackReference
-	private List<Region> listaRegiones;
-	
+
+	/*
+	 * @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy =
+	 * "listaEmpresas")
+	 * 
+	 * @JsonBackReference private List<Region> listaRegiones;
+	 */
 	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
 	@ManyToOne(optional = false)
 	@JsonBackReference
@@ -84,13 +87,12 @@ public class Empresa implements Serializable{
 		this.crea = crea;
 	}
 
-	public List<Region> getListaRegiones() {
-		return listaRegiones;
-	}
-
-	public void setListaRegiones(List<Region> listaRegiones) {
-		this.listaRegiones = listaRegiones;
-	}
+	/*
+	 * public List<Region> getListaRegiones() { return listaRegiones; }
+	 * 
+	 * public void setListaRegiones(List<Region> listaRegiones) { this.listaRegiones
+	 * = listaRegiones; }
+	 */
 
 	public Cliente getCliente() {
 		return cliente;
@@ -100,6 +102,4 @@ public class Empresa implements Serializable{
 		this.cliente = cliente;
 	}
 
-	
-	
 }

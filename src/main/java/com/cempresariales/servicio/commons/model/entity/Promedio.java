@@ -8,8 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "promedio")
@@ -43,6 +48,23 @@ public class Promedio implements Serializable{
 	
 	@Column(name = "fecha_final_promedio")
 	private Date fechaFinal;
+	
+	
+	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
+	@ManyToOne(optional = false)
+	@JsonBackReference
+	private Cliente cliente;
+	
+	
+
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	public Long getId() {
 		return id;
