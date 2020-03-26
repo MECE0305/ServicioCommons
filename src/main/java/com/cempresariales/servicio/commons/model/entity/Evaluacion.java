@@ -11,7 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,16 +36,16 @@ public class Evaluacion implements Serializable{
 	private Long id;
 	
 	@Column(name = "puntaje_evaluacion")
-	private float puntaje;
+	private Float puntaje;
 	
 	@Column(name = "espera_evaluacion")
-	private int tEspera;
+	private Integer tEspera;
 	
 	@Column(name = "contacto_evaluacion")
-	private int tContacto;
+	private Integer tContacto;
 	
 	@Column(name = "atencion_evaluacion")
-	private int tAtencion;
+	private Integer tAtencion;
 	
 	@Column(name = "video_evaluacion")
 	private String video;
@@ -60,139 +62,123 @@ public class Evaluacion implements Serializable{
 	@Column(name = "fecha_evaluacion")
 	private Date crea;
 	
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "listaEvaluaciones")
+	@JoinColumn(name = "estado_evaluacion_id_estado", referencedColumnName = "id_estado")
+	@ManyToOne(optional = false)
 	@JsonBackReference
+	private EstadoEvaluacion estado;
+	
+	@ManyToMany(mappedBy = "listaEvaluaciones",targetEntity = Categoria.class)
 	private List<Categoria> listaCategorias;
 	
+	@JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
+	@ManyToOne(optional = false)
+	@JsonBackReference
+	private Rol rol;
+
 	public Long getId() {
 		return id;
 	}
-
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-
-	public float getPuntaje() {
+	public Float getPuntaje() {
 		return puntaje;
 	}
 
-
-
-	public void setPuntaje(float puntaje) {
+	public void setPuntaje(Float puntaje) {
 		this.puntaje = puntaje;
 	}
 
-
-
-	public int gettEspera() {
+	public Integer gettEspera() {
 		return tEspera;
 	}
 
-
-
-	public void settEspera(int tEspera) {
+	public void settEspera(Integer tEspera) {
 		this.tEspera = tEspera;
 	}
 
-
-
-	public int gettContacto() {
+	public Integer gettContacto() {
 		return tContacto;
 	}
 
-
-
-	public void settContacto(int tContacto) {
+	public void settContacto(Integer tContacto) {
 		this.tContacto = tContacto;
 	}
 
-
-
-	public int gettAtencion() {
+	public Integer gettAtencion() {
 		return tAtencion;
 	}
 
-
-
-	public void settAtencion(int tAtencion) {
+	public void settAtencion(Integer tAtencion) {
 		this.tAtencion = tAtencion;
 	}
-
-
 
 	public String getVideo() {
 		return video;
 	}
 
-
-
 	public void setVideo(String video) {
 		this.video = video;
 	}
-
-
 
 	public String getPromedioTotal() {
 		return promedioTotal;
 	}
 
-
-
 	public void setPromedioTotal(String promedioTotal) {
 		this.promedioTotal = promedioTotal;
 	}
-
-
 
 	public String getPromedioSeccion() {
 		return promedioSeccion;
 	}
 
-
-
 	public void setPromedioSeccion(String promedioSeccion) {
 		this.promedioSeccion = promedioSeccion;
 	}
-
-
 
 	public String getPromedioPregunta() {
 		return promedioPregunta;
 	}
 
-
-
 	public void setPromedioPregunta(String promedioPregunta) {
 		this.promedioPregunta = promedioPregunta;
 	}
-
-
 
 	public Date getCrea() {
 		return crea;
 	}
 
-
-
 	public void setCrea(Date crea) {
 		this.crea = crea;
 	}
 
+	public EstadoEvaluacion getEstado() {
+		return estado;
+	}
 
+	public void setEstado(EstadoEvaluacion estado) {
+		this.estado = estado;
+	}
 
 	public List<Categoria> getListaCategorias() {
 		return listaCategorias;
 	}
 
-
-
 	public void setListaCategorias(List<Categoria> listaCategorias) {
 		this.listaCategorias = listaCategorias;
 	}
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
+	
 	
 }

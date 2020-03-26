@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,7 +45,14 @@ public class Item implements Serializable{
 	@Column(name = "crea_item")
 	private Date crea;
 	
-	@ManyToMany(mappedBy = "listaItems",targetEntity = Pregunta.class)
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Pregunta.class)
+	@JoinTable(
+	        name = "pregunta_has_item",
+	        joinColumns = {@JoinColumn(name = "pregunta_id_pregunta")},
+	        inverseJoinColumns = {@JoinColumn(name="item_id_item")}
+	)	
 	@JsonBackReference
 	private List<Pregunta> listaPreguntas;
 

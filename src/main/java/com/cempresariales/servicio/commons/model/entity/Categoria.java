@@ -45,23 +45,18 @@ public class Categoria implements Serializable{
 	@Column(name = "crea_categoria")
 	private Date crea;
 	
-	/*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "listaCategorias")
-	@JsonBackReference
-	private List<Evaluacion> listaEvaluaciones;*/
+	@ManyToMany(mappedBy = "listaCategorias",targetEntity = Pregunta.class)
+	private List<Pregunta> listaPreguntas;
 	
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Evaluacion.class)
+	
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Categoria.class)
 	@JoinTable(
 	        name = "evaluacion_has_categoria",
-	        joinColumns = {@JoinColumn(name = "id_categoria")},
-	        inverseJoinColumns = {@JoinColumn(name="id_evaluacion")}
-	)
-//	@JsonManagedReference
-	private List<Evaluacion> listaEvaluaciones;
-
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "listaCategorias")
+	        joinColumns = {@JoinColumn(name = "id_evaluacion")},
+	        inverseJoinColumns = {@JoinColumn(name="id_categoria")}
+	)	
 	@JsonBackReference
-	private List<Pregunta> listaPreguntas;
+	private List<Evaluacion> listaEvaluaciones;
 
 	
 	public Long getId() {
@@ -96,7 +91,25 @@ public class Categoria implements Serializable{
 		this.crea = crea;
 	}
 
-	public List<Evaluacion> getListaEvaluaciones() {
+	public List<Pregunta> getListaPreguntas() {
+		return listaPreguntas;
+	}
+
+	public void setListaPreguntas(List<Pregunta> listaPreguntas) {
+		this.listaPreguntas = listaPreguntas;
+	}
+
+	/*public List<Evaluacion> getListaEvaluaciones() {
+		return listaEvaluaciones;
+	}
+
+	public void setListaEvaluaciones(List<Evaluacion> listaEvaluaciones) {
+		this.listaEvaluaciones = listaEvaluaciones;
+	}
+	
+	*/
+
+	/*public List<Evaluacion> getListaEvaluaciones() {
 		return listaEvaluaciones;
 	}
 
@@ -110,6 +123,6 @@ public class Categoria implements Serializable{
 
 	public void setListaPreguntas(List<Pregunta> listaPreguntas) {
 		this.listaPreguntas = listaPreguntas;
-	}	
+	}	*/
 	
 }

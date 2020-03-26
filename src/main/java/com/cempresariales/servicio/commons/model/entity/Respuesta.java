@@ -2,12 +2,17 @@ package com.cempresariales.servicio.commons.model.entity;
 
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,6 +36,11 @@ public class Respuesta implements Serializable{
 	
 	@Column(name = "cumple_respuesta")
 	private Boolean cumple;
+	
+	@JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta")
+	@ManyToOne(optional = false)
+	private Pregunta pregunta;
+
 
 	public Long getId() {
 		return id;
@@ -54,6 +64,14 @@ public class Respuesta implements Serializable{
 
 	public void setCumple(Boolean cumple) {
 		this.cumple = cumple;
+	}
+
+	public Pregunta getPregunta() {
+		return pregunta;
+	}
+
+	public void setPregunta(Pregunta pregunta) {
+		this.pregunta = pregunta;
 	}
 	
 	

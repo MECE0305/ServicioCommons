@@ -11,7 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -39,10 +41,15 @@ public class Agencia implements Serializable{
 	@Column(name = "crea_agencia")
 	private Date crea;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "listaAgencias")
+	@JoinColumn(name = "ciudad_id_ciudad", referencedColumnName = "id_ciudad")
+	@ManyToOne(optional = false)
 	@JsonBackReference
-	private List<Rol> listaRoles;
+	private Ciudad ciudad;
 
+	/*
+	@ManyToMany(mappedBy = "listaAgencias",targetEntity = Rol.class)
+	private List<Rol> listaRoles;*/
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,13 +82,21 @@ public class Agencia implements Serializable{
 		this.crea = crea;
 	}
 
-	public List<Rol> getListaRoles() {
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	/*public List<Rol> getListaRoles() {
 		return listaRoles;
 	}
 
 	public void setListaRoles(List<Rol> listaRoles) {
 		this.listaRoles = listaRoles;
 	}
-	
-	
+
+	*/
 }

@@ -14,10 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -59,19 +61,22 @@ public class Pregunta implements Serializable{
 	private Date crea;
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Item.class)
-	@JoinTable(
-	        name = "pregunta_has_item",
-	        joinColumns = {@JoinColumn(name = "pregunta_id_pregunta",referencedColumnName = "id_pregunta")},
-	        inverseJoinColumns = {@JoinColumn(name="item_id_item",referencedColumnName = "id_item")}
-	)
-	@JsonManagedReference
+	@ManyToMany(mappedBy = "listaPreguntas",targetEntity = Item.class)
 	private List<Item> listaItems;
+	
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Categoria.class)
+	@JoinTable(
+	        name = "categoria_has_pregunta",
+	        joinColumns = {@JoinColumn(name = "categoria_id_categoria")},
+	        inverseJoinColumns = {@JoinColumn(name="pregunta_id_pregunta")}
+	)	
+	@JsonBackReference
+	private List<Categoria> listaCategorias;
 
 	
 	/*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "listaPreguntas")
 	private List<Categoria> listaCategoria;
-*/
+
 	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Categoria.class)
 	@JoinTable(
@@ -79,11 +84,16 @@ public class Pregunta implements Serializable{
 	        joinColumns = {@JoinColumn(name = "categoria_id_categoria")},
 	        inverseJoinColumns = {@JoinColumn(name="pregunta_id_pregunta")}
 	)
-	//@JsonManagedReference
+	@JsonManagedReference
 	private List<Categoria	> listaCategorias;
 	
 	@OneToMany
 	@JoinColumn(name = "pregunta_id_pregunta")
+	private List<Respuesta> listaRespuestas;
+	*/
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
 	private List<Respuesta> listaRespuestas;
 	
 	public Long getId() {
@@ -181,6 +191,11 @@ public class Pregunta implements Serializable{
 	}
 
 
+	public void setListaRespuestas(List<Respuesta> listaRespuestas) {
+		this.listaRespuestas = listaRespuestas;
+	}
+
+
 	public List<Categoria> getListaCategorias() {
 		return listaCategorias;
 	}
@@ -191,9 +206,29 @@ public class Pregunta implements Serializable{
 	}
 
 
+	
+	
+	/*
+	 
+	  public List<Respuesta> getListaRespuestas() {
+		return listaRespuestas;
+	}
+
 	public void setListaRespuestas(List<Respuesta> listaRespuestas) {
 		this.listaRespuestas = listaRespuestas;
 	}
+	
+	 public List<Categoria> getListaCategorias() {
+		return listaCategorias;
+	}
+
+
+	public void setListaCategorias(List<Categoria> listaCategorias) {
+		this.listaCategorias = listaCategorias;
+	}*/
+
+
+	
 
 	
 }

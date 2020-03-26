@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -44,18 +45,19 @@ public class Region implements Serializable{
 	@Column(name = "crea_region")
 	private Date crea;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "listaRegiones")
-	@JsonBackReference
-	private List<Zona> listaZonas;
-	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Empresa.class)
 	@JoinTable(
 	        name = "region_has_empresa",
 	        joinColumns = {@JoinColumn(name = "region_id_region")},
 	        inverseJoinColumns = {@JoinColumn(name="empresa_id_empresa")}
-	)
-	@JsonManagedReference
+	)	
+	@JsonBackReference	
+	//@ManyToMany(mappedBy = "listaRegiones",targetEntity = Empresa.class)
 	private List<Empresa> listaEmpresas;
+	
+	@ManyToMany(mappedBy = "listaRegiones",targetEntity = Zona.class)
+	private List<Zona> listaZonas;
+
 
 	
 	public Long getId() {
@@ -105,6 +107,6 @@ public class Region implements Serializable{
 	public void setListaEmpresas(List<Empresa> listaEmpresas) {
 		this.listaEmpresas = listaEmpresas;
 	}
-	
+
 	
 }

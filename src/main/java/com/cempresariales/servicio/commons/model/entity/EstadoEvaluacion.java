@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,16 +30,20 @@ public class EstadoEvaluacion implements Serializable{
 	@Column(name = "id_estado")
 	private Long id;
 	
+	@Column (name = "nombre_estado")
+	private String nombre;
+	
 	@Column(name = "activo_estado")
 	private Boolean activo;
 	
 	
 	@Column(name = "crea_estado")
 	private Date crea;
+
 	
-	@OneToMany
-	@JoinColumn(name = "estado_evaluacion_id_estado")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estado")
 	private List<Evaluacion> listaEvaluaciones;
+
 
 	public Long getId() {
 		return id;

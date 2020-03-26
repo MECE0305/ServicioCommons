@@ -12,10 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -44,12 +47,18 @@ public class Empresa implements Serializable {
 	@Column(name = "crea_empresa")
 	private Date crea;
 
-	/*
-	 * @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy =
-	 * "listaEmpresas")
-	 * 
-	 * @JsonBackReference private List<Region> listaRegiones;
-	 */
+	
+	@ManyToMany(mappedBy = "listaEmpresas",targetEntity = Region.class)
+	
+	/*@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Region.class)
+	@JoinTable(
+	        name = "region_has_empresa",
+	        joinColumns = {@JoinColumn(name = "empresa_id_empresa")},
+	        inverseJoinColumns = {@JoinColumn(name="region_id_region")}
+	)*/	
+	@JsonBackReference
+	private List<Region> listaRegiones;
+	
 	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
 	@ManyToOne(optional = false)
 	@JsonBackReference
@@ -87,13 +96,6 @@ public class Empresa implements Serializable {
 		this.crea = crea;
 	}
 
-	/*
-	 * public List<Region> getListaRegiones() { return listaRegiones; }
-	 * 
-	 * public void setListaRegiones(List<Region> listaRegiones) { this.listaRegiones
-	 * = listaRegiones; }
-	 */
-
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -101,5 +103,14 @@ public class Empresa implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+	public List<Region> getListaRegiones() {
+		return listaRegiones;
+	}
+
+	public void setListaRegiones(List<Region> listaRegiones) {
+		this.listaRegiones = listaRegiones;
+	}
+
 
 }

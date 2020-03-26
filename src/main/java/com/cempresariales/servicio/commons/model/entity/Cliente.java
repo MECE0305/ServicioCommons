@@ -61,12 +61,13 @@ public class Cliente implements Serializable {
 
 	@Column(name = "actualiza_cliente")
 	private Date actualiza;
+	
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
 	private List<Empresa> listaEmpresas;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-	private List<Promedio> listaPromedios;
+	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+	private List<Promedio> listaPromedios;*/
 
 	public Long getId() {
 		return id;
@@ -173,12 +174,12 @@ public class Cliente implements Serializable {
 		this.listaEmpresas = listaEmpresas;
 	}
 
-	public List<Promedio> getListaPromedios() {
+	/*public List<Promedio> getListaPromedios() {
 		return listaPromedios;
 	}
 
 	public void setListaPromedios(List<Promedio> listaPromedios) {
 		this.listaPromedios = listaPromedios;
-	}
+	}*/
 
 }

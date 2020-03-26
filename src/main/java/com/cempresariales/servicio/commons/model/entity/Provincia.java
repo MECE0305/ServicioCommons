@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -45,19 +46,18 @@ public class Provincia implements Serializable{
 	@Column(name = "crea_provincia")
 	private Date crea;
 	
-	@OneToMany
-	@JoinColumn(name = "provincia_id_provincia")
-	private List<Ciudad> listaCiudades;
-
+	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Zona.class)
 	@JoinTable(
 	        name = "zona_has_provincia",
 	        joinColumns = {@JoinColumn(name = "zona_id_zona")},
 	        inverseJoinColumns = {@JoinColumn(name="provincia_id_provincia")}
-	)
-	@JsonManagedReference
+	)	
+	@JsonBackReference	
 	private List<Zona> listaZonas;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "provincia")
+	private List<Ciudad> listaCiudades;
 	
 	public Long getId() {
 		return id;
@@ -91,20 +91,22 @@ public class Provincia implements Serializable{
 		this.crea = crea;
 	}
 
-	public List<Ciudad> getListaCiudades() {
-		return listaCiudades;
-	}
 
-	public void setListaCiudades(List<Ciudad> listaCiudades) {
-		this.listaCiudades = listaCiudades;
-	}
-
+	
 	public List<Zona> getListaZonas() {
 		return listaZonas;
 	}
 
 	public void setListaZonas(List<Zona> listaZonas) {
 		this.listaZonas = listaZonas;
+	}
+
+	public List<Ciudad> getListaCiudades() {
+		return listaCiudades;
+	}
+
+	public void setListaCiudades(List<Ciudad> listaCiudades) {
+		this.listaCiudades = listaCiudades;
 	}
 	
 	
