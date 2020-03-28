@@ -65,6 +65,7 @@ public class Cliente implements Serializable {
 	
 
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)
+	@JsonBackReference
 	private List<Empresa> listaEmpresas;
 
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)
