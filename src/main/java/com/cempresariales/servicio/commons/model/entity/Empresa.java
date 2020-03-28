@@ -64,6 +64,7 @@ public class Empresa implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY)	
 	private List<Region> listaRegiones;
 	
+	
 	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
 	@ManyToOne(optional = false)
 	private Cliente cliente;
