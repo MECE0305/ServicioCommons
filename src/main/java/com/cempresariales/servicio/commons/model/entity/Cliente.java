@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,11 +64,11 @@ public class Cliente implements Serializable {
 	private Date actualiza;
 	
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)
 	private List<Empresa> listaEmpresas;
 
-	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-	private List<Promedio> listaPromedios;*/
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)
+	private List<Promedio> listaPromedios;
 
 	public Long getId() {
 		return id;
@@ -174,12 +175,12 @@ public class Cliente implements Serializable {
 		this.listaEmpresas = listaEmpresas;
 	}
 
-	/*public List<Promedio> getListaPromedios() {
+	public List<Promedio> getListaPromedios() {
 		return listaPromedios;
 	}
 
 	public void setListaPromedios(List<Promedio> listaPromedios) {
 		this.listaPromedios = listaPromedios;
-	}*/
+	}
 
 }

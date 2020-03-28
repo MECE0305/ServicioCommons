@@ -48,15 +48,20 @@ public class Empresa implements Serializable {
 	private Date crea;
 
 	
-	@ManyToMany(mappedBy = "listaEmpresas",targetEntity = Region.class)
+	
 	
 	/*@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Region.class)
 	@JoinTable(
 	        name = "region_has_empresa",
 	        joinColumns = {@JoinColumn(name = "empresa_id_empresa")},
 	        inverseJoinColumns = {@JoinColumn(name="region_id_region")}
-	)*/	
-	@JsonBackReference
+	)
+	*/
+	//@ManyToMany(mappedBy = "listaEmpresas",targetEntity = Region.class)	
+	@JoinTable(name = "empresa_has_region", joinColumns = {
+			@JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa") }, inverseJoinColumns = {
+					@JoinColumn(name = "region_id_region", referencedColumnName = "id_region") })
+	@ManyToMany(fetch = FetchType.LAZY)	
 	private List<Region> listaRegiones;
 	
 	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
@@ -112,5 +117,6 @@ public class Empresa implements Serializable {
 		this.listaRegiones = listaRegiones;
 	}
 
+	
 
 }

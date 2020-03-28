@@ -53,9 +53,9 @@ public class Zona implements Serializable{
 	@JsonBackReference	
 	private List<Region> listaRegiones;
 	
-	
+	/*
 	@ManyToMany(mappedBy = "listaZonas",targetEntity = Provincia.class)
-	private List<Provincia> listaProvincias;
+	private List<Provincia> listaProvincias;*/
 	
 	public Long getId() {
 		return id;
@@ -97,6 +97,7 @@ public class Zona implements Serializable{
 		this.listaRegiones = listaRegiones;
 	}
 
+	/*
 	public List<Provincia> getListaProvincias() {
 		return listaProvincias;
 	}
@@ -105,6 +106,6 @@ public class Zona implements Serializable{
 		this.listaProvincias = listaProvincias;
 	}
 
-	
+	*/
 	
 }
