@@ -59,7 +59,7 @@ public class Empleado implements Serializable{
 	
 	@JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
 	@ManyToOne(optional = false)
-	@JsonBackReference
+	@JsonBackReference	
 	private Rol rol;
 
 	public Long getId() {

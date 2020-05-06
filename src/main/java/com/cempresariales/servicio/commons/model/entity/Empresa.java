@@ -1,10 +1,9 @@
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,11 +16,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "empresa")
@@ -44,20 +43,11 @@ public class Empresa implements Serializable {
 	@Column(name = "activo_empresa")
 	private Boolean activo;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "crea_empresa")
 	private Date crea;
 
-	
-	
-	
-	/*@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Region.class)
-	@JoinTable(
-	        name = "region_has_empresa",
-	        joinColumns = {@JoinColumn(name = "empresa_id_empresa")},
-	        inverseJoinColumns = {@JoinColumn(name="region_id_region")}
-	)
-	*/
-	//@ManyToMany(mappedBy = "listaEmpresas",targetEntity = Region.class)	
+		
 	@JoinTable(name = "empresa_has_region", joinColumns = {
 			@JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa") }, inverseJoinColumns = {
 					@JoinColumn(name = "region_id_region", referencedColumnName = "id_region") })
@@ -109,6 +99,7 @@ public class Empresa implements Serializable {
 		this.cliente = cliente;
 	}
 
+	@XmlTransient
 	public List<Region> getListaRegiones() {
 		return listaRegiones;
 	}

@@ -47,13 +47,8 @@ public class Item implements Serializable{
 	
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Pregunta.class)
-	@JoinTable(
-	        name = "pregunta_has_item",
-	        joinColumns = {@JoinColumn(name = "pregunta_id_pregunta")},
-	        inverseJoinColumns = {@JoinColumn(name="item_id_item")}
-	)	
-	@JsonBackReference
+	@ManyToMany(mappedBy = "listaItems",fetch = FetchType.LAZY)
+    @JsonBackReference
 	private List<Pregunta> listaPreguntas;
 
 	public Long getId() {

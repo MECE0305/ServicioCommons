@@ -45,17 +45,17 @@ public class Categoria implements Serializable{
 	@Column(name = "crea_categoria")
 	private Date crea;
 	
-	@ManyToMany(mappedBy = "listaCategorias",targetEntity = Pregunta.class)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	        name = "categoria_has_pregunta",
+	        joinColumns = {@JoinColumn(name = "categoria_id_categoria")},
+	        inverseJoinColumns = {@JoinColumn(name="pregunta_id_pregunta")}
+	)
 	private List<Pregunta> listaPreguntas;
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Categoria.class)
-	@JoinTable(
-	        name = "evaluacion_has_categoria",
-	        joinColumns = {@JoinColumn(name = "id_evaluacion")},
-	        inverseJoinColumns = {@JoinColumn(name="id_categoria")}
-	)	
-	@JsonBackReference
+	@ManyToMany(mappedBy = "listaCategorias",fetch = FetchType.LAZY)
+    @JsonBackReference
 	private List<Evaluacion> listaEvaluaciones;
 
 	
@@ -99,7 +99,7 @@ public class Categoria implements Serializable{
 		this.listaPreguntas = listaPreguntas;
 	}
 
-	/*public List<Evaluacion> getListaEvaluaciones() {
+	public List<Evaluacion> getListaEvaluaciones() {
 		return listaEvaluaciones;
 	}
 
@@ -107,22 +107,5 @@ public class Categoria implements Serializable{
 		this.listaEvaluaciones = listaEvaluaciones;
 	}
 	
-	*/
-
-	/*public List<Evaluacion> getListaEvaluaciones() {
-		return listaEvaluaciones;
-	}
-
-	public void setListaEvaluaciones(List<Evaluacion> listaEvaluaciones) {
-		this.listaEvaluaciones = listaEvaluaciones;
-	}
-
-	public List<Pregunta> getListaPreguntas() {
-		return listaPreguntas;
-	}
-
-	public void setListaPreguntas(List<Pregunta> listaPreguntas) {
-		this.listaPreguntas = listaPreguntas;
-	}	*/
 	
 }

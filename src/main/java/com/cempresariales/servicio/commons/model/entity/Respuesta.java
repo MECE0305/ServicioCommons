@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "respuesta")
 @XmlRootElement
@@ -39,6 +41,7 @@ public class Respuesta implements Serializable{
 	
 	@JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta")
 	@ManyToOne(optional = false)
+	@JsonBackReference
 	private Pregunta pregunta;
 
 

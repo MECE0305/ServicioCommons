@@ -61,39 +61,19 @@ public class Pregunta implements Serializable{
 	private Date crea;
 	
 	
-	@ManyToMany(mappedBy = "listaPreguntas",targetEntity = Item.class)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	        name = "pregunta_has_item",
+	        joinColumns = {@JoinColumn(name = "pregunta_id_pregunta")},
+	        inverseJoinColumns = {@JoinColumn(name="item_id_item")}
+	)
 	private List<Item> listaItems;
 	
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Categoria.class)
-	@JoinTable(
-	        name = "categoria_has_pregunta",
-	        joinColumns = {@JoinColumn(name = "categoria_id_categoria")},
-	        inverseJoinColumns = {@JoinColumn(name="pregunta_id_pregunta")}
-	)	
-	@JsonBackReference
+	@ManyToMany(mappedBy = "listaPreguntas",fetch = FetchType.LAZY)
+    @JsonBackReference
 	private List<Categoria> listaCategorias;
 
-	
-	/*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "listaPreguntas")
-	private List<Categoria> listaCategoria;
-
-	
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Categoria.class)
-	@JoinTable(
-	        name = "categoria_has_pregunta",
-	        joinColumns = {@JoinColumn(name = "categoria_id_categoria")},
-	        inverseJoinColumns = {@JoinColumn(name="pregunta_id_pregunta")}
-	)
-	@JsonManagedReference
-	private List<Categoria	> listaCategorias;
-	
-	@OneToMany
-	@JoinColumn(name = "pregunta_id_pregunta")
-	private List<Respuesta> listaRespuestas;
-	*/
-	
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "pregunta", fetch = FetchType.LAZY)	
 	private List<Respuesta> listaRespuestas;
 	
 	public Long getId() {
@@ -176,26 +156,6 @@ public class Pregunta implements Serializable{
 	}
 
 
-	public List<Item> getListaItems() {
-		return listaItems;
-	}
-
-
-	public void setListaItems(List<Item> listaItems) {
-		this.listaItems = listaItems;
-	}
-
-
-	public List<Respuesta> getListaRespuestas() {
-		return listaRespuestas;
-	}
-
-
-	public void setListaRespuestas(List<Respuesta> listaRespuestas) {
-		this.listaRespuestas = listaRespuestas;
-	}
-
-
 	public List<Categoria> getListaCategorias() {
 		return listaCategorias;
 	}
@@ -206,29 +166,14 @@ public class Pregunta implements Serializable{
 	}
 
 
-	
-	
-	/*
-	 
-	  public List<Respuesta> getListaRespuestas() {
-		return listaRespuestas;
-	}
-
-	public void setListaRespuestas(List<Respuesta> listaRespuestas) {
-		this.listaRespuestas = listaRespuestas;
-	}
-	
-	 public List<Categoria> getListaCategorias() {
-		return listaCategorias;
+	public List<Item> getListaItems() {
+		return listaItems;
 	}
 
 
-	public void setListaCategorias(List<Categoria> listaCategorias) {
-		this.listaCategorias = listaCategorias;
-	}*/
+	public void setListaItems(List<Item> listaItems) {
+		this.listaItems = listaItems;
+	}
 
 
-	
-
-	
 }

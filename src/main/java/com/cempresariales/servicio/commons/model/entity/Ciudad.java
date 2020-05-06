@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,9 +22,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "ciudad")
 @XmlRootElement
-public class Ciudad implements Serializable{
-	
-	
+public class Ciudad implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -33,19 +33,19 @@ public class Ciudad implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_ciudad")
 	private Long id;
-	
+
 	@Column(name = "nombre_ciudad")
 	private String nombre;
-	
+
 	@Column(name = "activo_ciudad")
 	private Boolean activo;
-	
+
 	@Column(name = "crea_ciudad")
 	private Date crea;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudad")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudad", fetch = FetchType.LAZY)
 	private List<Agencia> listaAgencias;
-	
+
 	@JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia")
 	@ManyToOne(optional = false)
 	@JsonBackReference
@@ -98,7 +98,5 @@ public class Ciudad implements Serializable{
 	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
 	}
-	
-	
 
 }

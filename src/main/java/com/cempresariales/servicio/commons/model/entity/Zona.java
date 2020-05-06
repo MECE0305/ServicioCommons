@@ -44,18 +44,19 @@ public class Zona implements Serializable{
 	@Column(name = "crea_zona")
 	private Date crea;
 
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Region.class)
-	@JoinTable(
-	        name = "region_has_zona",
-	        joinColumns = {@JoinColumn(name = "region_id_region")},
-	        inverseJoinColumns = {@JoinColumn(name="zona_id_zona")}
-	)	
-	@JsonBackReference	
+	
+	
+	@ManyToMany(mappedBy = "listaZonas",fetch = FetchType.LAZY)
+    @JsonBackReference
 	private List<Region> listaRegiones;
 	
-	/*
-	@ManyToMany(mappedBy = "listaZonas",targetEntity = Provincia.class)
-	private List<Provincia> listaProvincias;*/
+	
+	
+	@JoinTable(name = "zona_has_provincia", joinColumns = {
+			@JoinColumn(name = "zona_id_zona", referencedColumnName = "id_zona") }, inverseJoinColumns = {
+					@JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia") })
+	@ManyToMany(fetch = FetchType.LAZY)		
+	private List<Provincia> listaProvincias;
 	
 	public Long getId() {
 		return id;
@@ -96,8 +97,7 @@ public class Zona implements Serializable{
 	public void setListaRegiones(List<Region> listaRegiones) {
 		this.listaRegiones = listaRegiones;
 	}
-
-	/*
+	
 	public List<Provincia> getListaProvincias() {
 		return listaProvincias;
 	}
@@ -106,6 +106,4 @@ public class Zona implements Serializable{
 		this.listaProvincias = listaProvincias;
 	}
 
-	*/
-	
 }

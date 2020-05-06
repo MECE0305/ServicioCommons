@@ -45,20 +45,15 @@ public class Rol implements Serializable{
 	@Column(name = "crea_rol")
 	private Date crea;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "rol", fetch = FetchType.LAZY)
 	private List<Empleado> listaEmpleados;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "rol", fetch = FetchType.LAZY)
 	private List<Evaluacion> listaEvaluaciones;
 
-	/*@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Agencia.class)
-	@JoinTable(
-	        name = "agencia_has_rol",
-	        joinColumns = {@JoinColumn(name = "agencia_id_agencia")},
-	        inverseJoinColumns = {@JoinColumn(name="rol_id_rol")}
-	)	
-	@JsonBackReference
-	private List<Agencia> listaAgencias;*/
+	@ManyToMany(mappedBy = "listaRoles",fetch = FetchType.LAZY)
+    @JsonBackReference	   
+	private List<Agencia> listaAgencias;
 
 	public Long getId() {
 		return id;
@@ -92,6 +87,7 @@ public class Rol implements Serializable{
 		this.crea = crea;
 	}
 
+	
 	public List<Empleado> getListaEmpleados() {
 		return listaEmpleados;
 	}
@@ -108,14 +104,14 @@ public class Rol implements Serializable{
 		this.listaEvaluaciones = listaEvaluaciones;
 	}
 
-	/*public List<Agencia> getListaAgencias() {
+	public List<Agencia> getListaAgencias() {
 		return listaAgencias;
 	}
 
 	public void setListaAgencias(List<Agencia> listaAgencias) {
 		this.listaAgencias = listaAgencias;
 	}
-*/
+
 	
 	
 	

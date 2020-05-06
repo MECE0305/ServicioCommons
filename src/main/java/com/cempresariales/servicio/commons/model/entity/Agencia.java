@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -43,12 +44,14 @@ public class Agencia implements Serializable{
 	
 	@JoinColumn(name = "ciudad_id_ciudad", referencedColumnName = "id_ciudad")
 	@ManyToOne(optional = false)
-	@JsonBackReference
+	@JsonBackReference	
 	private Ciudad ciudad;
 
-	/*
-	@ManyToMany(mappedBy = "listaAgencias",targetEntity = Rol.class)
-	private List<Rol> listaRoles;*/
+	@JoinTable(name = "agencia_has_rol", joinColumns = {
+			@JoinColumn(name = "agencia_id_agencia", referencedColumnName = "id_agencia") }, inverseJoinColumns = {
+					@JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol") })
+	@ManyToMany(fetch = FetchType.LAZY)		
+	private List<Rol> listaRoles;
 	
 	public Long getId() {
 		return id;
@@ -90,7 +93,7 @@ public class Agencia implements Serializable{
 		this.ciudad = ciudad;
 	}
 
-	/*public List<Rol> getListaRoles() {
+	public List<Rol> getListaRoles() {
 		return listaRoles;
 	}
 
@@ -98,5 +101,5 @@ public class Agencia implements Serializable{
 		this.listaRoles = listaRoles;
 	}
 
-	*/
+	
 }

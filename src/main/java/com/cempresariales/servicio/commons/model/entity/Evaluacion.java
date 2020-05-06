@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,10 +25,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @XmlRootElement
 public class Evaluacion implements Serializable{
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6488878724000571976L;
 
 	@Id
@@ -62,12 +59,22 @@ public class Evaluacion implements Serializable{
 	@Column(name = "fecha_evaluacion")
 	private Date crea;
 	
+	@Column(name = "activo_evaluacion")
+	private Boolean activo;
+
+	@Column(name = "crea_evaluacion")
+	private Date creaEV;
+	
 	@JoinColumn(name = "estado_evaluacion_id_estado", referencedColumnName = "id_estado")
-	@ManyToOne(optional = false)
-	@JsonBackReference
+	@ManyToOne
 	private EstadoEvaluacion estado;
 	
-	@ManyToMany(mappedBy = "listaEvaluaciones",targetEntity = Categoria.class)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	        name = "evaluacion_has_categoria",
+	        joinColumns = {@JoinColumn(name = "id_evaluacion")},
+	        inverseJoinColumns = {@JoinColumn(name="id_categoria")}
+	)
 	private List<Categoria> listaCategorias;
 	
 	@JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
@@ -179,6 +186,23 @@ public class Evaluacion implements Serializable{
 		this.rol = rol;
 	}
 
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
+	public Date getCreaEV() {
+		return creaEV;
+	}
+
+	public void setCreaEV(Date creaEV) {
+		this.creaEV = creaEV;
+	}
+
+	
 	
 	
 }

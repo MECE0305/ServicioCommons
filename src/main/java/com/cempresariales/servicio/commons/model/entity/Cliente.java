@@ -64,7 +64,7 @@ public class Cliente implements Serializable {
 	private Date actualiza;
 	
 
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)	
 	private List<Empresa> listaEmpresas;
 
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)
@@ -175,6 +175,7 @@ public class Cliente implements Serializable {
 		this.listaEmpresas = listaEmpresas;
 	}
 
+	@XmlTransient
 	public List<Promedio> getListaPromedios() {
 		return listaPromedios;
 	}

@@ -44,19 +44,13 @@ public class Provincia implements Serializable{
 	private Boolean activo;
 	
 	@Column(name = "crea_provincia")
-	private Date crea;
+	private Date crea;	
 	
-	
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, targetEntity = Zona.class)
-	@JoinTable(
-	        name = "zona_has_provincia",
-	        joinColumns = {@JoinColumn(name = "zona_id_zona")},
-	        inverseJoinColumns = {@JoinColumn(name="provincia_id_provincia")}
-	)	
-	@JsonBackReference	
+	@ManyToMany(mappedBy = "listaProvincias",fetch = FetchType.LAZY)
+    @JsonBackReference		
 	private List<Zona> listaZonas;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "provincia")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "provincia", fetch = FetchType.LAZY)
 	private List<Ciudad> listaCiudades;
 	
 	public Long getId() {
