@@ -20,7 +20,6 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "empresa")
@@ -54,9 +53,9 @@ public class Empresa implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY)	
 	private List<Region> listaRegiones;
 	
+	
 	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
 	@ManyToOne(optional = false)
-	@JsonBackReference
 	private Cliente cliente;
 
 	public Long getId() {

@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+
 @Entity
 @Table(name = "cliente")
 @XmlRootElement
@@ -61,10 +62,10 @@ public class Cliente implements Serializable {
 	private Date crea;
 
 	@Column(name = "actualiza_cliente")
-	private Date actualiza;
-	
+	private Date actualiza;	
 
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)	
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)
+	@JsonBackReference
 	private List<Empresa> listaEmpresas;
 
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "cliente", fetch = FetchType.LAZY)
