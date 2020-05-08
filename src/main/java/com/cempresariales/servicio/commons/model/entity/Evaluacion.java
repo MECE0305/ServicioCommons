@@ -44,6 +44,12 @@ public class Evaluacion implements Serializable{
 	@Column(name = "atencion_evaluacion")
 	private Integer tAtencion;
 	
+	@Column(name = "hora_inicio_evaluacion")
+	private Integer tInicio;
+	
+	@Column(name = "hora_fin_evaluacion")
+	private Integer tFin;
+	
 	@Column(name = "video_evaluacion")
 	private String video;
 	
@@ -69,18 +75,8 @@ public class Evaluacion implements Serializable{
 	@ManyToOne
 	private EstadoEvaluacion estado;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	        name = "evaluacion_has_categoria",
-	        joinColumns = {@JoinColumn(name = "id_evaluacion")},
-	        inverseJoinColumns = {@JoinColumn(name="id_categoria")}
-	)
-	private List<Categoria> listaCategorias;
 	
-	@JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
-	@ManyToOne(optional = false)
-	@JsonBackReference
-	private Rol rol;
+	
 
 	public Long getId() {
 		return id;
@@ -170,21 +166,7 @@ public class Evaluacion implements Serializable{
 		this.estado = estado;
 	}
 
-	public List<Categoria> getListaCategorias() {
-		return listaCategorias;
-	}
-
-	public void setListaCategorias(List<Categoria> listaCategorias) {
-		this.listaCategorias = listaCategorias;
-	}
-
-	public Rol getRol() {
-		return rol;
-	}
-
-	public void setRol(Rol rol) {
-		this.rol = rol;
-	}
+	
 
 	public Boolean getActivo() {
 		return activo;
@@ -200,6 +182,22 @@ public class Evaluacion implements Serializable{
 
 	public void setCreaEV(Date creaEV) {
 		this.creaEV = creaEV;
+	}
+
+	public Integer gettInicio() {
+		return tInicio;
+	}
+
+	public void settInicio(Integer tInicio) {
+		this.tInicio = tInicio;
+	}
+
+	public Integer gettFin() {
+		return tFin;
+	}
+
+	public void settFin(Integer tFin) {
+		this.tFin = tFin;
 	}
 
 	

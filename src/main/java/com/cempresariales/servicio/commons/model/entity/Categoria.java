@@ -45,19 +45,7 @@ public class Categoria implements Serializable{
 	@Column(name = "crea_categoria")
 	private Date crea;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	        name = "categoria_has_pregunta",
-	        joinColumns = {@JoinColumn(name = "categoria_id_categoria")},
-	        inverseJoinColumns = {@JoinColumn(name="pregunta_id_pregunta")}
-	)
-	private List<Pregunta> listaPreguntas;
 	
-	
-	@ManyToMany(mappedBy = "listaCategorias",fetch = FetchType.LAZY)
-    @JsonBackReference
-	private List<Evaluacion> listaEvaluaciones;
-
 	
 	public Long getId() {
 		return id;
@@ -89,22 +77,6 @@ public class Categoria implements Serializable{
 
 	public void setCrea(Date crea) {
 		this.crea = crea;
-	}
-
-	public List<Pregunta> getListaPreguntas() {
-		return listaPreguntas;
-	}
-
-	public void setListaPreguntas(List<Pregunta> listaPreguntas) {
-		this.listaPreguntas = listaPreguntas;
-	}
-
-	public List<Evaluacion> getListaEvaluaciones() {
-		return listaEvaluaciones;
-	}
-
-	public void setListaEvaluaciones(List<Evaluacion> listaEvaluaciones) {
-		this.listaEvaluaciones = listaEvaluaciones;
 	}
 	
 	

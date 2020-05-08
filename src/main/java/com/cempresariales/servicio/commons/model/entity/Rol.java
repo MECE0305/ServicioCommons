@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -48,12 +49,9 @@ public class Rol implements Serializable{
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "rol", fetch = FetchType.LAZY)
 	private List<Empleado> listaEmpleados;
 	
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "rol", fetch = FetchType.LAZY)
-	private List<Evaluacion> listaEvaluaciones;
-
-	@ManyToMany(mappedBy = "listaRoles",fetch = FetchType.LAZY)
-    @JsonBackReference	   
-	private List<Agencia> listaAgencias;
+	@JoinColumn(name = "agenciaRol_id_agenciaRol", referencedColumnName = "id_agenciaRol")
+	@ManyToOne(optional = false)
+	private AgenciaRol agenciaRol;
 
 	public Long getId() {
 		return id;
@@ -96,23 +94,13 @@ public class Rol implements Serializable{
 		this.listaEmpleados = listaEmpleados;
 	}
 
-	public List<Evaluacion> getListaEvaluaciones() {
-		return listaEvaluaciones;
+	public AgenciaRol getAgenciaRol() {
+		return agenciaRol;
 	}
 
-	public void setListaEvaluaciones(List<Evaluacion> listaEvaluaciones) {
-		this.listaEvaluaciones = listaEvaluaciones;
-	}
+	public void setAgenciaRol(AgenciaRol agenciaRol) {
+		this.agenciaRol = agenciaRol;
+	}	
 
-	public List<Agencia> getListaAgencias() {
-		return listaAgencias;
-	}
-
-	public void setListaAgencias(List<Agencia> listaAgencias) {
-		this.listaAgencias = listaAgencias;
-	}
-
-	
-	
 	
 }

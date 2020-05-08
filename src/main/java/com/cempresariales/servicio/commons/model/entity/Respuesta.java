@@ -7,12 +7,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -39,10 +41,12 @@ public class Respuesta implements Serializable{
 	@Column(name = "cumple_respuesta")
 	private Boolean cumple;
 	
-	@JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta")
-	@ManyToOne(optional = false)
+	@OneToOne(mappedBy = "respuesta")
+    private Checklist check;
+	
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "respuesta", fetch = FetchType.LAZY)
 	@JsonBackReference
-	private Pregunta pregunta;
+	private List<RespuestaItems> listaRespuestaItems;
 
 
 	public Long getId() {
@@ -69,14 +73,21 @@ public class Respuesta implements Serializable{
 		this.cumple = cumple;
 	}
 
-	public Pregunta getPregunta() {
-		return pregunta;
+	public Checklist getCheck() {
+		return check;
 	}
 
-	public void setPregunta(Pregunta pregunta) {
-		this.pregunta = pregunta;
+	public void setCheck(Checklist check) {
+		this.check = check;
 	}
-	
-	
 
+	public List<RespuestaItems> getListaRespuestaItems() {
+		return listaRespuestaItems;
+	}
+
+	public void setListaRespuestaItems(List<RespuestaItems> listaRespuestaItems) {
+		this.listaRespuestaItems = listaRespuestaItems;
+	}
+
+	
 }

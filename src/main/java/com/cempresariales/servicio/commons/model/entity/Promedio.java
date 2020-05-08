@@ -2,7 +2,6 @@ package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "promedio")
@@ -50,20 +47,19 @@ public class Promedio implements Serializable{
 	private Date fechaFinal;
 	
 	
-	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
+	@JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")
 	@ManyToOne(optional = false)
 	@JsonBackReference
-	private Cliente cliente;
+	private Empresa empresa;
 	
 	
 
-
-	public Cliente getCliente() {
-		return cliente;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public Long getId() {

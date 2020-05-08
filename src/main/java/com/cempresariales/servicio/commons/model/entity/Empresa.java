@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +41,15 @@ public class Empresa implements Serializable {
 	@Column(name = "nombre_empresa")
 	private String nombre;
 
+	@Column(name = "imagen_empresa")
+	private String logo;
+	
+	@Column(name = "direccion_empresa")
+	private String direccion;
+	
+	@Column(name = "telefono_empresa")
+	private String telefono;
+	
 	@Column(name = "activo_empresa")
 	private Boolean activo;
 
@@ -57,6 +68,13 @@ public class Empresa implements Serializable {
 	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
 	@ManyToOne(optional = false)
 	private Cliente cliente;
+	
+	@JoinColumn(name = "sector_id_sector", referencedColumnName = "id_sector")
+	@ManyToOne(optional = false)
+	private Sector sector;
+	
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "empresa", fetch = FetchType.LAZY)
+	private List<Promedio> listaPromedios;
 
 	public Long getId() {
 		return id;
@@ -107,6 +125,47 @@ public class Empresa implements Serializable {
 		this.listaRegiones = listaRegiones;
 	}
 
-	
+	public Sector getSector() {
+		return sector;
+	}
+
+	public void setSector(Sector sector) {
+		this.sector = sector;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	@XmlTransient
+	public List<Promedio> getListaPromedios() {
+		return listaPromedios;
+	}
+
+	public void setListaPromedios(List<Promedio> listaPromedios) {
+		this.listaPromedios = listaPromedios;
+	}
+
+		
 
 }

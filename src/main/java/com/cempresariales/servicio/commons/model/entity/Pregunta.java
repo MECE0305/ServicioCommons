@@ -44,14 +44,7 @@ public class Pregunta implements Serializable{
 	@Column(name = "respuesta_pregunta")
 	private String respuesta;
 	
-	@Column(name = "peso")
-	private String peso;	
 	
-	@Column(name = "porcentaje")
-	private String porcentaje;
-	
-	@Column(name = "valor")
-	private String valor;
 	
 	@Column(name = "activo_pregunta")
 	private Boolean activo;
@@ -75,6 +68,12 @@ public class Pregunta implements Serializable{
 
 	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "pregunta", fetch = FetchType.LAZY)	
 	private List<Respuesta> listaRespuestas;
+	
+	
+	@JoinColumn(name = "peso_id_peso", referencedColumnName = "id_peso")
+	@ManyToOne(optional = false)
+	private Peso peso;
+
 	
 	public Long getId() {
 		return id;
@@ -103,36 +102,6 @@ public class Pregunta implements Serializable{
 
 	public void setRespuesta(String respuesta) {
 		this.respuesta = respuesta;
-	}
-
-
-	public String getPeso() {
-		return peso;
-	}
-
-
-	public void setPeso(String peso) {
-		this.peso = peso;
-	}
-
-
-	public String getPorcentaje() {
-		return porcentaje;
-	}
-
-
-	public void setPorcentaje(String porcentaje) {
-		this.porcentaje = porcentaje;
-	}
-
-
-	public String getValor() {
-		return valor;
-	}
-
-
-	public void setValor(String valor) {
-		this.valor = valor;
 	}
 
 

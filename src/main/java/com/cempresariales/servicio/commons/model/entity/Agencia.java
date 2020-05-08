@@ -47,11 +47,9 @@ public class Agencia implements Serializable{
 	@JsonBackReference	
 	private Ciudad ciudad;
 
-	@JoinTable(name = "agencia_has_rol", joinColumns = {
-			@JoinColumn(name = "agencia_id_agencia", referencedColumnName = "id_agencia") }, inverseJoinColumns = {
-					@JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol") })
-	@ManyToMany(fetch = FetchType.LAZY)		
-	private List<Rol> listaRoles;
+	@JoinColumn(name = "agenciaRol_id_agenciaRol", referencedColumnName = "id_agenciaRol")
+	@ManyToOne(optional = false)
+	private AgenciaRol agenciaRol;
 	
 	public Long getId() {
 		return id;
@@ -93,13 +91,14 @@ public class Agencia implements Serializable{
 		this.ciudad = ciudad;
 	}
 
-	public List<Rol> getListaRoles() {
-		return listaRoles;
+	public AgenciaRol getAgenciaRol() {
+		return agenciaRol;
 	}
 
-	public void setListaRoles(List<Rol> listaRoles) {
-		this.listaRoles = listaRoles;
+	public void setAgenciaRol(AgenciaRol agenciaRol) {
+		this.agenciaRol = agenciaRol;
 	}
+
 
 	
 }
