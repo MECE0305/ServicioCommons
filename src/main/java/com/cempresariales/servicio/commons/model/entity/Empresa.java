@@ -1,13 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,150 +28,177 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author ADM-DGIP
+ */
 @Entity
 @Table(name = "empresa")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e")
+    , @NamedQuery(name = "Empresa.findByIdEmpresa", query = "SELECT e FROM Empresa e WHERE e.idEmpresa = :idEmpresa")
+    , @NamedQuery(name = "Empresa.findByActivoEmpresa", query = "SELECT e FROM Empresa e WHERE e.activoEmpresa = :activoEmpresa")
+    , @NamedQuery(name = "Empresa.findByCreaEmpresa", query = "SELECT e FROM Empresa e WHERE e.creaEmpresa = :creaEmpresa")
+    , @NamedQuery(name = "Empresa.findByDireccionEmpresa", query = "SELECT e FROM Empresa e WHERE e.direccionEmpresa = :direccionEmpresa")
+    , @NamedQuery(name = "Empresa.findByImagenEmpresa", query = "SELECT e FROM Empresa e WHERE e.imagenEmpresa = :imagenEmpresa")
+    , @NamedQuery(name = "Empresa.findByNombreEmpresa", query = "SELECT e FROM Empresa e WHERE e.nombreEmpresa = :nombreEmpresa")
+    , @NamedQuery(name = "Empresa.findByTelefonoEmpresa", query = "SELECT e FROM Empresa e WHERE e.telefonoEmpresa = :telefonoEmpresa")})
 public class Empresa implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6792353500044096793L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_empresa")
+    private Long idEmpresa;
+    @Column(name = "activo_empresa")
+    private Boolean activoEmpresa;
+    @Column(name = "crea_empresa")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creaEmpresa;
+    @Column(name = "direccion_empresa")
+    private String direccionEmpresa;
+    @Column(name = "imagen_empresa")
+    private String imagenEmpresa;
+    @Column(name = "nombre_empresa")
+    private String nombreEmpresa;
+    @Column(name = "telefono_empresa")
+    private String telefonoEmpresa;
+    @JoinTable(name = "empresa_has_region", joinColumns = {
+        @JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")}, inverseJoinColumns = {
+        @JoinColumn(name = "region_id_region", referencedColumnName = "id_region")})
+    @ManyToMany
+    private List<Region> regionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdEmpresa")
+    private List<Promedio> promedioList;
+    @JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
+    @ManyToOne(optional = false)
+    private Cliente clienteIdCliente;
+    @JoinColumn(name = "sector_id_sector", referencedColumnName = "id_sector")
+    @ManyToOne(optional = false)
+    private Sector sectorIdSector;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_empresa")
-	private Long id;
+    public Empresa() {
+    }
 
-	@Column(name = "nombre_empresa")
-	private String nombre;
+    public Empresa(Long idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
 
-	@Column(name = "imagen_empresa")
-	private String logo;
-	
-	@Column(name = "direccion_empresa")
-	private String direccion;
-	
-	@Column(name = "telefono_empresa")
-	private String telefono;
-	
-	@Column(name = "activo_empresa")
-	private Boolean activo;
+    public Long getIdEmpresa() {
+        return idEmpresa;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "crea_empresa")
-	private Date crea;
+    public void setIdEmpresa(Long idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
 
-		
-	@JoinTable(name = "empresa_has_region", joinColumns = {
-			@JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa") }, inverseJoinColumns = {
-					@JoinColumn(name = "region_id_region", referencedColumnName = "id_region") })
-	@ManyToMany(fetch = FetchType.LAZY)	
-	private List<Region> listaRegiones;
-	
-	
-	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
-	@ManyToOne(optional = false)
-	private Cliente cliente;
-	
-	@JoinColumn(name = "sector_id_sector", referencedColumnName = "id_sector")
-	@ManyToOne(optional = false)
-	private Sector sector;
-	
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "empresa", fetch = FetchType.LAZY)
-	private List<Promedio> listaPromedios;
+    public Boolean getActivoEmpresa() {
+        return activoEmpresa;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setActivoEmpresa(Boolean activoEmpresa) {
+        this.activoEmpresa = activoEmpresa;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Date getCreaEmpresa() {
+        return creaEmpresa;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setCreaEmpresa(Date creaEmpresa) {
+        this.creaEmpresa = creaEmpresa;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getDireccionEmpresa() {
+        return direccionEmpresa;
+    }
 
-	public Boolean getActivo() {
-		return activo;
-	}
+    public void setDireccionEmpresa(String direccionEmpresa) {
+        this.direccionEmpresa = direccionEmpresa;
+    }
 
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
+    public String getImagenEmpresa() {
+        return imagenEmpresa;
+    }
 
-	public Date getCrea() {
-		return crea;
-	}
+    public void setImagenEmpresa(String imagenEmpresa) {
+        this.imagenEmpresa = imagenEmpresa;
+    }
 
-	public void setCrea(Date crea) {
-		this.crea = crea;
-	}
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
 
-	public Cliente getCliente() {
-		return cliente;
-	}
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+    public String getTelefonoEmpresa() {
+        return telefonoEmpresa;
+    }
 
-	@XmlTransient
-	public List<Region> getListaRegiones() {
-		return listaRegiones;
-	}
+    public void setTelefonoEmpresa(String telefonoEmpresa) {
+        this.telefonoEmpresa = telefonoEmpresa;
+    }
 
-	public void setListaRegiones(List<Region> listaRegiones) {
-		this.listaRegiones = listaRegiones;
-	}
+    @XmlTransient
+    public List<Region> getRegionList() {
+        return regionList;
+    }
 
-	public Sector getSector() {
-		return sector;
-	}
+    public void setRegionList(List<Region> regionList) {
+        this.regionList = regionList;
+    }
 
-	public void setSector(Sector sector) {
-		this.sector = sector;
-	}
+    @XmlTransient
+    public List<Promedio> getPromedioList() {
+        return promedioList;
+    }
 
-	public String getLogo() {
-		return logo;
-	}
+    public void setPromedioList(List<Promedio> promedioList) {
+        this.promedioList = promedioList;
+    }
 
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
+    public Cliente getClienteIdCliente() {
+        return clienteIdCliente;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public void setClienteIdCliente(Cliente clienteIdCliente) {
+        this.clienteIdCliente = clienteIdCliente;
+    }
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    public Sector getSectorIdSector() {
+        return sectorIdSector;
+    }
 
-	public String getTelefono() {
-		return telefono;
-	}
+    public void setSectorIdSector(Sector sectorIdSector) {
+        this.sectorIdSector = sectorIdSector;
+    }
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idEmpresa != null ? idEmpresa.hashCode() : 0);
+        return hash;
+    }
 
-	@XmlTransient
-	public List<Promedio> getListaPromedios() {
-		return listaPromedios;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Empresa)) {
+            return false;
+        }
+        Empresa other = (Empresa) object;
+        if ((this.idEmpresa == null && other.idEmpresa != null) || (this.idEmpresa != null && !this.idEmpresa.equals(other.idEmpresa))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setListaPromedios(List<Promedio> listaPromedios) {
-		this.listaPromedios = listaPromedios;
-	}
-
-		
+    @Override
+    public String toString() {
+        return "javaapplication1.Empresa[ idEmpresa=" + idEmpresa + " ]";
+    }
 
 }

@@ -1,7 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,115 +16,153 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ *
+ * @author ADM-DGIP
+ */
 @Entity
 @Table(name = "promedio")
 @XmlRootElement
-public class Promedio implements Serializable{
+@NamedQueries({
+    @NamedQuery(name = "Promedio.findAll", query = "SELECT p FROM Promedio p")
+    , @NamedQuery(name = "Promedio.findByIdPromedio", query = "SELECT p FROM Promedio p WHERE p.idPromedio = :idPromedio")
+    , @NamedQuery(name = "Promedio.findByCategoriaPromedio", query = "SELECT p FROM Promedio p WHERE p.categoriaPromedio = :categoriaPromedio")
+    , @NamedQuery(name = "Promedio.findByEvaluacionPromedio", query = "SELECT p FROM Promedio p WHERE p.evaluacionPromedio = :evaluacionPromedio")
+    , @NamedQuery(name = "Promedio.findByFechaFinalPromedio", query = "SELECT p FROM Promedio p WHERE p.fechaFinalPromedio = :fechaFinalPromedio")
+    , @NamedQuery(name = "Promedio.findByFechaInicialPromedio", query = "SELECT p FROM Promedio p WHERE p.fechaInicialPromedio = :fechaInicialPromedio")
+    , @NamedQuery(name = "Promedio.findByIdEvaluacionPromedio", query = "SELECT p FROM Promedio p WHERE p.idEvaluacionPromedio = :idEvaluacionPromedio")
+    , @NamedQuery(name = "Promedio.findByPreguntaPromedio", query = "SELECT p FROM Promedio p WHERE p.preguntaPromedio = :preguntaPromedio")})
+public class Promedio implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3734749056929341200L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_promedio")
+    private Long idPromedio;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "categoria_promedio")
+    private Float categoriaPromedio;
+    @Column(name = "evaluacion_promedio")
+    private Float evaluacionPromedio;
+    @Column(name = "fecha_final_promedio")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaFinalPromedio;
+    @Column(name = "fecha_inicial_promedio")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaInicialPromedio;
+    @Column(name = "id_evaluacion_promedio")
+    private Integer idEvaluacionPromedio;
+    @Column(name = "pregunta_promedio")
+    private Float preguntaPromedio;
+    @JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private Empresa empresaIdEmpresa;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_promedio")
-	private Long id;
-	
-	@Column(name = "evaluacion_promedio")
-	private Float evaluacion;
-	
-	@Column(name = "categoria_promedio")
-	private Float categoria;
-	
-	@Column(name = "pregunta_promedio")
-	private Float pregunta;
-	
-	@Column(name = "id_evaluacion_promedio")
-	private Integer idEvaluacion;
-	
-	@Column(name = "fecha_inicial_promedio")
-	private Date fechaInicial;
-	
-	@Column(name = "fecha_final_promedio")
-	private Date fechaFinal;
-	
-	
-	@JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")
-	@ManyToOne(optional = false)
-	@JsonBackReference
-	private Empresa empresa;
-	
-	
+    public Promedio() {
+    }
 
-	public Empresa getEmpresa() {
-		return empresa;
-	}
+    public Promedio(Long idPromedio) {
+        this.idPromedio = idPromedio;
+    }
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
+    public Long getIdPromedio() {
+        return idPromedio;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setIdPromedio(Long idPromedio) {
+        this.idPromedio = idPromedio;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Float getCategoriaPromedio() {
+        return categoriaPromedio;
+    }
 
-	public Float getEvaluacion() {
-		return evaluacion;
-	}
+    public void setCategoriaPromedio(Float categoriaPromedio) {
+        this.categoriaPromedio = categoriaPromedio;
+    }
 
-	public void setEvaluacion(Float evaluacion) {
-		this.evaluacion = evaluacion;
-	}
+    public Float getEvaluacionPromedio() {
+        return evaluacionPromedio;
+    }
 
-	public Float getCategoria() {
-		return categoria;
-	}
+    public void setEvaluacionPromedio(Float evaluacionPromedio) {
+        this.evaluacionPromedio = evaluacionPromedio;
+    }
 
-	public void setCategoria(Float categoria) {
-		this.categoria = categoria;
-	}
+    public Date getFechaFinalPromedio() {
+        return fechaFinalPromedio;
+    }
 
-	public Float getPregunta() {
-		return pregunta;
-	}
+    public void setFechaFinalPromedio(Date fechaFinalPromedio) {
+        this.fechaFinalPromedio = fechaFinalPromedio;
+    }
 
-	public void setPregunta(Float pregunta) {
-		this.pregunta = pregunta;
-	}
+    public Date getFechaInicialPromedio() {
+        return fechaInicialPromedio;
+    }
 
-	public Integer getIdEvaluacion() {
-		return idEvaluacion;
-	}
+    public void setFechaInicialPromedio(Date fechaInicialPromedio) {
+        this.fechaInicialPromedio = fechaInicialPromedio;
+    }
 
-	public void setIdEvaluacion(Integer idEvaluacion) {
-		this.idEvaluacion = idEvaluacion;
-	}
+    public Integer getIdEvaluacionPromedio() {
+        return idEvaluacionPromedio;
+    }
 
-	public Date getFechaInicial() {
-		return fechaInicial;
-	}
+    public void setIdEvaluacionPromedio(Integer idEvaluacionPromedio) {
+        this.idEvaluacionPromedio = idEvaluacionPromedio;
+    }
 
-	public void setFechaInicial(Date fechaInicial) {
-		this.fechaInicial = fechaInicial;
-	}
+    public Float getPreguntaPromedio() {
+        return preguntaPromedio;
+    }
 
-	public Date getFechaFinal() {
-		return fechaFinal;
-	}
+    public void setPreguntaPromedio(Float preguntaPromedio) {
+        this.preguntaPromedio = preguntaPromedio;
+    }
 
-	public void setFechaFinal(Date fechaFinal) {
-		this.fechaFinal = fechaFinal;
-	}
-	
-	
-	
+    public Empresa getEmpresaIdEmpresa() {
+        return empresaIdEmpresa;
+    }
+
+    public void setEmpresaIdEmpresa(Empresa empresaIdEmpresa) {
+        this.empresaIdEmpresa = empresaIdEmpresa;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idPromedio != null ? idPromedio.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Promedio)) {
+            return false;
+        }
+        Promedio other = (Promedio) object;
+        if ((this.idPromedio == null && other.idPromedio != null) || (this.idPromedio != null && !this.idPromedio.equals(other.idPromedio))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "javaapplication1.Promedio[ idPromedio=" + idPromedio + " ]";
+    }
+
 }

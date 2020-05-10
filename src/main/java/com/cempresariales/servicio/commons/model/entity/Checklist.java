@@ -1,101 +1,127 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-public class Checklist implements Serializable{
+/**
+ *
+ * @author ADM-DGIP
+ */
+@Entity
+@Table(name = "checklist")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Checklist.findAll", query = "SELECT c FROM Checklist c")
+    , @NamedQuery(name = "Checklist.findByIdChecklist", query = "SELECT c FROM Checklist c WHERE c.idChecklist = :idChecklist")})
+public class Checklist implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1069309521297349557L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_checklist")
+    private Long idChecklist;
+    @JoinTable(name = "peso_has_checklist", joinColumns = {
+        @JoinColumn(name = "checklist_id_checklist", referencedColumnName = "id_checklist")}, inverseJoinColumns = {
+        @JoinColumn(name = "peso_id_peso", referencedColumnName = "id_peso")})
+    @ManyToMany
+    private List<Peso> pesoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
+    private List<ChecklistHasEvaluacion> checklistHasEvaluacionList;
+    @JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private Rol rolIdRol;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_checklist")
-	private Long id;
-	
-	@JoinColumn(name = "agenciaRol_id_agenciaRol", referencedColumnName = "id_agenciaRol")
-	@ManyToOne(optional = false)
-	private AgenciaRol agenciaRol;
-	
-	@JoinColumn(name = "evaluacion_id_evaluacion", referencedColumnName = "id_evaluacion")
-	@ManyToOne(optional = false)
-	private Evaluacion evaluacion;
-	
-	@JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
-	@ManyToOne(optional = false)
-	private Categoria categoria;
-	
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "peso", fetch = FetchType.LAZY)
-	@JsonBackReference
-	private List<Peso> listaPeso;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "respuesta_id_respuesta", referencedColumnName = "id_respuesta")
-    private Respuesta respuesta;
+    public Checklist() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Checklist(Long idChecklist) {
+        this.idChecklist = idChecklist;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getIdChecklist() {
+        return idChecklist;
+    }
 
-	public AgenciaRol getAgenciaRol() {
-		return agenciaRol;
-	}
+    public void setIdChecklist(Long idChecklist) {
+        this.idChecklist = idChecklist;
+    }
 
-	public void setAgenciaRol(AgenciaRol agenciaRol) {
-		this.agenciaRol = agenciaRol;
-	}
+    @XmlTransient
+    public List<Peso> getPesoList() {
+        return pesoList;
+    }
 
-	public Evaluacion getEvaluacion() {
-		return evaluacion;
-	}
+    public void setPesoList(List<Peso> pesoList) {
+        this.pesoList = pesoList;
+    }
 
-	public void setEvaluacion(Evaluacion evaluacion) {
-		this.evaluacion = evaluacion;
-	}
+    @XmlTransient
+    public List<ChecklistHasEvaluacion> getChecklistHasEvaluacionList() {
+        return checklistHasEvaluacionList;
+    }
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
+    public void setChecklistHasEvaluacionList(List<ChecklistHasEvaluacion> checklistHasEvaluacionList) {
+        this.checklistHasEvaluacionList = checklistHasEvaluacionList;
+    }
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
+    public Rol getRolIdRol() {
+        return rolIdRol;
+    }
 
-	public List<Peso> getListaPeso() {
-		return listaPeso;
-	}
+    public void setRolIdRol(Rol rolIdRol) {
+        this.rolIdRol = rolIdRol;
+    }
 
-	public void setListaPeso(List<Peso> listaPeso) {
-		this.listaPeso = listaPeso;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idChecklist != null ? idChecklist.hashCode() : 0);
+        return hash;
+    }
 
-	public Respuesta getRespuesta() {
-		return respuesta;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Checklist)) {
+            return false;
+        }
+        Checklist other = (Checklist) object;
+        if ((this.idChecklist == null && other.idChecklist != null) || (this.idChecklist != null && !this.idChecklist.equals(other.idChecklist))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setRespuesta(Respuesta respuesta) {
-		this.respuesta = respuesta;
-	}
- 
-	
-	
+    @Override
+    public String toString() {
+        return "javaapplication1.Checklist[ idChecklist=" + idChecklist + " ]";
+    }
+
 }

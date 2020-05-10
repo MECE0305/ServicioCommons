@@ -1,148 +1,182 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-
+/**
+ *
+ * @author ADM-DGIP
+ */
 @Entity
 @Table(name = "pregunta")
 @XmlRootElement
-public class Pregunta implements Serializable{
+@NamedQueries({
+    @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p")
+    , @NamedQuery(name = "Pregunta.findByIdPregunta", query = "SELECT p FROM Pregunta p WHERE p.idPregunta = :idPregunta")
+    , @NamedQuery(name = "Pregunta.findByActivoPregunta", query = "SELECT p FROM Pregunta p WHERE p.activoPregunta = :activoPregunta")
+    , @NamedQuery(name = "Pregunta.findByCreaPregunta", query = "SELECT p FROM Pregunta p WHERE p.creaPregunta = :creaPregunta")
+    , @NamedQuery(name = "Pregunta.findByNombrePregunta", query = "SELECT p FROM Pregunta p WHERE p.nombrePregunta = :nombrePregunta")
+    , @NamedQuery(name = "Pregunta.findByRespuestaPregunta", query = "SELECT p FROM Pregunta p WHERE p.respuestaPregunta = :respuestaPregunta")})
+public class Pregunta implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1079974159784869781L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_pregunta")
-	private Long id;
-	
-	@Column(name = "nombre_pregunta")
-	private String nombre;
-		
-	@Column(name = "respuesta_pregunta")
-	private String respuesta;
-	
-	
-	
-	@Column(name = "activo_pregunta")
-	private Boolean activo;
-	
-	
-	@Column(name = "crea_pregunta")
-	private Date crea;
-	
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-	        name = "pregunta_has_item",
-	        joinColumns = {@JoinColumn(name = "pregunta_id_pregunta")},
-	        inverseJoinColumns = {@JoinColumn(name="item_id_item")}
-	)
-	private List<Item> listaItems;
-	
-	@ManyToMany(mappedBy = "listaPreguntas",fetch = FetchType.LAZY)
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_pregunta")
+    private Long idPregunta;
+    @Column(name = "activo_pregunta")
+    private Boolean activoPregunta;
+    @Column(name = "crea_pregunta")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creaPregunta;
+    @Column(name = "nombre_pregunta")
+    private String nombrePregunta;
+    @Column(name = "respuesta_pregunta")
+    private String respuestaPregunta;
+    @JoinColumn(name = "peso_id_peso", referencedColumnName = "id_peso")
+    @ManyToOne(optional = false)
     @JsonBackReference
-	private List<Categoria> listaCategorias;
+    private Peso pesoIdPeso;
+    @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
+    @ManyToOne(optional = false)
+    private Categoria categoriaIdCategoria;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaIdPregunta")
+    private List<Pregunta> preguntaList;
+    @JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta")
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private Pregunta preguntaIdPregunta;
 
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "pregunta", fetch = FetchType.LAZY)	
-	private List<Respuesta> listaRespuestas;
-	
-	
-	@JoinColumn(name = "peso_id_peso", referencedColumnName = "id_peso")
-	@ManyToOne(optional = false)
-	private Peso peso;
+    public Pregunta() {
+    }
 
-	
-	public Long getId() {
-		return id;
-	}
+    public Pregunta(Long idPregunta) {
+        this.idPregunta = idPregunta;
+    }
 
+    public Long getIdPregunta() {
+        return idPregunta;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setIdPregunta(Long idPregunta) {
+        this.idPregunta = idPregunta;
+    }
 
+    public Boolean getActivoPregunta() {
+        return activoPregunta;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setActivoPregunta(Boolean activoPregunta) {
+        this.activoPregunta = activoPregunta;
+    }
 
+    public Date getCreaPregunta() {
+        return creaPregunta;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setCreaPregunta(Date creaPregunta) {
+        this.creaPregunta = creaPregunta;
+    }
 
+    public String getNombrePregunta() {
+        return nombrePregunta;
+    }
 
-	public String getRespuesta() {
-		return respuesta;
-	}
+    public void setNombrePregunta(String nombrePregunta) {
+        this.nombrePregunta = nombrePregunta;
+    }
 
+    public String getRespuestaPregunta() {
+        return respuestaPregunta;
+    }
 
-	public void setRespuesta(String respuesta) {
-		this.respuesta = respuesta;
-	}
+    public void setRespuestaPregunta(String respuestaPregunta) {
+        this.respuestaPregunta = respuestaPregunta;
+    }
 
+    public Peso getPesoIdPeso() {
+        return pesoIdPeso;
+    }
 
-	public Boolean getActivo() {
-		return activo;
-	}
+    public void setPesoIdPeso(Peso pesoIdPeso) {
+        this.pesoIdPeso = pesoIdPeso;
+    }
 
+    public Categoria getCategoriaIdCategoria() {
+        return categoriaIdCategoria;
+    }
 
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
+    public void setCategoriaIdCategoria(Categoria categoriaIdCategoria) {
+        this.categoriaIdCategoria = categoriaIdCategoria;
+    }
 
+    @XmlTransient
+    public List<Pregunta> getPreguntaList() {
+        return preguntaList;
+    }
 
-	public Date getCrea() {
-		return crea;
-	}
+    public void setPreguntaList(List<Pregunta> preguntaList) {
+        this.preguntaList = preguntaList;
+    }
 
+    public Pregunta getPreguntaIdPregunta() {
+        return preguntaIdPregunta;
+    }
 
-	public void setCrea(Date crea) {
-		this.crea = crea;
-	}
+    public void setPreguntaIdPregunta(Pregunta preguntaIdPregunta) {
+        this.preguntaIdPregunta = preguntaIdPregunta;
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idPregunta != null ? idPregunta.hashCode() : 0);
+        return hash;
+    }
 
-	public List<Categoria> getListaCategorias() {
-		return listaCategorias;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Pregunta)) {
+            return false;
+        }
+        Pregunta other = (Pregunta) object;
+        if ((this.idPregunta == null && other.idPregunta != null) || (this.idPregunta != null && !this.idPregunta.equals(other.idPregunta))) {
+            return false;
+        }
+        return true;
+    }
 
-
-	public void setListaCategorias(List<Categoria> listaCategorias) {
-		this.listaCategorias = listaCategorias;
-	}
-
-
-	public List<Item> getListaItems() {
-		return listaItems;
-	}
-
-
-	public void setListaItems(List<Item> listaItems) {
-		this.listaItems = listaItems;
-	}
-
+    @Override
+    public String toString() {
+        return "javaapplication1.Pregunta[ idPregunta=" + idPregunta + " ]";
+    }
 
 }

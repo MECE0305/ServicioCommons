@@ -1,102 +1,148 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ *
+ * @author ADM-DGIP
+ */
 @Entity
 @Table(name = "ciudad")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Ciudad.findAll", query = "SELECT c FROM Ciudad c")
+    , @NamedQuery(name = "Ciudad.findByIdCiudad", query = "SELECT c FROM Ciudad c WHERE c.idCiudad = :idCiudad")
+    , @NamedQuery(name = "Ciudad.findByActivoCiudad", query = "SELECT c FROM Ciudad c WHERE c.activoCiudad = :activoCiudad")
+    , @NamedQuery(name = "Ciudad.findByCreaCiudad", query = "SELECT c FROM Ciudad c WHERE c.creaCiudad = :creaCiudad")
+    , @NamedQuery(name = "Ciudad.findByNombreCiudad", query = "SELECT c FROM Ciudad c WHERE c.nombreCiudad = :nombreCiudad")})
 public class Ciudad implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5531530191690443983L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_ciudad")
+    private Long idCiudad;
+    @Column(name = "activo_ciudad")
+    private Boolean activoCiudad;
+    @Column(name = "crea_ciudad")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creaCiudad;
+    @Column(name = "nombre_ciudad")
+    private String nombreCiudad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudadIdCiudad")
+    private List<Agencia> agenciaList;
+    @JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia")
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private Provincia provinciaIdProvincia;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_ciudad")
-	private Long id;
+    public Ciudad() {
+    }
 
-	@Column(name = "nombre_ciudad")
-	private String nombre;
+    public Ciudad(Long idCiudad) {
+        this.idCiudad = idCiudad;
+    }
 
-	@Column(name = "activo_ciudad")
-	private Boolean activo;
+    public Long getIdCiudad() {
+        return idCiudad;
+    }
 
-	@Column(name = "crea_ciudad")
-	private Date crea;
+    public void setIdCiudad(Long idCiudad) {
+        this.idCiudad = idCiudad;
+    }
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudad", fetch = FetchType.LAZY)
-	private List<Agencia> listaAgencias;
+    public Boolean getActivoCiudad() {
+        return activoCiudad;
+    }
 
-	@JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia")
-	@ManyToOne(optional = false)
-	@JsonBackReference
-	private Provincia provincia;
+    public void setActivoCiudad(Boolean activoCiudad) {
+        this.activoCiudad = activoCiudad;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Date getCreaCiudad() {
+        return creaCiudad;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setCreaCiudad(Date creaCiudad) {
+        this.creaCiudad = creaCiudad;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public String getNombreCiudad() {
+        return nombreCiudad;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setNombreCiudad(String nombreCiudad) {
+        this.nombreCiudad = nombreCiudad;
+    }
 
-	public Boolean getActivo() {
-		return activo;
-	}
+    @XmlTransient
+    public List<Agencia> getAgenciaList() {
+        return agenciaList;
+    }
 
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
+    public void setAgenciaList(List<Agencia> agenciaList) {
+        this.agenciaList = agenciaList;
+    }
 
-	public Date getCrea() {
-		return crea;
-	}
+    public Provincia getProvinciaIdProvincia() {
+        return provinciaIdProvincia;
+    }
 
-	public void setCrea(Date crea) {
-		this.crea = crea;
-	}
+    public void setProvinciaIdProvincia(Provincia provinciaIdProvincia) {
+        this.provinciaIdProvincia = provinciaIdProvincia;
+    }
 
-	public List<Agencia> getListaAgencias() {
-		return listaAgencias;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idCiudad != null ? idCiudad.hashCode() : 0);
+        return hash;
+    }
 
-	public void setListaAgencias(List<Agencia> listaAgencias) {
-		this.listaAgencias = listaAgencias;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Ciudad)) {
+            return false;
+        }
+        Ciudad other = (Ciudad) object;
+        if ((this.idCiudad == null && other.idCiudad != null) || (this.idCiudad != null && !this.idCiudad.equals(other.idCiudad))) {
+            return false;
+        }
+        return true;
+    }
 
-	public Provincia getProvincia() {
-		return provincia;
-	}
-
-	public void setProvincia(Provincia provincia) {
-		this.provincia = provincia;
-	}
+    @Override
+    public String toString() {
+        return "javaapplication1.Ciudad[ idCiudad=" + idCiudad + " ]";
+    }
 
 }

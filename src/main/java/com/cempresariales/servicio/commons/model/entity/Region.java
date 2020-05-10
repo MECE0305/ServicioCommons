@@ -1,110 +1,150 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ *
+ * @author ADM-DGIP
+ */
 @Entity
 @Table(name = "region")
 @XmlRootElement
-public class Region implements Serializable{
+@NamedQueries({
+    @NamedQuery(name = "Region.findAll", query = "SELECT r FROM Region r")
+    , @NamedQuery(name = "Region.findByIdRegion", query = "SELECT r FROM Region r WHERE r.idRegion = :idRegion")
+    , @NamedQuery(name = "Region.findByActivoRegion", query = "SELECT r FROM Region r WHERE r.activoRegion = :activoRegion")
+    , @NamedQuery(name = "Region.findByCreaRegion", query = "SELECT r FROM Region r WHERE r.creaRegion = :creaRegion")
+    , @NamedQuery(name = "Region.findByNombreRegion", query = "SELECT r FROM Region r WHERE r.nombreRegion = :nombreRegion")})
+public class Region implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5869091894852718878L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_region")
+    private Long idRegion;
+    @Column(name = "activo_region")
+    private Boolean activoRegion;
+    @Column(name = "crea_region")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creaRegion;
+    @Column(name = "nombre_region")
+    private String nombreRegion;
+    @JoinTable(name = "region_has_zona", joinColumns = {
+        @JoinColumn(name = "region_id_region", referencedColumnName = "id_region")}, inverseJoinColumns = {
+        @JoinColumn(name = "zona_id_zona", referencedColumnName = "id_zona")})
+    @ManyToMany
+    private List<Zona> zonaList;
+    @ManyToMany(mappedBy = "regionList")
+    @JsonBackReference
+    private List<Empresa> empresaList;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_region")
-	private Long id;
-	
-	@Column(name = "nombre_region")
-	private String nombre;
-	
-	@Column(name = "activo_region")
-	private Boolean activo;
-	
-	@Column(name = "crea_region")
-	private Date crea;
+    public Region() {
+    }
 
+    public Region(Long idRegion) {
+        this.idRegion = idRegion;
+    }
 
-	@ManyToMany(mappedBy = "listaRegiones",fetch = FetchType.LAZY)
-    @JsonBackReference	   
-	private List<Empresa> listaEmpresas;
-	
-	@JoinTable(name = "region_has_zona", joinColumns = {
-			@JoinColumn(name = "region_id_region", referencedColumnName = "id_region") }, inverseJoinColumns = {
-					@JoinColumn(name = "zona_id_zona", referencedColumnName = "id_zona") })
-	@ManyToMany(fetch = FetchType.LAZY)	
-	private List<Zona> listaZonas;
+    public Long getIdRegion() {
+        return idRegion;
+    }
 
+    public void setIdRegion(Long idRegion) {
+        this.idRegion = idRegion;
+    }
 
-	
-	public Long getId() {
-		return id;
-	}
+    public Boolean getActivoRegion() {
+        return activoRegion;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setActivoRegion(Boolean activoRegion) {
+        this.activoRegion = activoRegion;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public Date getCreaRegion() {
+        return creaRegion;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setCreaRegion(Date creaRegion) {
+        this.creaRegion = creaRegion;
+    }
 
-	public Boolean getActivo() {
-		return activo;
-	}
+    public String getNombreRegion() {
+        return nombreRegion;
+    }
 
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
+    public void setNombreRegion(String nombreRegion) {
+        this.nombreRegion = nombreRegion;
+    }
 
-	public Date getCrea() {
-		return crea;
-	}
+    @XmlTransient
+    public List<Zona> getZonaList() {
+        return zonaList;
+    }
 
-	public void setCrea(Date crea) {
-		this.crea = crea;
-	}
+    public void setZonaList(List<Zona> zonaList) {
+        this.zonaList = zonaList;
+    }
 
-	public List<Zona> getListaZonas() {
-		return listaZonas;
-	}
+    @XmlTransient
+    public List<Empresa> getEmpresaList() {
+        return empresaList;
+    }
 
-	public void setListaZonas(List<Zona> listaZonas) {
-		this.listaZonas = listaZonas;
-	}
+    public void setEmpresaList(List<Empresa> empresaList) {
+        this.empresaList = empresaList;
+    }
 
-	public List<Empresa> getListaEmpresas() {
-		return listaEmpresas;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idRegion != null ? idRegion.hashCode() : 0);
+        return hash;
+    }
 
-	public void setListaEmpresas(List<Empresa> listaEmpresas) {
-		this.listaEmpresas = listaEmpresas;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Region)) {
+            return false;
+        }
+        Region other = (Region) object;
+        if ((this.idRegion == null && other.idRegion != null) || (this.idRegion != null && !this.idRegion.equals(other.idRegion))) {
+            return false;
+        }
+        return true;
+    }
 
-	
+    @Override
+    public String toString() {
+        return "javaapplication1.Region[ idRegion=" + idRegion + " ]";
+    }
+
 }

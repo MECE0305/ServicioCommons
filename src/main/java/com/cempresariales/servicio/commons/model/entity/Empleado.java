@@ -1,8 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,136 +18,197 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ *
+ * @author ADM-DGIP
+ */
 @Entity
 @Table(name = "empleado")
 @XmlRootElement
-public class Empleado implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 528586178926893185L;
+@NamedQueries({
+    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
+    , @NamedQuery(name = "Empleado.findByIdEmpleado", query = "SELECT e FROM Empleado e WHERE e.idEmpleado = :idEmpleado")
+    , @NamedQuery(name = "Empleado.findByActivoEmpleado", query = "SELECT e FROM Empleado e WHERE e.activoEmpleado = :activoEmpleado")
+    , @NamedQuery(name = "Empleado.findByApellidoEmpleado", query = "SELECT e FROM Empleado e WHERE e.apellidoEmpleado = :apellidoEmpleado")
+    , @NamedQuery(name = "Empleado.findByCiEmpleado", query = "SELECT e FROM Empleado e WHERE e.ciEmpleado = :ciEmpleado")
+    , @NamedQuery(name = "Empleado.findByCreaEmpleado", query = "SELECT e FROM Empleado e WHERE e.creaEmpleado = :creaEmpleado")
+    , @NamedQuery(name = "Empleado.findByFotoEmpleado", query = "SELECT e FROM Empleado e WHERE e.fotoEmpleado = :fotoEmpleado")
+    , @NamedQuery(name = "Empleado.findByGeneroEmpleado", query = "SELECT e FROM Empleado e WHERE e.generoEmpleado = :generoEmpleado")
+    , @NamedQuery(name = "Empleado.findByMailEmpleado", query = "SELECT e FROM Empleado e WHERE e.mailEmpleado = :mailEmpleado")
+    , @NamedQuery(name = "Empleado.findByNombreEmpleado", query = "SELECT e FROM Empleado e WHERE e.nombreEmpleado = :nombreEmpleado")
+    , @NamedQuery(name = "Empleado.findByTelefonoEmpleado", query = "SELECT e FROM Empleado e WHERE e.telefonoEmpleado = :telefonoEmpleado")})
+public class Empleado implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_empleado")
-	private Long id;
-		
-	@Column(name = "nombre_empleado")
-	private String nombre;
-	
-	@Column(name = "apellido_empleado")
-	private String apellido;
-	
-	@Column(name = "ci_empleado")
-	private String ci;
-	
-	@Column(name = "genero_empleado")
-	private String genero;
-	
-	@Column(name = "telefono_empleado")
-	private String telefono;
-	
-	@Column(name = "foto_empleado")
-	private String foto;
-	
-	@Column(name = "mail_empleado")
-	private String mail;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_empleado")
+    private Long idEmpleado;
+    @Column(name = "activo_empleado")
+    private Boolean activoEmpleado;
+    @Column(name = "apellido_empleado")
+    private String apellidoEmpleado;
+    @Column(name = "ci_empleado")
+    private String ciEmpleado;
+    @Column(name = "crea_empleado")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creaEmpleado;
+    @Column(name = "foto_empleado")
+    private String fotoEmpleado;
+    @Column(name = "genero_empleado")
+    private String generoEmpleado;
+    @Column(name = "mail_empleado")
+    private String mailEmpleado;
+    @Column(name = "nombre_empleado")
+    private String nombreEmpleado;
+    @Column(name = "telefono_empleado")
+    private String telefonoEmpleado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private List<EmpleadoHasRol> EmpleadoHasRol;
+    @JoinColumn(name = "agencia_id_agencia", referencedColumnName = "id_agencia")
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private Agencia agenciaIdAgencia;
 
-	@Column(name = "activo_empleado")
-	private Boolean activo;
+    public Empleado() {
+    }
 
-	@Column(name = "crea_empleado")
-	private Date crea;
-	
-	@JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
-	@ManyToOne(optional = false)
-	@JsonBackReference	
-	private Rol rol;
+    public Empleado(Long idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getIdEmpleado() {
+        return idEmpleado;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setIdEmpleado(Long idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public Boolean getActivoEmpleado() {
+        return activoEmpleado;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setActivoEmpleado(Boolean activoEmpleado) {
+        this.activoEmpleado = activoEmpleado;
+    }
 
-	public String getApellido() {
-		return apellido;
-	}
+    public String getApellidoEmpleado() {
+        return apellidoEmpleado;
+    }
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+    public void setApellidoEmpleado(String apellidoEmpleado) {
+        this.apellidoEmpleado = apellidoEmpleado;
+    }
 
-	public String getCi() {
-		return ci;
-	}
+    public String getCiEmpleado() {
+        return ciEmpleado;
+    }
 
-	public void setCi(String ci) {
-		this.ci = ci;
-	}
+    public void setCiEmpleado(String ciEmpleado) {
+        this.ciEmpleado = ciEmpleado;
+    }
 
-	public String getGenero() {
-		return genero;
-	}
+    public Date getCreaEmpleado() {
+        return creaEmpleado;
+    }
 
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
+    public void setCreaEmpleado(Date creaEmpleado) {
+        this.creaEmpleado = creaEmpleado;
+    }
 
-	public String getTelefono() {
-		return telefono;
-	}
+    public String getFotoEmpleado() {
+        return fotoEmpleado;
+    }
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
+    public void setFotoEmpleado(String fotoEmpleado) {
+        this.fotoEmpleado = fotoEmpleado;
+    }
 
-	public String getFoto() {
-		return foto;
-	}
+    public String getGeneroEmpleado() {
+        return generoEmpleado;
+    }
 
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
+    public void setGeneroEmpleado(String generoEmpleado) {
+        this.generoEmpleado = generoEmpleado;
+    }
 
-	public String getMail() {
-		return mail;
-	}
+    public String getMailEmpleado() {
+        return mailEmpleado;
+    }
 
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+    public void setMailEmpleado(String mailEmpleado) {
+        this.mailEmpleado = mailEmpleado;
+    }
 
-	public Boolean getActivo() {
-		return activo;
-	}
+    public String getNombreEmpleado() {
+        return nombreEmpleado;
+    }
 
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
+    public void setNombreEmpleado(String nombreEmpleado) {
+        this.nombreEmpleado = nombreEmpleado;
+    }
 
-	public Date getCrea() {
-		return crea;
-	}
+    public String getTelefonoEmpleado() {
+        return telefonoEmpleado;
+    }
 
-	public void setCrea(Date crea) {
-		this.crea = crea;
-	}
-		
+    public void setTelefonoEmpleado(String telefonoEmpleado) {
+        this.telefonoEmpleado = telefonoEmpleado;
+    }
+
+    @XmlTransient
+    public List<EmpleadoHasRol> getEmpleadoHasRol() {
+        return EmpleadoHasRol;
+    }
+
+    public void setEmpleadoHasRol(List<EmpleadoHasRol> EmpleadoHasRol) {
+        this.EmpleadoHasRol = EmpleadoHasRol;
+    }
+
+    public Agencia getAgenciaIdAgencia() {
+        return agenciaIdAgencia;
+    }
+
+    public void setAgenciaIdAgencia(Agencia agenciaIdAgencia) {
+        this.agenciaIdAgencia = agenciaIdAgencia;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idEmpleado != null ? idEmpleado.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Empleado)) {
+            return false;
+        }
+        Empleado other = (Empleado) object;
+        if ((this.idEmpleado == null && other.idEmpleado != null) || (this.idEmpleado != null && !this.idEmpleado.equals(other.idEmpleado))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "javaapplication1.Empleado[ idEmpleado=" + idEmpleado + " ]";
+    }
+
 }
