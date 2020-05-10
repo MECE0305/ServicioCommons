@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author ADM-DGIP
@@ -37,9 +39,11 @@ public class EmpleadoHasRol implements Serializable {
     protected EmpleadoHasRolPK empleadoHasRolPK;
     @JoinColumn(name = "empleado_id_empleado", referencedColumnName = "id_empleado", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+	@JsonIgnore
     private Empleado empleado;
     @JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+	@JsonIgnore
     private Rol rol;
 
     public EmpleadoHasRolPK getEmpleadoHasRolPK() {

@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author ADM-DGIP
@@ -37,9 +39,11 @@ public class ChecklistHasEvaluacion implements Serializable {
     protected ChecklistHasEvaluacionPK checklistHasEvaluacionPK;
     @JoinColumn(name = "checklist_id_checklist", referencedColumnName = "id_checklist", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+	@JsonIgnore
     private Checklist checklist;
     @JoinColumn(name = "evaluacion_id_evaluacion", referencedColumnName = "id_evaluacion", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+	@JsonIgnore
     private Evaluacion evaluacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklistHasEvaluacion")
     private List<Respuesta> respuestaList;

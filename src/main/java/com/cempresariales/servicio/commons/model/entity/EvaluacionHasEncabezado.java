@@ -16,6 +16,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author ADM-DGIP
@@ -37,9 +39,11 @@ public class EvaluacionHasEncabezado implements Serializable {
     private String valorEncabezado;
     @JoinColumn(name = "encabezado_id_encabezado", referencedColumnName = "id_encabezado", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+	@JsonIgnore
     private Encabezado encabezado;
     @JoinColumn(name = "evaluacion_id_evaluacion", referencedColumnName = "id_evaluacion", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+	@JsonIgnore
     private Evaluacion evaluacion;
 
     public EvaluacionHasEncabezado() {
