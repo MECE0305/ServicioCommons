@@ -8,7 +8,6 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,8 +25,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -60,10 +57,8 @@ public class Pregunta implements Serializable {
     private String nombrePregunta;
     @Column(name = "respuesta_pregunta")
     private String respuestaPregunta;
-    @JoinColumn(name = "peso_id_peso", referencedColumnName = "id_peso")
-    @ManyToOne(optional = false)
-    @JsonBackReference
-    private Peso pesoIdPeso;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
+    private List<PesoHasPregunta> pesoHasPreguntaList;
     @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
     @ManyToOne(optional = false)
     private Categoria categoriaIdCategoria;
@@ -71,7 +66,6 @@ public class Pregunta implements Serializable {
     private List<Pregunta> preguntaList;
     @JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta")
     @ManyToOne(optional = false)
-    @JsonBackReference
     private Pregunta preguntaIdPregunta;
 
     public Pregunta() {
@@ -121,12 +115,13 @@ public class Pregunta implements Serializable {
         this.respuestaPregunta = respuestaPregunta;
     }
 
-    public Peso getPesoIdPeso() {
-        return pesoIdPeso;
+    @XmlTransient
+    public List<PesoHasPregunta> getPesoHasPreguntaList() {
+        return pesoHasPreguntaList;
     }
 
-    public void setPesoIdPeso(Peso pesoIdPeso) {
-        this.pesoIdPeso = pesoIdPeso;
+    public void setPesoHasPreguntaList(List<PesoHasPregunta> pesoHasPreguntaList) {
+        this.pesoHasPreguntaList = pesoHasPreguntaList;
     }
 
     public Categoria getCategoriaIdCategoria() {
@@ -176,7 +171,7 @@ public class Pregunta implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Pregunta[ idPregunta=" + idPregunta + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Pregunta[ idPregunta=" + idPregunta + " ]";
     }
-
+    
 }

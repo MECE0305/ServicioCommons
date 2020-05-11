@@ -7,7 +7,6 @@ package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,8 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -46,17 +41,15 @@ public class Checklist implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_checklist")
     private Long idChecklist;
-    @JoinTable(name = "peso_has_checklist", joinColumns = {
-        @JoinColumn(name = "checklist_id_checklist", referencedColumnName = "id_checklist")}, inverseJoinColumns = {
-        @JoinColumn(name = "peso_id_peso", referencedColumnName = "id_peso")})
-    @ManyToMany
-    private List<Peso> pesoList;
+    @Column(name = "activo_checklist")
+    private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
     private List<ChecklistHasEvaluacion> checklistHasEvaluacionList;
     @JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
     @ManyToOne(optional = false)
-    @JsonBackReference
     private Rol rolIdRol;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
+    private List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList;
 
     public Checklist() {
     }
@@ -71,18 +64,17 @@ public class Checklist implements Serializable {
 
     public void setIdChecklist(Long idChecklist) {
         this.idChecklist = idChecklist;
-    }
+    }    
 
-    @XmlTransient
-    public List<Peso> getPesoList() {
-        return pesoList;
-    }
+    public Boolean getActivo() {
+		return activo;
+	}
 
-    public void setPesoList(List<Peso> pesoList) {
-        this.pesoList = pesoList;
-    }
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
 
-    @XmlTransient
+	@XmlTransient
     public List<ChecklistHasEvaluacion> getChecklistHasEvaluacionList() {
         return checklistHasEvaluacionList;
     }
@@ -97,6 +89,15 @@ public class Checklist implements Serializable {
 
     public void setRolIdRol(Rol rolIdRol) {
         this.rolIdRol = rolIdRol;
+    }
+
+    @XmlTransient
+    public List<ChecklistHasPesoHasPregunta> getChecklistHasPesoHasPreguntaList() {
+        return checklistHasPesoHasPreguntaList;
+    }
+
+    public void setChecklistHasPesoHasPreguntaList(List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList) {
+        this.checklistHasPesoHasPreguntaList = checklistHasPesoHasPreguntaList;
     }
 
     @Override
@@ -121,7 +122,7 @@ public class Checklist implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Checklist[ idChecklist=" + idChecklist + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Checklist[ idChecklist=" + idChecklist + " ]";
     }
-
+    
 }

@@ -8,7 +8,6 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +15,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,8 +23,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -59,11 +55,8 @@ public class Peso implements Serializable {
     private String porcentaje;
     @Column(name = "valor")
     private String valor;
-    @ManyToMany(mappedBy = "pesoList")
-    @JsonBackReference
-    private List<Checklist> checklistList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pesoIdPeso")
-    private List<Pregunta> preguntaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "peso")
+    private List<PesoHasPregunta> pesoHasPreguntaList;
 
     public Peso() {
     }
@@ -113,21 +106,12 @@ public class Peso implements Serializable {
     }
 
     @XmlTransient
-    public List<Checklist> getChecklistList() {
-        return checklistList;
+    public List<PesoHasPregunta> getPesoHasPreguntaList() {
+        return pesoHasPreguntaList;
     }
 
-    public void setChecklistList(List<Checklist> checklistList) {
-        this.checklistList = checklistList;
-    }
-
-    @XmlTransient
-    public List<Pregunta> getPreguntaList() {
-        return preguntaList;
-    }
-
-    public void setPreguntaList(List<Pregunta> preguntaList) {
-        this.preguntaList = preguntaList;
+    public void setPesoHasPreguntaList(List<PesoHasPregunta> pesoHasPreguntaList) {
+        this.pesoHasPreguntaList = pesoHasPreguntaList;
     }
 
     @Override
@@ -152,7 +136,7 @@ public class Peso implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Peso[ idPeso=" + idPeso + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Peso[ idPeso=" + idPeso + " ]";
     }
-
+    
 }
