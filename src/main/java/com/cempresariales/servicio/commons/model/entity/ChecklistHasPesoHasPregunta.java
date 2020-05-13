@@ -6,6 +6,7 @@
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class ChecklistHasPesoHasPregunta implements Serializable {
     @EmbeddedId
     protected ChecklistHasPesoHasPreguntaPK checklistHasPesoHasPreguntaPK;
     @Column(name = "activo")
-    private Boolean activo;
+    private Short activo;
     @JoinColumn(name = "checklist_id_checklist", referencedColumnName = "id_checklist", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonIgnore
@@ -69,11 +70,11 @@ public class ChecklistHasPesoHasPregunta implements Serializable {
         this.checklistHasPesoHasPreguntaPK = checklistHasPesoHasPreguntaPK;
     }
 
-    public Boolean getActivo() {
+    public Short getActivo() {
         return activo;
     }
 
-    public void setActivo(Boolean activo) {
+    public void setActivo(Short activo) {
         this.activo = activo;
     }
 

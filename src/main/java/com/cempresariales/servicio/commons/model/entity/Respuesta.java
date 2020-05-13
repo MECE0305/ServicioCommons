@@ -7,7 +7,6 @@ package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,8 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -59,7 +56,6 @@ public class Respuesta implements Serializable {
         @JoinColumn(name = "checklist_has_evaluacion_checklist_id_checklist", referencedColumnName = "checklist_id_checklist")
         , @JoinColumn(name = "checklist_has_evaluacion_evaluacion_id_evaluacion", referencedColumnName = "evaluacion_id_evaluacion")})
     @ManyToOne(optional = false)
-    @JsonBackReference
     private ChecklistHasEvaluacion checklistHasEvaluacion;
 
     public Respuesta() {
@@ -144,7 +140,7 @@ public class Respuesta implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Respuesta[ idRespuesta=" + idRespuesta + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Respuesta[ idRespuesta=" + idRespuesta + " ]";
     }
-
+    
 }

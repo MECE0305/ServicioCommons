@@ -7,7 +7,9 @@ package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -19,6 +21,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -31,21 +34,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "ChecklistHasEvaluacion.findAll", query = "SELECT c FROM ChecklistHasEvaluacion c")
     , @NamedQuery(name = "ChecklistHasEvaluacion.findByChecklistIdChecklist", query = "SELECT c FROM ChecklistHasEvaluacion c WHERE c.checklistHasEvaluacionPK.checklistIdChecklist = :checklistIdChecklist")
-    , @NamedQuery(name = "ChecklistHasEvaluacion.findByEvaluacionIdEvaluacion", query = "SELECT c FROM ChecklistHasEvaluacion c WHERE c.checklistHasEvaluacionPK.evaluacionIdEvaluacion = :evaluacionIdEvaluacion")})
+    , @NamedQuery(name = "ChecklistHasEvaluacion.findByEvaluacionIdEvaluacion", query = "SELECT c FROM ChecklistHasEvaluacion c WHERE c.checklistHasEvaluacionPK.evaluacionIdEvaluacion = :evaluacionIdEvaluacion")
+    , @NamedQuery(name = "ChecklistHasEvaluacion.findByActivo", query = "SELECT c FROM ChecklistHasEvaluacion c WHERE c.activo = :activo")})
 public class ChecklistHasEvaluacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ChecklistHasEvaluacionPK checklistHasEvaluacionPK;
+    @Column(name = "activo")
+    private Short activo;
     @JoinColumn(name = "checklist_id_checklist", referencedColumnName = "id_checklist", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-	@JsonIgnore
+    @JsonIgnore
     private Checklist checklist;
     @JoinColumn(name = "evaluacion_id_evaluacion", referencedColumnName = "id_evaluacion", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-	@JsonIgnore
+    @JsonIgnore
     private Evaluacion evaluacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklistHasEvaluacion")
+    @JsonBackReference
     private List<Respuesta> respuestaList;
 
     public ChecklistHasEvaluacion() {
@@ -65,6 +72,14 @@ public class ChecklistHasEvaluacion implements Serializable {
 
     public void setChecklistHasEvaluacionPK(ChecklistHasEvaluacionPK checklistHasEvaluacionPK) {
         this.checklistHasEvaluacionPK = checklistHasEvaluacionPK;
+    }
+
+    public Short getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Short activo) {
+        this.activo = activo;
     }
 
     public Checklist getChecklist() {
@@ -114,7 +129,7 @@ public class ChecklistHasEvaluacion implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.ChecklistHasEvaluacion[ checklistHasEvaluacionPK=" + checklistHasEvaluacionPK + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.ChecklistHasEvaluacion[ checklistHasEvaluacionPK=" + checklistHasEvaluacionPK + " ]";
     }
     
 }

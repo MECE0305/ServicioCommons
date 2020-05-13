@@ -74,7 +74,7 @@ public class ChecklistHasEvaluacionPK implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.ChecklistHasEvaluacionPK[ checklistIdChecklist=" + checklistIdChecklist + ", evaluacionIdEvaluacion=" + evaluacionIdEvaluacion + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.ChecklistHasEvaluacionPK[ checklistIdChecklist=" + checklistIdChecklist + ", evaluacionIdEvaluacion=" + evaluacionIdEvaluacion + " ]";
     }
     
 }

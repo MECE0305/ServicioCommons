@@ -8,7 +8,6 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,8 +25,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -75,12 +72,11 @@ public class Empleado implements Serializable {
     private String nombreEmpleado;
     @Column(name = "telefono_empleado")
     private String telefonoEmpleado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-    private List<EmpleadoHasRol> EmpleadoHasRol;
     @JoinColumn(name = "agencia_id_agencia", referencedColumnName = "id_agencia")
     @ManyToOne(optional = false)
-    @JsonBackReference
     private Agencia agenciaIdAgencia;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private List<RolHasEmpleado> rolHasEmpleadoList;
 
     public Empleado() {
     }
@@ -169,21 +165,21 @@ public class Empleado implements Serializable {
         this.telefonoEmpleado = telefonoEmpleado;
     }
 
-    @XmlTransient
-    public List<EmpleadoHasRol> getEmpleadoHasRol() {
-        return EmpleadoHasRol;
-    }
-
-    public void setEmpleadoHasRol(List<EmpleadoHasRol> EmpleadoHasRol) {
-        this.EmpleadoHasRol = EmpleadoHasRol;
-    }
-
     public Agencia getAgenciaIdAgencia() {
         return agenciaIdAgencia;
     }
 
     public void setAgenciaIdAgencia(Agencia agenciaIdAgencia) {
         this.agenciaIdAgencia = agenciaIdAgencia;
+    }
+
+    @XmlTransient
+    public List<RolHasEmpleado> getRolHasEmpleadoList() {
+        return rolHasEmpleadoList;
+    }
+
+    public void setRolHasEmpleadoList(List<RolHasEmpleado> rolHasEmpleadoList) {
+        this.rolHasEmpleadoList = rolHasEmpleadoList;
     }
 
     @Override
@@ -208,7 +204,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Empleado[ idEmpleado=" + idEmpleado + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Empleado[ idEmpleado=" + idEmpleado + " ]";
     }
-
+    
 }

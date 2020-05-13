@@ -8,7 +8,6 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -53,15 +52,15 @@ public class Ciudad implements Serializable {
     @Column(name = "activo_ciudad")
     private Boolean activoCiudad;
     @Column(name = "crea_ciudad")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date creaCiudad;
     @Column(name = "nombre_ciudad")
     private String nombreCiudad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudadIdCiudad")
+    @JsonBackReference
     private List<Agencia> agenciaList;
     @JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia")
     @ManyToOne(optional = false)
-    @JsonBackReference
     private Provincia provinciaIdProvincia;
 
     public Ciudad() {
@@ -142,7 +141,7 @@ public class Ciudad implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Ciudad[ idCiudad=" + idCiudad + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Ciudad[ idCiudad=" + idCiudad + " ]";
     }
-
+    
 }

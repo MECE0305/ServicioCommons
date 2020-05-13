@@ -16,8 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,6 +25,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -65,13 +65,11 @@ public class Empresa implements Serializable {
     private String nombreEmpresa;
     @Column(name = "telefono_empresa")
     private String telefonoEmpresa;
-    @JoinTable(name = "empresa_has_region", joinColumns = {
-        @JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")}, inverseJoinColumns = {
-        @JoinColumn(name = "region_id_region", referencedColumnName = "id_region")})
-    @ManyToMany
-    private List<Region> regionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdEmpresa")
+    @JsonBackReference
     private List<Promedio> promedioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresa")
+    private List<EmpresaHasRegion> empresaHasRegionList;
     @JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
     @ManyToOne(optional = false)
     private Cliente clienteIdCliente;
@@ -143,21 +141,21 @@ public class Empresa implements Serializable {
     }
 
     @XmlTransient
-    public List<Region> getRegionList() {
-        return regionList;
-    }
-
-    public void setRegionList(List<Region> regionList) {
-        this.regionList = regionList;
-    }
-
-    @XmlTransient
     public List<Promedio> getPromedioList() {
         return promedioList;
     }
 
     public void setPromedioList(List<Promedio> promedioList) {
         this.promedioList = promedioList;
+    }
+
+    @XmlTransient
+    public List<EmpresaHasRegion> getEmpresaHasRegionList() {
+        return empresaHasRegionList;
+    }
+
+    public void setEmpresaHasRegionList(List<EmpresaHasRegion> empresaHasRegionList) {
+        this.empresaHasRegionList = empresaHasRegionList;
     }
 
     public Cliente getClienteIdCliente() {
@@ -198,7 +196,7 @@ public class Empresa implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Empresa[ idEmpresa=" + idEmpresa + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Empresa[ idEmpresa=" + idEmpresa + " ]";
     }
-
+    
 }

@@ -8,7 +8,6 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +15,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -52,14 +51,14 @@ public class Provincia implements Serializable {
     @Column(name = "activo_provincia")
     private Boolean activoProvincia;
     @Column(name = "crea_provincia")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date creaProvincia;
     @Column(name = "nombre_provincia")
     private String nombreProvincia;
-    @ManyToMany(mappedBy = "provinciaList")
-    @JsonBackReference
-    private List<Zona> zonaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "provincia")
+    private List<ZonaHasProvincia> zonaHasProvinciaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "provinciaIdProvincia")
+    @JsonBackReference
     private List<Ciudad> ciudadList;
 
     public Provincia() {
@@ -102,12 +101,12 @@ public class Provincia implements Serializable {
     }
 
     @XmlTransient
-    public List<Zona> getZonaList() {
-        return zonaList;
+    public List<ZonaHasProvincia> getZonaHasProvinciaList() {
+        return zonaHasProvinciaList;
     }
 
-    public void setZonaList(List<Zona> zonaList) {
-        this.zonaList = zonaList;
+    public void setZonaHasProvinciaList(List<ZonaHasProvincia> zonaHasProvinciaList) {
+        this.zonaHasProvinciaList = zonaHasProvinciaList;
     }
 
     @XmlTransient
@@ -141,7 +140,7 @@ public class Provincia implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Provincia[ idProvincia=" + idProvincia + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Provincia[ idProvincia=" + idProvincia + " ]";
     }
-
+    
 }

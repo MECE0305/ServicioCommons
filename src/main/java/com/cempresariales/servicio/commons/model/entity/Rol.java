@@ -8,7 +8,6 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +23,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -53,10 +54,11 @@ public class Rol implements Serializable {
     private Date creaRol;
     @Column(name = "nombre_rol")
     private String nombreRol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolIdRol")
-    private List<Checklist> checklistList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
-    private List<EmpleadoHasRol> EmpleadoHasRol;
+    private List<RolHasEmpleado> rolHasEmpleadoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolIdRol")
+    @JsonIgnore
+    private List<Checklist> checklistList;
 
     public Rol() {
     }
@@ -98,21 +100,21 @@ public class Rol implements Serializable {
     }
 
     @XmlTransient
+    public List<RolHasEmpleado> getRolHasEmpleadoList() {
+        return rolHasEmpleadoList;
+    }
+
+    public void setRolHasEmpleadoList(List<RolHasEmpleado> rolHasEmpleadoList) {
+        this.rolHasEmpleadoList = rolHasEmpleadoList;
+    }
+
+    @XmlTransient
     public List<Checklist> getChecklistList() {
         return checklistList;
     }
 
     public void setChecklistList(List<Checklist> checklistList) {
         this.checklistList = checklistList;
-    }
-
-    @XmlTransient
-    public List<EmpleadoHasRol> getEmpleadoHasRol() {
-        return EmpleadoHasRol;
-    }
-
-    public void setEmpleadoHasRol(List<EmpleadoHasRol> EmpleadoHasRol) {
-        this.EmpleadoHasRol = EmpleadoHasRol;
     }
 
     @Override
@@ -137,7 +139,7 @@ public class Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Rol[ idRol=" + idRol + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Rol[ idRol=" + idRol + " ]";
     }
-
+    
 }

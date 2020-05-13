@@ -7,7 +7,6 @@ package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,8 +19,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 /**
  *
  * @author ADM-DGIP
@@ -29,89 +26,88 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "encabezado")
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "Encabezado.findAll", query = "SELECT e FROM Encabezado e"),
-		@NamedQuery(name = "Encabezado.findByIdEncabezado", query = "SELECT e FROM Encabezado e WHERE e.idEncabezado = :idEncabezado"),
-		@NamedQuery(name = "Encabezado.findByNombreEncabezado", query = "SELECT e FROM Encabezado e WHERE e.nombreEncabezado = :nombreEncabezado"),
-		@NamedQuery(name = "Encabezado.findByActivoEncabezado", query = "SELECT e FROM Encabezado e WHERE e.activoEncabezado = :activoEncabezado") })
+@NamedQueries({
+    @NamedQuery(name = "Encabezado.findAll", query = "SELECT e FROM Encabezado e")
+    , @NamedQuery(name = "Encabezado.findByIdEncabezado", query = "SELECT e FROM Encabezado e WHERE e.idEncabezado = :idEncabezado")
+    , @NamedQuery(name = "Encabezado.findByNombreEncabezado", query = "SELECT e FROM Encabezado e WHERE e.nombreEncabezado = :nombreEncabezado")
+    , @NamedQuery(name = "Encabezado.findByEstadoEncabezado", query = "SELECT e FROM Encabezado e WHERE e.estadoEncabezado = :estadoEncabezado")})
 public class Encabezado implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@Id
-	@Basic(optional = false)
-	@Column(name = "id_encabezado")
-	private Integer idEncabezado;
-	@Column(name = "nombre_encabezado")
-	private String nombreEncabezado;
-	@Column(name = "activo_encabezado")
-	private Boolean activoEncabezado;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "encabezado")
-	@JsonBackReference
-	private List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "id_encabezado")
+    private Integer idEncabezado;
+    @Column(name = "nombre_encabezado")
+    private String nombreEncabezado;
+    @Column(name = "estado_encabezado")
+    private Short estadoEncabezado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encabezado")
+    private List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList;
 
-	public Encabezado() {
-	}
+    public Encabezado() {
+    }
 
-	public Encabezado(Integer idEncabezado) {
-		this.idEncabezado = idEncabezado;
-	}
+    public Encabezado(Integer idEncabezado) {
+        this.idEncabezado = idEncabezado;
+    }
 
-	public Integer getIdEncabezado() {
-		return idEncabezado;
-	}
+    public Integer getIdEncabezado() {
+        return idEncabezado;
+    }
 
-	public void setIdEncabezado(Integer idEncabezado) {
-		this.idEncabezado = idEncabezado;
-	}
+    public void setIdEncabezado(Integer idEncabezado) {
+        this.idEncabezado = idEncabezado;
+    }
 
-	public String getNombreEncabezado() {
-		return nombreEncabezado;
-	}
+    public String getNombreEncabezado() {
+        return nombreEncabezado;
+    }
 
-	public void setNombreEncabezado(String nombreEncabezado) {
-		this.nombreEncabezado = nombreEncabezado;
-	}
+    public void setNombreEncabezado(String nombreEncabezado) {
+        this.nombreEncabezado = nombreEncabezado;
+    }
 
-	public Boolean getActivoEncabezado() {
-		return activoEncabezado;
-	}
+    public Short getEstadoEncabezado() {
+        return estadoEncabezado;
+    }
 
-	public void setActivoEncabezado(Boolean activoEncabezado) {
-		this.activoEncabezado = activoEncabezado;
-	}
+    public void setEstadoEncabezado(Short estadoEncabezado) {
+        this.estadoEncabezado = estadoEncabezado;
+    }
 
-	@XmlTransient
-	public List<EvaluacionHasEncabezado> getEvaluacionHasEncabezadoList() {
-		return evaluacionHasEncabezadoList;
-	}
+    @XmlTransient
+    public List<EvaluacionHasEncabezado> getEvaluacionHasEncabezadoList() {
+        return evaluacionHasEncabezadoList;
+    }
 
-	public void setEvaluacionHasEncabezadoList(List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList) {
-		this.evaluacionHasEncabezadoList = evaluacionHasEncabezadoList;
-	}
+    public void setEvaluacionHasEncabezadoList(List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList) {
+        this.evaluacionHasEncabezadoList = evaluacionHasEncabezadoList;
+    }
 
-	@Override
-	public int hashCode() {
-		int hash = 0;
-		hash += (idEncabezado != null ? idEncabezado.hashCode() : 0);
-		return hash;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idEncabezado != null ? idEncabezado.hashCode() : 0);
+        return hash;
+    }
 
-	@Override
-	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof Encabezado)) {
-			return false;
-		}
-		Encabezado other = (Encabezado) object;
-		if ((this.idEncabezado == null && other.idEncabezado != null)
-				|| (this.idEncabezado != null && !this.idEncabezado.equals(other.idEncabezado))) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Encabezado)) {
+            return false;
+        }
+        Encabezado other = (Encabezado) object;
+        if ((this.idEncabezado == null && other.idEncabezado != null) || (this.idEncabezado != null && !this.idEncabezado.equals(other.idEncabezado))) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "javaapplication1.Encabezado[ idEncabezado=" + idEncabezado + " ]";
-	}
-
+    @Override
+    public String toString() {
+        return "com.cempresariales.servicio.commons.model.entity.Encabezado[ idEncabezado=" + idEncabezado + " ]";
+    }
+    
 }

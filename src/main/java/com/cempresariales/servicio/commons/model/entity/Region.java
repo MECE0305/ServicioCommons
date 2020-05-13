@@ -8,25 +8,21 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -52,18 +48,14 @@ public class Region implements Serializable {
     @Column(name = "activo_region")
     private Boolean activoRegion;
     @Column(name = "crea_region")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date creaRegion;
     @Column(name = "nombre_region")
     private String nombreRegion;
-    @JoinTable(name = "region_has_zona", joinColumns = {
-        @JoinColumn(name = "region_id_region", referencedColumnName = "id_region")}, inverseJoinColumns = {
-        @JoinColumn(name = "zona_id_zona", referencedColumnName = "id_zona")})
-    @ManyToMany
-    private List<Zona> zonaList;
-    @ManyToMany(mappedBy = "regionList")
-    @JsonBackReference
-    private List<Empresa> empresaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "region")
+    private List<RegionHasZona> regionHasZonaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "region")
+    private List<EmpresaHasRegion> empresaHasRegionList;
 
     public Region() {
     }
@@ -105,21 +97,21 @@ public class Region implements Serializable {
     }
 
     @XmlTransient
-    public List<Zona> getZonaList() {
-        return zonaList;
+    public List<RegionHasZona> getRegionHasZonaList() {
+        return regionHasZonaList;
     }
 
-    public void setZonaList(List<Zona> zonaList) {
-        this.zonaList = zonaList;
+    public void setRegionHasZonaList(List<RegionHasZona> regionHasZonaList) {
+        this.regionHasZonaList = regionHasZonaList;
     }
 
     @XmlTransient
-    public List<Empresa> getEmpresaList() {
-        return empresaList;
+    public List<EmpresaHasRegion> getEmpresaHasRegionList() {
+        return empresaHasRegionList;
     }
 
-    public void setEmpresaList(List<Empresa> empresaList) {
-        this.empresaList = empresaList;
+    public void setEmpresaHasRegionList(List<EmpresaHasRegion> empresaHasRegionList) {
+        this.empresaHasRegionList = empresaHasRegionList;
     }
 
     @Override
@@ -144,7 +136,7 @@ public class Region implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Region[ idRegion=" + idRegion + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Region[ idRegion=" + idRegion + " ]";
     }
-
+    
 }

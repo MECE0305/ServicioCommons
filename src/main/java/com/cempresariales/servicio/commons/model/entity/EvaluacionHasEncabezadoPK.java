@@ -74,7 +74,7 @@ public class EvaluacionHasEncabezadoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.EvaluacionHasEncabezadoPK[ evaluacionIdEvaluacion=" + evaluacionIdEvaluacion + ", encabezadoIdEncabezado=" + encabezadoIdEncabezado + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.EvaluacionHasEncabezadoPK[ evaluacionIdEvaluacion=" + evaluacionIdEvaluacion + ", encabezadoIdEncabezado=" + encabezadoIdEncabezado + " ]";
     }
     
 }

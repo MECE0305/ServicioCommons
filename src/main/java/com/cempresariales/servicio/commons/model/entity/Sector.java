@@ -8,7 +8,6 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,10 +49,10 @@ public class Sector implements Serializable {
     @Column(name = "id_sector")
     private Long idSector;
     @Column(name = "actualiza_sector")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date actualizaSector;
     @Column(name = "crea_sector")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date creaSector;
     @Column(name = "descripcion_sector")
     private String descripcionSector;
@@ -141,7 +140,7 @@ public class Sector implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Sector[ idSector=" + idSector + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Sector[ idSector=" + idSector + " ]";
     }
-
+    
 }

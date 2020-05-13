@@ -41,15 +41,13 @@ public class Checklist implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_checklist")
     private Long idChecklist;
-    @Column(name = "activo_checklist")
-    private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
     private List<ChecklistHasEvaluacion> checklistHasEvaluacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
+    private List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList;
     @JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
     @ManyToOne(optional = false)
     private Rol rolIdRol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
-    private List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList;
 
     public Checklist() {
     }
@@ -64,31 +62,15 @@ public class Checklist implements Serializable {
 
     public void setIdChecklist(Long idChecklist) {
         this.idChecklist = idChecklist;
-    }    
+    }
 
-    public Boolean getActivo() {
-		return activo;
-	}
-
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
-
-	@XmlTransient
+    @XmlTransient
     public List<ChecklistHasEvaluacion> getChecklistHasEvaluacionList() {
         return checklistHasEvaluacionList;
     }
 
     public void setChecklistHasEvaluacionList(List<ChecklistHasEvaluacion> checklistHasEvaluacionList) {
         this.checklistHasEvaluacionList = checklistHasEvaluacionList;
-    }
-
-    public Rol getRolIdRol() {
-        return rolIdRol;
-    }
-
-    public void setRolIdRol(Rol rolIdRol) {
-        this.rolIdRol = rolIdRol;
     }
 
     @XmlTransient
@@ -98,6 +80,14 @@ public class Checklist implements Serializable {
 
     public void setChecklistHasPesoHasPreguntaList(List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList) {
         this.checklistHasPesoHasPreguntaList = checklistHasPesoHasPreguntaList;
+    }
+
+    public Rol getRolIdRol() {
+        return rolIdRol;
+    }
+
+    public void setRolIdRol(Rol rolIdRol) {
+        this.rolIdRol = rolIdRol;
     }
 
     @Override

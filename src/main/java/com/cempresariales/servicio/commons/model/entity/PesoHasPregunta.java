@@ -8,6 +8,7 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -19,8 +20,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  *
  * @author ADM-DGIP
@@ -31,22 +30,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "PesoHasPregunta.findAll", query = "SELECT p FROM PesoHasPregunta p")
     , @NamedQuery(name = "PesoHasPregunta.findByPesoIdPeso", query = "SELECT p FROM PesoHasPregunta p WHERE p.pesoHasPreguntaPK.pesoIdPeso = :pesoIdPeso")
-    , @NamedQuery(name = "PesoHasPregunta.findByPreguntaIdPregunta", query = "SELECT p FROM PesoHasPregunta p WHERE p.pesoHasPreguntaPK.preguntaIdPregunta = :preguntaIdPregunta")})
+    , @NamedQuery(name = "PesoHasPregunta.findByPreguntaIdPregunta", query = "SELECT p FROM PesoHasPregunta p WHERE p.pesoHasPreguntaPK.preguntaIdPregunta = :preguntaIdPregunta")
+    , @NamedQuery(name = "PesoHasPregunta.findByActivo", query = "SELECT p FROM PesoHasPregunta p WHERE p.activo = :activo")})
 public class PesoHasPregunta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected PesoHasPreguntaPK pesoHasPreguntaPK;
+    @Column(name = "activo")
+    private Short activo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pesoHasPregunta")
+    private List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList;
     @JoinColumn(name = "peso_id_peso", referencedColumnName = "id_peso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Peso peso;
     @JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Pregunta pregunta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pesoHasPregunta")
-    private List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList;
 
     public PesoHasPregunta() {
     }
@@ -67,6 +67,23 @@ public class PesoHasPregunta implements Serializable {
         this.pesoHasPreguntaPK = pesoHasPreguntaPK;
     }
 
+    public Short getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Short activo) {
+        this.activo = activo;
+    }
+
+    @XmlTransient
+    public List<ChecklistHasPesoHasPregunta> getChecklistHasPesoHasPreguntaList() {
+        return checklistHasPesoHasPreguntaList;
+    }
+
+    public void setChecklistHasPesoHasPreguntaList(List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList) {
+        this.checklistHasPesoHasPreguntaList = checklistHasPesoHasPreguntaList;
+    }
+
     public Peso getPeso() {
         return peso;
     }
@@ -81,15 +98,6 @@ public class PesoHasPregunta implements Serializable {
 
     public void setPregunta(Pregunta pregunta) {
         this.pregunta = pregunta;
-    }
-
-    @XmlTransient
-    public List<ChecklistHasPesoHasPregunta> getChecklistHasPesoHasPreguntaList() {
-        return checklistHasPesoHasPreguntaList;
-    }
-
-    public void setChecklistHasPesoHasPreguntaList(List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList) {
-        this.checklistHasPesoHasPreguntaList = checklistHasPesoHasPreguntaList;
     }
 
     @Override

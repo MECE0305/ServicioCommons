@@ -8,12 +8,10 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -60,14 +58,14 @@ public class Cliente implements Serializable {
     @Column(name = "activo_cliente")
     private Boolean activoCliente;
     @Column(name = "actualiza_cliente")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date actualizaCliente;
     @Column(name = "ceo_cliente")
     private String ceoCliente;
     @Column(name = "ci_cliente")
     private String ciCliente;
     @Column(name = "crea_cliente")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date creaCliente;
     @Column(name = "direccion_cliente")
     private String direccionCliente;
@@ -81,7 +79,7 @@ public class Cliente implements Serializable {
     private String telefonoCliente;
     @Column(name = "url_cliente")
     private String urlCliente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteIdCliente",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteIdCliente")
     @JsonBackReference
     private List<Empresa> empresaList;
 
@@ -219,7 +217,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Cliente[ idCliente=" + idCliente + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Cliente[ idCliente=" + idCliente + " ]";
     }
     
 }

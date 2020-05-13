@@ -7,7 +7,6 @@ package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,8 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -55,10 +52,10 @@ public class Promedio implements Serializable {
     @Column(name = "evaluacion_promedio")
     private Float evaluacionPromedio;
     @Column(name = "fecha_final_promedio")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fechaFinalPromedio;
     @Column(name = "fecha_inicial_promedio")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fechaInicialPromedio;
     @Column(name = "id_evaluacion_promedio")
     private Integer idEvaluacionPromedio;
@@ -66,7 +63,6 @@ public class Promedio implements Serializable {
     private Float preguntaPromedio;
     @JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")
     @ManyToOne(optional = false)
-    @JsonBackReference
     private Empresa empresaIdEmpresa;
 
     public Promedio() {
@@ -162,7 +158,7 @@ public class Promedio implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Promedio[ idPromedio=" + idPromedio + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Promedio[ idPromedio=" + idPromedio + " ]";
     }
-
+    
 }

@@ -8,25 +8,21 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -52,18 +48,14 @@ public class Zona implements Serializable {
     @Column(name = "activo_zona")
     private Boolean activoZona;
     @Column(name = "crea_zona")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date creaZona;
     @Column(name = "nombre_zona")
     private String nombreZona;
-    @JoinTable(name = "zona_has_provincia", joinColumns = {
-        @JoinColumn(name = "zona_id_zona", referencedColumnName = "id_zona")}, inverseJoinColumns = {
-        @JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia")})
-    @ManyToMany
-    private List<Provincia> provinciaList;
-    @ManyToMany(mappedBy = "zonaList")
-    @JsonBackReference
-    private List<Region> regionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zona")
+    private List<ZonaHasProvincia> zonaHasProvinciaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zona")
+    private List<RegionHasZona> regionHasZonaList;
 
     public Zona() {
     }
@@ -105,21 +97,21 @@ public class Zona implements Serializable {
     }
 
     @XmlTransient
-    public List<Provincia> getProvinciaList() {
-        return provinciaList;
+    public List<ZonaHasProvincia> getZonaHasProvinciaList() {
+        return zonaHasProvinciaList;
     }
 
-    public void setProvinciaList(List<Provincia> provinciaList) {
-        this.provinciaList = provinciaList;
+    public void setZonaHasProvinciaList(List<ZonaHasProvincia> zonaHasProvinciaList) {
+        this.zonaHasProvinciaList = zonaHasProvinciaList;
     }
 
     @XmlTransient
-    public List<Region> getRegionList() {
-        return regionList;
+    public List<RegionHasZona> getRegionHasZonaList() {
+        return regionHasZonaList;
     }
 
-    public void setRegionList(List<Region> regionList) {
-        this.regionList = regionList;
+    public void setRegionHasZonaList(List<RegionHasZona> regionHasZonaList) {
+        this.regionHasZonaList = regionHasZonaList;
     }
 
     @Override
@@ -144,7 +136,7 @@ public class Zona implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Zona[ idZona=" + idZona + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Zona[ idZona=" + idZona + " ]";
     }
-
+    
 }
