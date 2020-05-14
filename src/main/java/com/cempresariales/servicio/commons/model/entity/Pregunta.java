@@ -65,10 +65,10 @@ public class Pregunta implements Serializable {
     @ManyToOne(optional = false)
     private Categoria categoriaIdCategoria;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaIdPregunta")
-    @JsonBackReference
     private List<Pregunta> preguntaList;
     @JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta")
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JsonBackReference
     private Pregunta preguntaIdPregunta;
 
     public Pregunta() {
