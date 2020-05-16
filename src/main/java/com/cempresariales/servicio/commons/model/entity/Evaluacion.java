@@ -35,247 +35,258 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "evaluacion")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Evaluacion.findAll", query = "SELECT e FROM Evaluacion e")
-    , @NamedQuery(name = "Evaluacion.findByIdEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.idEvaluacion = :idEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByActivoEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.activoEvaluacion = :activoEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByFechaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.fechaEvaluacion = :fechaEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByCreaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.creaEvaluacion = :creaEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByPromedioPregunta", query = "SELECT e FROM Evaluacion e WHERE e.promedioPregunta = :promedioPregunta")
-    , @NamedQuery(name = "Evaluacion.findByPromedioSeccion", query = "SELECT e FROM Evaluacion e WHERE e.promedioSeccion = :promedioSeccion")
-    , @NamedQuery(name = "Evaluacion.findByPromedioTotal", query = "SELECT e FROM Evaluacion e WHERE e.promedioTotal = :promedioTotal")
-    , @NamedQuery(name = "Evaluacion.findByPuntajeEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.puntajeEvaluacion = :puntajeEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByAtencionEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.atencionEvaluacion = :atencionEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByContactoEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.contactoEvaluacion = :contactoEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByEsperaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.esperaEvaluacion = :esperaEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByHoraFinEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.horaFinEvaluacion = :horaFinEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByHoraInicioEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.horaInicioEvaluacion = :horaInicioEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByVideoEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.videoEvaluacion = :videoEvaluacion")
-    , @NamedQuery(name = "Evaluacion.findByObservacionEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.observacionEvaluacion = :observacionEvaluacion")})
+@NamedQueries({ @NamedQuery(name = "Evaluacion.findAll", query = "SELECT e FROM Evaluacion e"),
+		@NamedQuery(name = "Evaluacion.findByIdEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.idEvaluacion = :idEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByActivoEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.activoEvaluacion = :activoEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByFechaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.fechaEvaluacion = :fechaEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByCreaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.creaEvaluacion = :creaEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByPromedioPregunta", query = "SELECT e FROM Evaluacion e WHERE e.promedioPregunta = :promedioPregunta"),
+		@NamedQuery(name = "Evaluacion.findByPromedioSeccion", query = "SELECT e FROM Evaluacion e WHERE e.promedioSeccion = :promedioSeccion"),
+		@NamedQuery(name = "Evaluacion.findByPromedioTotal", query = "SELECT e FROM Evaluacion e WHERE e.promedioTotal = :promedioTotal"),
+		@NamedQuery(name = "Evaluacion.findByPuntajeEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.puntajeEvaluacion = :puntajeEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByAtencionEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.atencionEvaluacion = :atencionEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByContactoEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.contactoEvaluacion = :contactoEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByEsperaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.esperaEvaluacion = :esperaEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByHoraFinEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.horaFinEvaluacion = :horaFinEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByHoraInicioEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.horaInicioEvaluacion = :horaInicioEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByVideoEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.videoEvaluacion = :videoEvaluacion"),
+		@NamedQuery(name = "Evaluacion.findByObservacionEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.observacionEvaluacion = :observacionEvaluacion") })
 public class Evaluacion implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id_evaluacion")
-    private Long idEvaluacion;
-    @Column(name = "activo_evaluacion")
-    private Boolean activoEvaluacion;
-    @Column(name = "fecha_evaluacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaEvaluacion;
-    @Column(name = "crea_evaluacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creaEvaluacion;
-    @Column(name = "promedio_pregunta")
-    private String promedioPregunta;
-    @Column(name = "promedio_seccion")
-    private String promedioSeccion;
-    @Column(name = "promedio_total")
-    private String promedioTotal;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "puntaje_evaluacion")
-    private Float puntajeEvaluacion;
-    @Column(name = "atencion_evaluacion")
-    private Integer atencionEvaluacion;
-    @Column(name = "contacto_evaluacion")
-    private Integer contactoEvaluacion;
-    @Column(name = "espera_evaluacion")
-    private Integer esperaEvaluacion;
-    @Column(name = "hora_fin_evaluacion")
-    private Integer horaFinEvaluacion;
-    @Column(name = "hora_inicio_evaluacion")
-    private Integer horaInicioEvaluacion;
-    @Column(name = "video_evaluacion")
-    private String videoEvaluacion;
-    @Column(name = "observacion_evaluacion")
-    private String observacionEvaluacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluacion")
-    private List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluacion")
-    @JsonBackReference
-    private List<ChecklistHasEvaluacion> checklistHasEvaluacionList;
-    @JoinColumn(name = "estado_evaluacion_id_estado", referencedColumnName = "id_estado")
-    @ManyToOne
-    private EstadoEvaluacion estadoEvaluacionIdEstado;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id_evaluacion")
+	private Long idEvaluacion;
+	@Column(name = "activo_evaluacion")
+	private Boolean activoEvaluacion;
+	@Column(name = "fecha_evaluacion")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaEvaluacion;
+	@Column(name = "crea_evaluacion")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creaEvaluacion;
+	@Column(name = "promedio_pregunta")
+	private String promedioPregunta;
+	@Column(name = "promedio_seccion")
+	private String promedioSeccion;
+	@Column(name = "promedio_total")
+	private String promedioTotal;
+	// @Max(value=?) @Min(value=?)//if you know range of your decimal fields
+	// consider using these annotations to enforce field validation
+	@Column(name = "puntaje_evaluacion")
+	private Float puntajeEvaluacion;
+	@Column(name = "atencion_evaluacion")
+	private Integer atencionEvaluacion;
+	@Column(name = "contacto_evaluacion")
+	private Integer contactoEvaluacion;
+	@Column(name = "espera_evaluacion")
+	private Integer esperaEvaluacion;
+	@Column(name = "hora_fin_evaluacion")
+	private Integer horaFinEvaluacion;
+	@Column(name = "hora_inicio_evaluacion")
+	private Integer horaInicioEvaluacion;
+	@Column(name = "video_evaluacion")
+	private String videoEvaluacion;
+	@Column(name = "observacion_evaluacion")
+	private String observacionEvaluacion;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluacion")
+	private List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluacion")
+	@JsonBackReference
+	private List<ChecklistHasEvaluacion> checklistHasEvaluacionList;
+	@JoinColumn(name = "estado_evaluacion_id_estado", referencedColumnName = "id_estado")
+	@ManyToOne
+	private EstadoEvaluacion estadoEvaluacionIdEstado;
+	@Column(name = "id_empleado")
+	private Long idEmpleado;
 
-    public Evaluacion() {
-    }
+	public Evaluacion() {
+	}
 
-    public Evaluacion(Long idEvaluacion) {
-        this.idEvaluacion = idEvaluacion;
-    }
+	public Evaluacion(Long idEvaluacion) {
+		this.idEvaluacion = idEvaluacion;
+	}
 
-    public Long getIdEvaluacion() {
-        return idEvaluacion;
-    }
+	public Long getIdEmpleado() {
+		return idEmpleado;
+	}
 
-    public void setIdEvaluacion(Long idEvaluacion) {
-        this.idEvaluacion = idEvaluacion;
-    }
+	public void setIdEmpleado(Long idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
 
-    public Boolean getActivoEvaluacion() {
-        return activoEvaluacion;
-    }
+	public Long getIdEvaluacion() {
+		return idEvaluacion;
+	}
 
-    public void setActivoEvaluacion(Boolean activoEvaluacion) {
-        this.activoEvaluacion = activoEvaluacion;
-    }
+	public void setIdEvaluacion(Long idEvaluacion) {
+		this.idEvaluacion = idEvaluacion;
+	}
 
-    public Date getFechaEvaluacion() {
-        return fechaEvaluacion;
-    }
+	public Boolean getActivoEvaluacion() {
+		return activoEvaluacion;
+	}
 
-    public void setFechaEvaluacion(Date fechaEvaluacion) {
-        this.fechaEvaluacion = fechaEvaluacion;
-    }
+	public void setActivoEvaluacion(Boolean activoEvaluacion) {
+		this.activoEvaluacion = activoEvaluacion;
+	}
 
-    public Date getCreaEvaluacion() {
-        return creaEvaluacion;
-    }
+	public Date getFechaEvaluacion() {
+		return fechaEvaluacion;
+	}
 
-    public void setCreaEvaluacion(Date creaEvaluacion) {
-        this.creaEvaluacion = creaEvaluacion;
-    }
+	public void setFechaEvaluacion(Date fechaEvaluacion) {
+		this.fechaEvaluacion = fechaEvaluacion;
+	}
 
-    public String getPromedioPregunta() {
-        return promedioPregunta;
-    }
+	public Date getCreaEvaluacion() {
+		return creaEvaluacion;
+	}
 
-    public void setPromedioPregunta(String promedioPregunta) {
-        this.promedioPregunta = promedioPregunta;
-    }
+	public void setCreaEvaluacion(Date creaEvaluacion) {
+		this.creaEvaluacion = creaEvaluacion;
+	}
 
-    public String getPromedioSeccion() {
-        return promedioSeccion;
-    }
+	public String getPromedioPregunta() {
+		return promedioPregunta;
+	}
 
-    public void setPromedioSeccion(String promedioSeccion) {
-        this.promedioSeccion = promedioSeccion;
-    }
+	public void setPromedioPregunta(String promedioPregunta) {
+		this.promedioPregunta = promedioPregunta;
+	}
 
-    public String getPromedioTotal() {
-        return promedioTotal;
-    }
+	public String getPromedioSeccion() {
+		return promedioSeccion;
+	}
 
-    public void setPromedioTotal(String promedioTotal) {
-        this.promedioTotal = promedioTotal;
-    }
+	public void setPromedioSeccion(String promedioSeccion) {
+		this.promedioSeccion = promedioSeccion;
+	}
 
-    public Float getPuntajeEvaluacion() {
-        return puntajeEvaluacion;
-    }
+	public String getPromedioTotal() {
+		return promedioTotal;
+	}
 
-    public void setPuntajeEvaluacion(Float puntajeEvaluacion) {
-        this.puntajeEvaluacion = puntajeEvaluacion;
-    }
+	public void setPromedioTotal(String promedioTotal) {
+		this.promedioTotal = promedioTotal;
+	}
 
-    public Integer getAtencionEvaluacion() {
-        return atencionEvaluacion;
-    }
+	public Float getPuntajeEvaluacion() {
+		return puntajeEvaluacion;
+	}
 
-    public void setAtencionEvaluacion(Integer atencionEvaluacion) {
-        this.atencionEvaluacion = atencionEvaluacion;
-    }
+	public void setPuntajeEvaluacion(Float puntajeEvaluacion) {
+		this.puntajeEvaluacion = puntajeEvaluacion;
+	}
 
-    public Integer getContactoEvaluacion() {
-        return contactoEvaluacion;
-    }
+	public Integer getAtencionEvaluacion() {
+		return atencionEvaluacion;
+	}
 
-    public void setContactoEvaluacion(Integer contactoEvaluacion) {
-        this.contactoEvaluacion = contactoEvaluacion;
-    }
+	public void setAtencionEvaluacion(Integer atencionEvaluacion) {
+		this.atencionEvaluacion = atencionEvaluacion;
+	}
 
-    public Integer getEsperaEvaluacion() {
-        return esperaEvaluacion;
-    }
+	public Integer getContactoEvaluacion() {
+		return contactoEvaluacion;
+	}
 
-    public void setEsperaEvaluacion(Integer esperaEvaluacion) {
-        this.esperaEvaluacion = esperaEvaluacion;
-    }
+	public void setContactoEvaluacion(Integer contactoEvaluacion) {
+		this.contactoEvaluacion = contactoEvaluacion;
+	}
 
-    public Integer getHoraFinEvaluacion() {
-        return horaFinEvaluacion;
-    }
+	public Integer getEsperaEvaluacion() {
+		return esperaEvaluacion;
+	}
 
-    public void setHoraFinEvaluacion(Integer horaFinEvaluacion) {
-        this.horaFinEvaluacion = horaFinEvaluacion;
-    }
+	public void setEsperaEvaluacion(Integer esperaEvaluacion) {
+		this.esperaEvaluacion = esperaEvaluacion;
+	}
 
-    public Integer getHoraInicioEvaluacion() {
-        return horaInicioEvaluacion;
-    }
+	public Integer getHoraFinEvaluacion() {
+		return horaFinEvaluacion;
+	}
 
-    public void setHoraInicioEvaluacion(Integer horaInicioEvaluacion) {
-        this.horaInicioEvaluacion = horaInicioEvaluacion;
-    }
+	public void setHoraFinEvaluacion(Integer horaFinEvaluacion) {
+		this.horaFinEvaluacion = horaFinEvaluacion;
+	}
 
-    public String getVideoEvaluacion() {
-        return videoEvaluacion;
-    }
+	public Integer getHoraInicioEvaluacion() {
+		return horaInicioEvaluacion;
+	}
 
-    public void setVideoEvaluacion(String videoEvaluacion) {
-        this.videoEvaluacion = videoEvaluacion;
-    }
+	public void setHoraInicioEvaluacion(Integer horaInicioEvaluacion) {
+		this.horaInicioEvaluacion = horaInicioEvaluacion;
+	}
 
-    public String getObservacionEvaluacion() {
-        return observacionEvaluacion;
-    }
+	public String getVideoEvaluacion() {
+		return videoEvaluacion;
+	}
 
-    public void setObservacionEvaluacion(String observacionEvaluacion) {
-        this.observacionEvaluacion = observacionEvaluacion;
-    }
+	public void setVideoEvaluacion(String videoEvaluacion) {
+		this.videoEvaluacion = videoEvaluacion;
+	}
 
-    @XmlTransient
-    public List<EvaluacionHasEncabezado> getEvaluacionHasEncabezadoList() {
-        return evaluacionHasEncabezadoList;
-    }
+	public String getObservacionEvaluacion() {
+		return observacionEvaluacion;
+	}
 
-    public void setEvaluacionHasEncabezadoList(List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList) {
-        this.evaluacionHasEncabezadoList = evaluacionHasEncabezadoList;
-    }
+	public void setObservacionEvaluacion(String observacionEvaluacion) {
+		this.observacionEvaluacion = observacionEvaluacion;
+	}
 
-    @XmlTransient
-    public List<ChecklistHasEvaluacion> getChecklistHasEvaluacionList() {
-        return checklistHasEvaluacionList;
-    }
+	@XmlTransient
+	public List<EvaluacionHasEncabezado> getEvaluacionHasEncabezadoList() {
+		return evaluacionHasEncabezadoList;
+	}
 
-    public void setChecklistHasEvaluacionList(List<ChecklistHasEvaluacion> checklistHasEvaluacionList) {
-        this.checklistHasEvaluacionList = checklistHasEvaluacionList;
-    }
+	public void setEvaluacionHasEncabezadoList(List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList) {
+		this.evaluacionHasEncabezadoList = evaluacionHasEncabezadoList;
+	}
 
-    public EstadoEvaluacion getEstadoEvaluacionIdEstado() {
-        return estadoEvaluacionIdEstado;
-    }
+	@XmlTransient
+	public List<ChecklistHasEvaluacion> getChecklistHasEvaluacionList() {
+		return checklistHasEvaluacionList;
+	}
 
-    public void setEstadoEvaluacionIdEstado(EstadoEvaluacion estadoEvaluacionIdEstado) {
-        this.estadoEvaluacionIdEstado = estadoEvaluacionIdEstado;
-    }
+	public void setChecklistHasEvaluacionList(List<ChecklistHasEvaluacion> checklistHasEvaluacionList) {
+		this.checklistHasEvaluacionList = checklistHasEvaluacionList;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idEvaluacion != null ? idEvaluacion.hashCode() : 0);
-        return hash;
-    }
+	public EstadoEvaluacion getEstadoEvaluacionIdEstado() {
+		return estadoEvaluacionIdEstado;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Evaluacion)) {
-            return false;
-        }
-        Evaluacion other = (Evaluacion) object;
-        if ((this.idEvaluacion == null && other.idEvaluacion != null) || (this.idEvaluacion != null && !this.idEvaluacion.equals(other.idEvaluacion))) {
-            return false;
-        }
-        return true;
-    }
+	public void setEstadoEvaluacionIdEstado(EstadoEvaluacion estadoEvaluacionIdEstado) {
+		this.estadoEvaluacionIdEstado = estadoEvaluacionIdEstado;
+	}
 
-    @Override
-    public String toString() {
-        return "com.cempresariales.servicio.commons.model.entity.Evaluacion[ idEvaluacion=" + idEvaluacion + " ]";
-    }
-    
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (idEvaluacion != null ? idEvaluacion.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Evaluacion)) {
+			return false;
+		}
+		Evaluacion other = (Evaluacion) object;
+		if ((this.idEvaluacion == null && other.idEvaluacion != null)
+				|| (this.idEvaluacion != null && !this.idEvaluacion.equals(other.idEvaluacion))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "com.cempresariales.servicio.commons.model.entity.Evaluacion[ idEvaluacion=" + idEvaluacion + " ]";
+	}
+
 }

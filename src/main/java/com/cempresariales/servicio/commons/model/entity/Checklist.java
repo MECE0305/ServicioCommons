@@ -6,6 +6,7 @@
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -41,6 +44,13 @@ public class Checklist implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_checklist")
     private Long idChecklist;
+    @Column(name = "nombre_checklist")
+    private String nombreChecklist;
+    @Column(name = "crea_checklist")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creaChecklist;
+    @Column(name = "activo_checklist")
+    private Boolean activoChecklist;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
     private List<ChecklistHasEvaluacion> checklistHasEvaluacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
@@ -55,8 +65,35 @@ public class Checklist implements Serializable {
     public Checklist(Long idChecklist) {
         this.idChecklist = idChecklist;
     }
+    
+    
+    
 
-    public Long getIdChecklist() {
+    public String getNombreChecklist() {
+		return nombreChecklist;
+	}
+
+	public void setNombreChecklist(String nombreChecklist) {
+		this.nombreChecklist = nombreChecklist;
+	}
+
+	public Date getCreaChecklist() {
+		return creaChecklist;
+	}
+
+	public void setCreaChecklist(Date creaChecklist) {
+		this.creaChecklist = creaChecklist;
+	}
+
+	public Boolean getActivoChecklist() {
+		return activoChecklist;
+	}
+
+	public void setActivoChecklist(Boolean activoChecklist) {
+		this.activoChecklist = activoChecklist;
+	}
+
+	public Long getIdChecklist() {
         return idChecklist;
     }
 
