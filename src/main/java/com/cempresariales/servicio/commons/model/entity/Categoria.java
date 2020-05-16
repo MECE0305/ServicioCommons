@@ -8,6 +8,7 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -55,8 +58,14 @@ public class Categoria implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creaCategoria;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
-    @JsonBackReference
     private List<Pregunta> preguntaList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
+    private List<Categoria> categoriaList;
+    @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
+    @ManyToOne
+    @JsonBackReference
+    private Categoria categoriaIdCategoria;
 
     public Categoria() {
     }
@@ -104,9 +113,26 @@ public class Categoria implements Serializable {
 
     public void setPreguntaList(List<Pregunta> preguntaList) {
         this.preguntaList = preguntaList;
-    }
+    }    
 
-    @Override
+    @XmlTransient
+    public List<Categoria> getCategoriaList() {
+		return categoriaList;
+	}
+
+	public void setCategoriaList(List<Categoria> categoriaList) {
+		this.categoriaList = categoriaList;
+	}
+
+	public Categoria getCategoriaIdCategoria() {
+		return categoriaIdCategoria;
+	}
+
+	public void setCategoriaIdCategoria(Categoria categoriaIdCategoria) {
+		this.categoriaIdCategoria = categoriaIdCategoria;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idCategoria != null ? idCategoria.hashCode() : 0);
