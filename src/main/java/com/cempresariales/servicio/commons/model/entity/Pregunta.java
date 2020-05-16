@@ -63,6 +63,7 @@ public class Pregunta implements Serializable {
     private List<PesoHasPregunta> pesoHasPreguntaList;
     @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Categoria categoriaIdCategoria;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaIdPregunta")
     private List<Pregunta> preguntaList;

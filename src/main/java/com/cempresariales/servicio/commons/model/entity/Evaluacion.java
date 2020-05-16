@@ -101,6 +101,8 @@ public class Evaluacion implements Serializable {
 	private EstadoEvaluacion estadoEvaluacionIdEstado;
 	@Column(name = "id_empleado")
 	private Long idEmpleado;
+	@Column(name = "id_evaluacion_historial")
+	private Long idEvaluacionHistorial;
 
 	public Evaluacion() {
 	}
@@ -123,6 +125,14 @@ public class Evaluacion implements Serializable {
 
 	public void setIdEvaluacion(Long idEvaluacion) {
 		this.idEvaluacion = idEvaluacion;
+	}
+	
+	public Long getIdEvaluacionHistorial() {
+		return idEvaluacionHistorial;
+	}
+
+	public void setIdEvaluacionHistorial(Long idEvaluacionHistorial) {
+		this.idEvaluacionHistorial = idEvaluacionHistorial;
 	}
 
 	public Boolean getActivoEvaluacion() {

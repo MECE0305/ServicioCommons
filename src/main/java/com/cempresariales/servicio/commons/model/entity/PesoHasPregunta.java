@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  *
  * @author ADM-DGIP
@@ -46,6 +48,7 @@ public class PesoHasPregunta implements Serializable {
     private Peso peso;
     @JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Pregunta pregunta;
 
     public PesoHasPregunta() {
