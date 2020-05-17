@@ -35,113 +35,124 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "agencia")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Agencia.findAll", query = "SELECT a FROM Agencia a")
-    , @NamedQuery(name = "Agencia.findByIdAgencia", query = "SELECT a FROM Agencia a WHERE a.idAgencia = :idAgencia")
-    , @NamedQuery(name = "Agencia.findByActivoAgencia", query = "SELECT a FROM Agencia a WHERE a.activoAgencia = :activoAgencia")
-    , @NamedQuery(name = "Agencia.findByCreaAgencia", query = "SELECT a FROM Agencia a WHERE a.creaAgencia = :creaAgencia")
-    , @NamedQuery(name = "Agencia.findByNombreAgencia", query = "SELECT a FROM Agencia a WHERE a.nombreAgencia = :nombreAgencia")})
+@NamedQueries({ @NamedQuery(name = "Agencia.findAll", query = "SELECT a FROM Agencia a"),
+		@NamedQuery(name = "Agencia.findByIdAgencia", query = "SELECT a FROM Agencia a WHERE a.idAgencia = :idAgencia"),
+		@NamedQuery(name = "Agencia.findByActivoAgencia", query = "SELECT a FROM Agencia a WHERE a.activoAgencia = :activoAgencia"),
+		@NamedQuery(name = "Agencia.findByCreaAgencia", query = "SELECT a FROM Agencia a WHERE a.creaAgencia = :creaAgencia"),
+		@NamedQuery(name = "Agencia.findByNombreAgencia", query = "SELECT a FROM Agencia a WHERE a.nombreAgencia = :nombreAgencia") })
 public class Agencia implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id_agencia")
-    private Long idAgencia;
-    @Column(name = "activo_agencia")
-    private Boolean activoAgencia;
-    @Column(name = "crea_agencia")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creaAgencia;
-    @Column(name = "nombre_agencia")
-    private String nombreAgencia;
-    @JoinColumn(name = "ciudad_id_ciudad", referencedColumnName = "id_ciudad")
-    @ManyToOne(optional = false)
-    private Ciudad ciudadIdCiudad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "agenciaIdAgencia")
-    @JsonBackReference
-    private List<Empleado> empleadoList;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id_agencia")
+	private Long idAgencia;
+	@Column(name = "activo_agencia")
+	private Boolean activoAgencia;
+	@Column(name = "crea_agencia")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creaAgencia;
+	@Column(name = "nombre_agencia")
+	private String nombreAgencia;
+	@JoinColumn(name = "ciudad_id_ciudad", referencedColumnName = "id_ciudad")
+	@ManyToOne(optional = false)
+	private Ciudad ciudadIdCiudad;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agenciaIdAgencia")
+	@JsonBackReference
+	private List<Empleado> empleadoList;
+	@JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")
+	@ManyToOne(optional = false)
+	private Empresa empresaIdEmpresa;
 
-    public Agencia() {
-    }
+	public Agencia() {
+	}
 
-    public Agencia(Long idAgencia) {
-        this.idAgencia = idAgencia;
-    }
+	public Agencia(Long idAgencia) {
+		this.idAgencia = idAgencia;
+	}
 
-    public Long getIdAgencia() {
-        return idAgencia;
-    }
+	public Empresa getEmpresaIdEmpresa() {
+		return empresaIdEmpresa;
+	}
 
-    public void setIdAgencia(Long idAgencia) {
-        this.idAgencia = idAgencia;
-    }
+	public void setEmpresaIdEmpresa(Empresa empresaIdEmpresa) {
+		this.empresaIdEmpresa = empresaIdEmpresa;
+	}
 
-    public Boolean getActivoAgencia() {
-        return activoAgencia;
-    }
+	public Long getIdAgencia() {
+		return idAgencia;
+	}
 
-    public void setActivoAgencia(Boolean activoAgencia) {
-        this.activoAgencia = activoAgencia;
-    }
+	public void setIdAgencia(Long idAgencia) {
+		this.idAgencia = idAgencia;
+	}
 
-    public Date getCreaAgencia() {
-        return creaAgencia;
-    }
+	public Boolean getActivoAgencia() {
+		return activoAgencia;
+	}
 
-    public void setCreaAgencia(Date creaAgencia) {
-        this.creaAgencia = creaAgencia;
-    }
+	public void setActivoAgencia(Boolean activoAgencia) {
+		this.activoAgencia = activoAgencia;
+	}
 
-    public String getNombreAgencia() {
-        return nombreAgencia;
-    }
+	public Date getCreaAgencia() {
+		return creaAgencia;
+	}
 
-    public void setNombreAgencia(String nombreAgencia) {
-        this.nombreAgencia = nombreAgencia;
-    }
+	public void setCreaAgencia(Date creaAgencia) {
+		this.creaAgencia = creaAgencia;
+	}
 
-    public Ciudad getCiudadIdCiudad() {
-        return ciudadIdCiudad;
-    }
+	public String getNombreAgencia() {
+		return nombreAgencia;
+	}
 
-    public void setCiudadIdCiudad(Ciudad ciudadIdCiudad) {
-        this.ciudadIdCiudad = ciudadIdCiudad;
-    }
+	public void setNombreAgencia(String nombreAgencia) {
+		this.nombreAgencia = nombreAgencia;
+	}
 
-    @XmlTransient
-    public List<Empleado> getEmpleadoList() {
-        return empleadoList;
-    }
+	public Ciudad getCiudadIdCiudad() {
+		return ciudadIdCiudad;
+	}
 
-    public void setEmpleadoList(List<Empleado> empleadoList) {
-        this.empleadoList = empleadoList;
-    }
+	public void setCiudadIdCiudad(Ciudad ciudadIdCiudad) {
+		this.ciudadIdCiudad = ciudadIdCiudad;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idAgencia != null ? idAgencia.hashCode() : 0);
-        return hash;
-    }
+	@XmlTransient
+	public List<Empleado> getEmpleadoList() {
+		return empleadoList;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Agencia)) {
-            return false;
-        }
-        Agencia other = (Agencia) object;
-        if ((this.idAgencia == null && other.idAgencia != null) || (this.idAgencia != null && !this.idAgencia.equals(other.idAgencia))) {
-            return false;
-        }
-        return true;
-    }
+	public void setEmpleadoList(List<Empleado> empleadoList) {
+		this.empleadoList = empleadoList;
+	}
 
-    @Override
-    public String toString() {
-        return "com.cempresariales.servicio.commons.model.entity.Agencia[ idAgencia=" + idAgencia + " ]";
-    }
-    
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (idAgencia != null ? idAgencia.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Agencia)) {
+			return false;
+		}
+		Agencia other = (Agencia) object;
+		if ((this.idAgencia == null && other.idAgencia != null)
+				|| (this.idAgencia != null && !this.idAgencia.equals(other.idAgencia))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "com.cempresariales.servicio.commons.model.entity.Agencia[ idAgencia=" + idAgencia + " ]";
+	}
+
 }

@@ -54,8 +54,7 @@ public class Region implements Serializable {
     private String nombreRegion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "region")
     private List<RegionHasZona> regionHasZonaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "region")
-    private List<EmpresaHasRegion> empresaHasRegionList;
+   
 
     public Region() {
     }
@@ -105,14 +104,7 @@ public class Region implements Serializable {
         this.regionHasZonaList = regionHasZonaList;
     }
 
-    @XmlTransient
-    public List<EmpresaHasRegion> getEmpresaHasRegionList() {
-        return empresaHasRegionList;
-    }
-
-    public void setEmpresaHasRegionList(List<EmpresaHasRegion> empresaHasRegionList) {
-        this.empresaHasRegionList = empresaHasRegionList;
-    }
+  
 
     @Override
     public int hashCode() {
