@@ -49,7 +49,7 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_categoria")
-    private Integer idCategoria;
+    private Long idCategoria;
     @Column(name = "nombre_categoria")
     private String nombreCategoria;
     @Column(name = "activo_categoria")
@@ -70,15 +70,15 @@ public class Categoria implements Serializable {
     public Categoria() {
     }
 
-    public Categoria(Integer idCategoria) {
+    public Categoria(Long idCategoria) {
         this.idCategoria = idCategoria;
     }
 
-    public Integer getIdCategoria() {
+    public Long getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(Integer idCategoria) {
+    public void setIdCategoria(Long idCategoria) {
         this.idCategoria = idCategoria;
     }
 

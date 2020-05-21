@@ -55,6 +55,14 @@ public class Agencia implements Serializable {
 	private Date creaAgencia;
 	@Column(name = "nombre_agencia")
 	private String nombreAgencia;
+	@Column(name = "direccion_agencia")
+	private String direccionAgencia;
+	@Column(name = "email_agencia")
+	private String emailAgencia;
+	@Column(name = "telefono_agencia")
+	private String telefonoAgencia;
+	@Column(name = "ceo_agencia")
+	private String ceoAgencia;
 	@JoinColumn(name = "ciudad_id_ciudad", referencedColumnName = "id_ciudad")
 	@ManyToOne(optional = false)
 	private Ciudad ciudadIdCiudad;
@@ -70,6 +78,40 @@ public class Agencia implements Serializable {
 
 	public Agencia(Long idAgencia) {
 		this.idAgencia = idAgencia;
+	}
+	
+	
+
+	public String getDireccionAgencia() {
+		return direccionAgencia;
+	}
+
+	public void setDireccionAgencia(String direccionAgencia) {
+		this.direccionAgencia = direccionAgencia;
+	}
+
+	public String getEmailAgencia() {
+		return emailAgencia;
+	}
+
+	public void setEmailAgencia(String emailAgencia) {
+		this.emailAgencia = emailAgencia;
+	}
+
+	public String getTelefonoAgencia() {
+		return telefonoAgencia;
+	}
+
+	public void setTelefonoAgencia(String telefonoAgencia) {
+		this.telefonoAgencia = telefonoAgencia;
+	}
+
+	public String getCeoAgencia() {
+		return ceoAgencia;
+	}
+
+	public void setCeoAgencia(String ceoAgencia) {
+		this.ceoAgencia = ceoAgencia;
 	}
 
 	public Empresa getEmpresaIdEmpresa() {

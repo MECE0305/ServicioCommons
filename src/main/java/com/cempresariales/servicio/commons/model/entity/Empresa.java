@@ -65,7 +65,6 @@ public class Empresa implements Serializable {
 	@Column(name = "telefono_empresa")
 	private String telefonoEmpresa;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdEmpresa")
-	@JsonBackReference
 	private List<Promedio> promedioList;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdEmpresa")
 	@JsonBackReference
