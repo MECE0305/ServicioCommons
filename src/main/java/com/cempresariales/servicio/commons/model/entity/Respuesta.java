@@ -31,9 +31,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r")
     , @NamedQuery(name = "Respuesta.findByIdRespuesta", query = "SELECT r FROM Respuesta r WHERE r.idRespuesta = :idRespuesta")
-    , @NamedQuery(name = "Respuesta.findByCumpleRespuesta", query = "SELECT r FROM Respuesta r WHERE r.cumpleRespuesta = :cumpleRespuesta")
-    , @NamedQuery(name = "Respuesta.findByIdEvaluacion", query = "SELECT r FROM Respuesta r WHERE r.idEvaluacion = :idEvaluacion")
     , @NamedQuery(name = "Respuesta.findByCategoriaIdCategoria", query = "SELECT r FROM Respuesta r WHERE r.categoriaIdCategoria = :categoriaIdCategoria")
+    , @NamedQuery(name = "Respuesta.findByCumpleRespuesta", query = "SELECT r FROM Respuesta r WHERE r.cumpleRespuesta = :cumpleRespuesta")
+    , @NamedQuery(name = "Respuesta.findByIdCatalogoPregunta", query = "SELECT r FROM Respuesta r WHERE r.idCatalogoPregunta = :idCatalogoPregunta")
     , @NamedQuery(name = "Respuesta.findByObservacionRespuesta", query = "SELECT r FROM Respuesta r WHERE r.observacionRespuesta = :observacionRespuesta")})
 public class Respuesta implements Serializable {
 
@@ -43,13 +43,13 @@ public class Respuesta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_respuesta")
     private Long idRespuesta;
-    @Column(name = "cumple_respuesta")
-    private Short cumpleRespuesta;
-    @Column(name = "id_evaluacion")
-    private BigInteger idEvaluacion;
     @Basic(optional = false)
     @Column(name = "categoria_id_categoria")
     private long categoriaIdCategoria;
+    @Column(name = "cumple_respuesta")
+    private Short cumpleRespuesta;
+    @Column(name = "id_catalogo_pregunta")
+    private BigInteger idCatalogoPregunta;
     @Column(name = "observacion_respuesta")
     private String observacionRespuesta;
     @JoinColumns({
@@ -78,6 +78,14 @@ public class Respuesta implements Serializable {
         this.idRespuesta = idRespuesta;
     }
 
+    public long getCategoriaIdCategoria() {
+        return categoriaIdCategoria;
+    }
+
+    public void setCategoriaIdCategoria(long categoriaIdCategoria) {
+        this.categoriaIdCategoria = categoriaIdCategoria;
+    }
+
     public Short getCumpleRespuesta() {
         return cumpleRespuesta;
     }
@@ -86,20 +94,12 @@ public class Respuesta implements Serializable {
         this.cumpleRespuesta = cumpleRespuesta;
     }
 
-    public BigInteger getIdEvaluacion() {
-        return idEvaluacion;
+    public BigInteger getIdCatalogoPregunta() {
+        return idCatalogoPregunta;
     }
 
-    public void setIdEvaluacion(BigInteger idEvaluacion) {
-        this.idEvaluacion = idEvaluacion;
-    }
-
-    public long getCategoriaIdCategoria() {
-        return categoriaIdCategoria;
-    }
-
-    public void setCategoriaIdCategoria(long categoriaIdCategoria) {
-        this.categoriaIdCategoria = categoriaIdCategoria;
+    public void setIdCatalogoPregunta(BigInteger idCatalogoPregunta) {
+        this.idCatalogoPregunta = idCatalogoPregunta;
     }
 
     public String getObservacionRespuesta() {

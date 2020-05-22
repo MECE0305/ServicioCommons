@@ -57,7 +57,7 @@ public class Peso implements Serializable {
     private String porcentaje;
     @Column(name = "valor")
     private String valor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pesoIdPeso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "peso")
     @JsonBackReference
     private List<CatalogoPregunta> catalogoPreguntaList;
 

@@ -21,15 +21,23 @@ public class ChecklistHasCatalogoPreguntaPK implements Serializable {
     @Column(name = "checklist_id_checklist")
     private long checklistIdChecklist;
     @Basic(optional = false)
-    @Column(name = "catalogo_pregunta_id_catalogo_pregunta")
-    private long catalogoPreguntaIdCatalogoPregunta;
+    @Column(name = "catalogo_pregunta_categoria_id_categoria")
+    private long catalogoPreguntaCategoriaIdCategoria;
+    @Basic(optional = false)
+    @Column(name = "catalogo_pregunta_pregunta_id_pregunta")
+    private long catalogoPreguntaPreguntaIdPregunta;
+    @Basic(optional = false)
+    @Column(name = "catalogo_pregunta_peso_id_peso")
+    private long catalogoPreguntaPesoIdPeso;
 
     public ChecklistHasCatalogoPreguntaPK() {
     }
 
-    public ChecklistHasCatalogoPreguntaPK(long checklistIdChecklist, long catalogoPreguntaIdCatalogoPregunta) {
+    public ChecklistHasCatalogoPreguntaPK(long checklistIdChecklist, long catalogoPreguntaCategoriaIdCategoria, long catalogoPreguntaPreguntaIdPregunta, long catalogoPreguntaPesoIdPeso) {
         this.checklistIdChecklist = checklistIdChecklist;
-        this.catalogoPreguntaIdCatalogoPregunta = catalogoPreguntaIdCatalogoPregunta;
+        this.catalogoPreguntaCategoriaIdCategoria = catalogoPreguntaCategoriaIdCategoria;
+        this.catalogoPreguntaPreguntaIdPregunta = catalogoPreguntaPreguntaIdPregunta;
+        this.catalogoPreguntaPesoIdPeso = catalogoPreguntaPesoIdPeso;
     }
 
     public long getChecklistIdChecklist() {
@@ -40,19 +48,37 @@ public class ChecklistHasCatalogoPreguntaPK implements Serializable {
         this.checklistIdChecklist = checklistIdChecklist;
     }
 
-    public long getCatalogoPreguntaIdCatalogoPregunta() {
-        return catalogoPreguntaIdCatalogoPregunta;
+    public long getCatalogoPreguntaCategoriaIdCategoria() {
+        return catalogoPreguntaCategoriaIdCategoria;
     }
 
-    public void setCatalogoPreguntaIdCatalogoPregunta(long catalogoPreguntaIdCatalogoPregunta) {
-        this.catalogoPreguntaIdCatalogoPregunta = catalogoPreguntaIdCatalogoPregunta;
+    public void setCatalogoPreguntaCategoriaIdCategoria(long catalogoPreguntaCategoriaIdCategoria) {
+        this.catalogoPreguntaCategoriaIdCategoria = catalogoPreguntaCategoriaIdCategoria;
+    }
+
+    public long getCatalogoPreguntaPreguntaIdPregunta() {
+        return catalogoPreguntaPreguntaIdPregunta;
+    }
+
+    public void setCatalogoPreguntaPreguntaIdPregunta(long catalogoPreguntaPreguntaIdPregunta) {
+        this.catalogoPreguntaPreguntaIdPregunta = catalogoPreguntaPreguntaIdPregunta;
+    }
+
+    public long getCatalogoPreguntaPesoIdPeso() {
+        return catalogoPreguntaPesoIdPeso;
+    }
+
+    public void setCatalogoPreguntaPesoIdPeso(long catalogoPreguntaPesoIdPeso) {
+        this.catalogoPreguntaPesoIdPeso = catalogoPreguntaPesoIdPeso;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) checklistIdChecklist;
-        hash += (int) catalogoPreguntaIdCatalogoPregunta;
+        hash += (int) catalogoPreguntaCategoriaIdCategoria;
+        hash += (int) catalogoPreguntaPreguntaIdPregunta;
+        hash += (int) catalogoPreguntaPesoIdPeso;
         return hash;
     }
 
@@ -66,7 +92,13 @@ public class ChecklistHasCatalogoPreguntaPK implements Serializable {
         if (this.checklistIdChecklist != other.checklistIdChecklist) {
             return false;
         }
-        if (this.catalogoPreguntaIdCatalogoPregunta != other.catalogoPreguntaIdCatalogoPregunta) {
+        if (this.catalogoPreguntaCategoriaIdCategoria != other.catalogoPreguntaCategoriaIdCategoria) {
+            return false;
+        }
+        if (this.catalogoPreguntaPreguntaIdPregunta != other.catalogoPreguntaPreguntaIdPregunta) {
+            return false;
+        }
+        if (this.catalogoPreguntaPesoIdPeso != other.catalogoPreguntaPesoIdPeso) {
             return false;
         }
         return true;
@@ -74,7 +106,7 @@ public class ChecklistHasCatalogoPreguntaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.cempresariales.servicio.commons.model.entity.ChecklistHasCatalogoPreguntaPK[ checklistIdChecklist=" + checklistIdChecklist + ", catalogoPreguntaIdCatalogoPregunta=" + catalogoPreguntaIdCatalogoPregunta + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.ChecklistHasCatalogoPreguntaPK[ checklistIdChecklist=" + checklistIdChecklist + ", catalogoPreguntaCategoriaIdCategoria=" + catalogoPreguntaCategoriaIdCategoria + ", catalogoPreguntaPreguntaIdPregunta=" + catalogoPreguntaPreguntaIdPregunta + ", catalogoPreguntaPesoIdPeso=" + catalogoPreguntaPesoIdPeso + " ]";
     }
     
 }

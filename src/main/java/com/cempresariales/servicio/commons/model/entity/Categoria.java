@@ -62,7 +62,7 @@ public class Categoria implements Serializable {
     @ManyToOne
     @JsonBackReference
     private Categoria categoriaIdCategoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
     @JsonBackReference
     private List<CatalogoPregunta> catalogoPreguntaList;
 

@@ -12,20 +12,17 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author DIGETBI 05
+ * @author ADM-DGIP
  */
 @Embeddable
 public class CatalogoPreguntaPK implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "id_catalogo_pregunta")
-    private short idCatalogoPregunta;
+    @Column(name = "categoria_id_categoria")
+    private long categoriaIdCategoria;
     @Basic(optional = false)
     @Column(name = "pregunta_id_pregunta")
     private long preguntaIdPregunta;
-    @Basic(optional = false)
-    @Column(name = "categoria_id_categoria")
-    private long categoriaIdCategoria;
     @Basic(optional = false)
     @Column(name = "peso_id_peso")
     private long pesoIdPeso;
@@ -33,27 +30,10 @@ public class CatalogoPreguntaPK implements Serializable {
     public CatalogoPreguntaPK() {
     }
 
-    public CatalogoPreguntaPK(short idCatalogoPregunta, long preguntaIdPregunta, long categoriaIdCategoria, long pesoIdPeso) {
-        this.idCatalogoPregunta = idCatalogoPregunta;
-        this.preguntaIdPregunta = preguntaIdPregunta;
+    public CatalogoPreguntaPK(long categoriaIdCategoria, long preguntaIdPregunta, long pesoIdPeso) {
         this.categoriaIdCategoria = categoriaIdCategoria;
-        this.pesoIdPeso = pesoIdPeso;
-    }
-
-    public short getIdCatalogoPregunta() {
-        return idCatalogoPregunta;
-    }
-
-    public void setIdCatalogoPregunta(short idCatalogoPregunta) {
-        this.idCatalogoPregunta = idCatalogoPregunta;
-    }
-
-    public long getPreguntaIdPregunta() {
-        return preguntaIdPregunta;
-    }
-
-    public void setPreguntaIdPregunta(long preguntaIdPregunta) {
         this.preguntaIdPregunta = preguntaIdPregunta;
+        this.pesoIdPeso = pesoIdPeso;
     }
 
     public long getCategoriaIdCategoria() {
@@ -62,6 +42,14 @@ public class CatalogoPreguntaPK implements Serializable {
 
     public void setCategoriaIdCategoria(long categoriaIdCategoria) {
         this.categoriaIdCategoria = categoriaIdCategoria;
+    }
+
+    public long getPreguntaIdPregunta() {
+        return preguntaIdPregunta;
+    }
+
+    public void setPreguntaIdPregunta(long preguntaIdPregunta) {
+        this.preguntaIdPregunta = preguntaIdPregunta;
     }
 
     public long getPesoIdPeso() {
@@ -75,9 +63,8 @@ public class CatalogoPreguntaPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) idCatalogoPregunta;
-        hash += (int) preguntaIdPregunta;
         hash += (int) categoriaIdCategoria;
+        hash += (int) preguntaIdPregunta;
         hash += (int) pesoIdPeso;
         return hash;
     }
@@ -89,13 +76,10 @@ public class CatalogoPreguntaPK implements Serializable {
             return false;
         }
         CatalogoPreguntaPK other = (CatalogoPreguntaPK) object;
-        if (this.idCatalogoPregunta != other.idCatalogoPregunta) {
+        if (this.categoriaIdCategoria != other.categoriaIdCategoria) {
             return false;
         }
         if (this.preguntaIdPregunta != other.preguntaIdPregunta) {
-            return false;
-        }
-        if (this.categoriaIdCategoria != other.categoriaIdCategoria) {
             return false;
         }
         if (this.pesoIdPeso != other.pesoIdPeso) {
@@ -106,7 +90,7 @@ public class CatalogoPreguntaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.cempresariales.servicio.commons.model.entity.CatalogoPreguntaPK[ idCatalogoPregunta=" + idCatalogoPregunta + ", preguntaIdPregunta=" + preguntaIdPregunta + ", categoriaIdCategoria=" + categoriaIdCategoria + ", pesoIdPeso=" + pesoIdPeso + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.CatalogoPreguntaPK[ categoriaIdCategoria=" + categoriaIdCategoria + ", preguntaIdPregunta=" + preguntaIdPregunta + ", pesoIdPeso=" + pesoIdPeso + " ]";
     }
     
 }

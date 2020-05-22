@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -29,7 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "ChecklistHasCatalogoPregunta.findAll", query = "SELECT c FROM ChecklistHasCatalogoPregunta c")
     , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByChecklistIdChecklist", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.checklistIdChecklist = :checklistIdChecklist")
-    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByCatalogoPreguntaIdCatalogoPregunta", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.catalogoPreguntaIdCatalogoPregunta = :catalogoPreguntaIdCatalogoPregunta")
+    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByCatalogoPreguntaCategoriaIdCategoria", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.catalogoPreguntaCategoriaIdCategoria = :catalogoPreguntaCategoriaIdCategoria")
+    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByCatalogoPreguntaPreguntaIdPregunta", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.catalogoPreguntaPreguntaIdPregunta = :catalogoPreguntaPreguntaIdPregunta")
+    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByCatalogoPreguntaPesoIdPeso", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.catalogoPreguntaPesoIdPeso = :catalogoPreguntaPesoIdPeso")
     , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByActivo", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.activo = :activo")})
 public class ChecklistHasCatalogoPregunta implements Serializable {
 
@@ -38,7 +41,10 @@ public class ChecklistHasCatalogoPregunta implements Serializable {
     protected ChecklistHasCatalogoPreguntaPK checklistHasCatalogoPreguntaPK;
     @Column(name = "activo")
     private Boolean activo;
-    @JoinColumn(name = "catalogo_pregunta_id_catalogo_pregunta", referencedColumnName = "id_catalogo_pregunta", insertable = false, updatable = false)
+    @JoinColumns({
+        @JoinColumn(name = "catalogo_pregunta_categoria_id_categoria", referencedColumnName = "categoria_id_categoria", insertable = false, updatable = false)
+        , @JoinColumn(name = "catalogo_pregunta_pregunta_id_pregunta", referencedColumnName = "pregunta_id_pregunta", insertable = false, updatable = false)
+        , @JoinColumn(name = "catalogo_pregunta_peso_id_peso", referencedColumnName = "peso_id_peso", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     @JsonIgnore
     private CatalogoPregunta catalogoPregunta;
@@ -54,8 +60,8 @@ public class ChecklistHasCatalogoPregunta implements Serializable {
         this.checklistHasCatalogoPreguntaPK = checklistHasCatalogoPreguntaPK;
     }
 
-    public ChecklistHasCatalogoPregunta(long checklistIdChecklist, long catalogoPreguntaIdCatalogoPregunta) {
-        this.checklistHasCatalogoPreguntaPK = new ChecklistHasCatalogoPreguntaPK(checklistIdChecklist, catalogoPreguntaIdCatalogoPregunta);
+    public ChecklistHasCatalogoPregunta(long checklistIdChecklist, long catalogoPreguntaCategoriaIdCategoria, long catalogoPreguntaPreguntaIdPregunta, long catalogoPreguntaPesoIdPeso) {
+        this.checklistHasCatalogoPreguntaPK = new ChecklistHasCatalogoPreguntaPK(checklistIdChecklist, catalogoPreguntaCategoriaIdCategoria, catalogoPreguntaPreguntaIdPregunta, catalogoPreguntaPesoIdPeso);
     }
 
     public ChecklistHasCatalogoPreguntaPK getChecklistHasCatalogoPreguntaPK() {

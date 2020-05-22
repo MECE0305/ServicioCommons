@@ -59,7 +59,7 @@ public class Pregunta implements Serializable {
     private String nombrePregunta;
     @Column(name = "respuesta_pregunta")
     private String respuestaPregunta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaIdPregunta")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
     @JsonBackReference
     private List<CatalogoPregunta> catalogoPreguntaList;
     @OneToMany(mappedBy = "preguntaIdPregunta")
