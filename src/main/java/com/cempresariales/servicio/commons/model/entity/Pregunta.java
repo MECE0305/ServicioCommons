@@ -57,8 +57,6 @@ public class Pregunta implements Serializable {
     private Date creaPregunta;
     @Column(name = "nombre_pregunta")
     private String nombrePregunta;
-    @Column(name = "respuesta_pregunta")
-    private String respuestaPregunta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
     @JsonBackReference
     private List<CatalogoPregunta> catalogoPreguntaList;
@@ -108,13 +106,6 @@ public class Pregunta implements Serializable {
         this.nombrePregunta = nombrePregunta;
     }
 
-    public String getRespuestaPregunta() {
-        return respuestaPregunta;
-    }
-
-    public void setRespuestaPregunta(String respuestaPregunta) {
-        this.respuestaPregunta = respuestaPregunta;
-    }
 
     @XmlTransient
     public List<CatalogoPregunta> getCatalogoPreguntaList() {
