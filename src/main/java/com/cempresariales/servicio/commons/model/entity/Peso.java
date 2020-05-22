@@ -24,6 +24,8 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  *
  * @author ADM-DGIP
@@ -56,6 +58,7 @@ public class Peso implements Serializable {
     @Column(name = "valor")
     private String valor;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pesoIdPeso")
+    @JsonBackReference
     private List<CatalogoPregunta> catalogoPreguntaList;
 
     public Peso() {

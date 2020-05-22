@@ -6,6 +6,7 @@
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -37,9 +40,11 @@ public class ChecklistHasCatalogoPregunta implements Serializable {
     private Boolean activo;
     @JoinColumn(name = "catalogo_pregunta_id_catalogo_pregunta", referencedColumnName = "id_catalogo_pregunta", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private CatalogoPregunta catalogoPregunta;
     @JoinColumn(name = "checklist_id_checklist", referencedColumnName = "id_checklist", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Checklist checklist;
 
     public ChecklistHasCatalogoPregunta() {

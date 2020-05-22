@@ -26,6 +26,8 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  *
  * @author ADM-DGIP
@@ -58,8 +60,10 @@ public class Categoria implements Serializable {
     private List<Categoria> categoriaList;
     @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
     @ManyToOne
+    @JsonBackReference
     private Categoria categoriaIdCategoria;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
+    @JsonBackReference
     private List<CatalogoPregunta> catalogoPreguntaList;
 
     public Categoria() {
