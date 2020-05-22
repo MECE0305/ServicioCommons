@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author DIGETBI 05
+ * @author ADM-DGIP
  */
 @Entity
 @Table(name = "peso")
@@ -55,7 +55,7 @@ public class Peso implements Serializable {
     private String porcentaje;
     @Column(name = "valor")
     private String valor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "peso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pesoIdPeso")
     private List<CatalogoPregunta> catalogoPreguntaList;
 
     public Peso() {

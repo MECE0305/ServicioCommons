@@ -35,7 +35,7 @@ public class RolHasEmpleado implements Serializable {
 	@EmbeddedId
 	protected RolHasEmpleadoPK rolHasEmpleadoPK;
 	@Column(name = "activo")
-	private Short activo;
+	private Boolean activo;
 	@JoinColumn(name = "empleado_id_empleado", referencedColumnName = "id_empleado", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	@JsonIgnore
@@ -64,11 +64,11 @@ public class RolHasEmpleado implements Serializable {
 		this.rolHasEmpleadoPK = rolHasEmpleadoPK;
 	}
 
-	public Short getActivo() {
+	public Boolean getActivo() {
 		return activo;
 	}
 
-	public void setActivo(Short activo) {
+	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
 

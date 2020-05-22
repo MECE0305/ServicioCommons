@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author DIGETBI 05
+ * @author ADM-DGIP
  */
 @Entity
 @Table(name = "categoria")
@@ -59,7 +59,7 @@ public class Categoria implements Serializable {
     @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
     @ManyToOne
     private Categoria categoriaIdCategoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
     private List<CatalogoPregunta> catalogoPreguntaList;
 
     public Categoria() {

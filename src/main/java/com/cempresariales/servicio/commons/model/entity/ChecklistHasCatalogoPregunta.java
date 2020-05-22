@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author DIGETBI 05
+ * @author ADM-DGIP
  */
 @Entity
 @Table(name = "checklist_has_catalogo_pregunta")
@@ -28,22 +27,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ChecklistHasCatalogoPregunta.findAll", query = "SELECT c FROM ChecklistHasCatalogoPregunta c")
     , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByChecklistIdChecklist", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.checklistIdChecklist = :checklistIdChecklist")
     , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByCatalogoPreguntaIdCatalogoPregunta", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.catalogoPreguntaIdCatalogoPregunta = :catalogoPreguntaIdCatalogoPregunta")
-    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByCatalogoPreguntaPreguntaIdPregunta", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.catalogoPreguntaPreguntaIdPregunta = :catalogoPreguntaPreguntaIdPregunta")
-    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByCatalogoPreguntaCategoriaIdCategoria", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.catalogoPreguntaCategoriaIdCategoria = :catalogoPreguntaCategoriaIdCategoria")
-    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByCatalogoPreguntaPesoIdPeso", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.checklistHasCatalogoPreguntaPK.catalogoPreguntaPesoIdPeso = :catalogoPreguntaPesoIdPeso")
-    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByActivoChecklisHasCatalogo", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.activoChecklisHasCatalogo = :activoChecklisHasCatalogo")})
+    , @NamedQuery(name = "ChecklistHasCatalogoPregunta.findByActivo", query = "SELECT c FROM ChecklistHasCatalogoPregunta c WHERE c.activo = :activo")})
 public class ChecklistHasCatalogoPregunta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ChecklistHasCatalogoPreguntaPK checklistHasCatalogoPreguntaPK;
-    @Column(name = "activo_checklis_has_catalogo")
-    private Short activoChecklisHasCatalogo;
-    @JoinColumns({
-        @JoinColumn(name = "catalogo_pregunta_id_catalogo_pregunta", referencedColumnName = "id_catalogo_pregunta", insertable = false, updatable = false)
-        , @JoinColumn(name = "catalogo_pregunta_pregunta_id_pregunta", referencedColumnName = "pregunta_id_pregunta", insertable = false, updatable = false)
-        , @JoinColumn(name = "catalogo_pregunta_categoria_id_categoria", referencedColumnName = "categoria_id_categoria", insertable = false, updatable = false)
-        , @JoinColumn(name = "catalogo_pregunta_peso_id_peso", referencedColumnName = "peso_id_peso", insertable = false, updatable = false)})
+    @Column(name = "activo")
+    private Boolean activo;
+    @JoinColumn(name = "catalogo_pregunta_id_catalogo_pregunta", referencedColumnName = "id_catalogo_pregunta", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private CatalogoPregunta catalogoPregunta;
     @JoinColumn(name = "checklist_id_checklist", referencedColumnName = "id_checklist", insertable = false, updatable = false)
@@ -57,8 +49,8 @@ public class ChecklistHasCatalogoPregunta implements Serializable {
         this.checklistHasCatalogoPreguntaPK = checklistHasCatalogoPreguntaPK;
     }
 
-    public ChecklistHasCatalogoPregunta(long checklistIdChecklist, short catalogoPreguntaIdCatalogoPregunta, long catalogoPreguntaPreguntaIdPregunta, long catalogoPreguntaCategoriaIdCategoria, long catalogoPreguntaPesoIdPeso) {
-        this.checklistHasCatalogoPreguntaPK = new ChecklistHasCatalogoPreguntaPK(checklistIdChecklist, catalogoPreguntaIdCatalogoPregunta, catalogoPreguntaPreguntaIdPregunta, catalogoPreguntaCategoriaIdCategoria, catalogoPreguntaPesoIdPeso);
+    public ChecklistHasCatalogoPregunta(long checklistIdChecklist, long catalogoPreguntaIdCatalogoPregunta) {
+        this.checklistHasCatalogoPreguntaPK = new ChecklistHasCatalogoPreguntaPK(checklistIdChecklist, catalogoPreguntaIdCatalogoPregunta);
     }
 
     public ChecklistHasCatalogoPreguntaPK getChecklistHasCatalogoPreguntaPK() {
@@ -69,12 +61,12 @@ public class ChecklistHasCatalogoPregunta implements Serializable {
         this.checklistHasCatalogoPreguntaPK = checklistHasCatalogoPreguntaPK;
     }
 
-    public Short getActivoChecklisHasCatalogo() {
-        return activoChecklisHasCatalogo;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setActivoChecklisHasCatalogo(Short activoChecklisHasCatalogo) {
-        this.activoChecklisHasCatalogo = activoChecklisHasCatalogo;
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public CatalogoPregunta getCatalogoPregunta() {

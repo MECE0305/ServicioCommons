@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author DIGETBI 05
+ * @author ADM-DGIP
  */
 @Entity
 @Table(name = "checklist")

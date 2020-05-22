@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author DIGETBI 05
+ * @author ADM-DGIP
  */
 @Entity
 @Table(name = "pregunta")
@@ -57,7 +57,7 @@ public class Pregunta implements Serializable {
     private String nombrePregunta;
     @Column(name = "respuesta_pregunta")
     private String respuestaPregunta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaIdPregunta")
     private List<CatalogoPregunta> catalogoPreguntaList;
     @OneToMany(mappedBy = "preguntaIdPregunta")
     private List<Pregunta> preguntaList;

@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author DIGETBI 05
+ * @author ADM-DGIP
  */
 @Embeddable
 public class ChecklistHasCatalogoPreguntaPK implements Serializable {
@@ -22,26 +22,14 @@ public class ChecklistHasCatalogoPreguntaPK implements Serializable {
     private long checklistIdChecklist;
     @Basic(optional = false)
     @Column(name = "catalogo_pregunta_id_catalogo_pregunta")
-    private short catalogoPreguntaIdCatalogoPregunta;
-    @Basic(optional = false)
-    @Column(name = "catalogo_pregunta_pregunta_id_pregunta")
-    private long catalogoPreguntaPreguntaIdPregunta;
-    @Basic(optional = false)
-    @Column(name = "catalogo_pregunta_categoria_id_categoria")
-    private long catalogoPreguntaCategoriaIdCategoria;
-    @Basic(optional = false)
-    @Column(name = "catalogo_pregunta_peso_id_peso")
-    private long catalogoPreguntaPesoIdPeso;
+    private long catalogoPreguntaIdCatalogoPregunta;
 
     public ChecklistHasCatalogoPreguntaPK() {
     }
 
-    public ChecklistHasCatalogoPreguntaPK(long checklistIdChecklist, short catalogoPreguntaIdCatalogoPregunta, long catalogoPreguntaPreguntaIdPregunta, long catalogoPreguntaCategoriaIdCategoria, long catalogoPreguntaPesoIdPeso) {
+    public ChecklistHasCatalogoPreguntaPK(long checklistIdChecklist, long catalogoPreguntaIdCatalogoPregunta) {
         this.checklistIdChecklist = checklistIdChecklist;
         this.catalogoPreguntaIdCatalogoPregunta = catalogoPreguntaIdCatalogoPregunta;
-        this.catalogoPreguntaPreguntaIdPregunta = catalogoPreguntaPreguntaIdPregunta;
-        this.catalogoPreguntaCategoriaIdCategoria = catalogoPreguntaCategoriaIdCategoria;
-        this.catalogoPreguntaPesoIdPeso = catalogoPreguntaPesoIdPeso;
     }
 
     public long getChecklistIdChecklist() {
@@ -52,36 +40,12 @@ public class ChecklistHasCatalogoPreguntaPK implements Serializable {
         this.checklistIdChecklist = checklistIdChecklist;
     }
 
-    public short getCatalogoPreguntaIdCatalogoPregunta() {
+    public long getCatalogoPreguntaIdCatalogoPregunta() {
         return catalogoPreguntaIdCatalogoPregunta;
     }
 
-    public void setCatalogoPreguntaIdCatalogoPregunta(short catalogoPreguntaIdCatalogoPregunta) {
+    public void setCatalogoPreguntaIdCatalogoPregunta(long catalogoPreguntaIdCatalogoPregunta) {
         this.catalogoPreguntaIdCatalogoPregunta = catalogoPreguntaIdCatalogoPregunta;
-    }
-
-    public long getCatalogoPreguntaPreguntaIdPregunta() {
-        return catalogoPreguntaPreguntaIdPregunta;
-    }
-
-    public void setCatalogoPreguntaPreguntaIdPregunta(long catalogoPreguntaPreguntaIdPregunta) {
-        this.catalogoPreguntaPreguntaIdPregunta = catalogoPreguntaPreguntaIdPregunta;
-    }
-
-    public long getCatalogoPreguntaCategoriaIdCategoria() {
-        return catalogoPreguntaCategoriaIdCategoria;
-    }
-
-    public void setCatalogoPreguntaCategoriaIdCategoria(long catalogoPreguntaCategoriaIdCategoria) {
-        this.catalogoPreguntaCategoriaIdCategoria = catalogoPreguntaCategoriaIdCategoria;
-    }
-
-    public long getCatalogoPreguntaPesoIdPeso() {
-        return catalogoPreguntaPesoIdPeso;
-    }
-
-    public void setCatalogoPreguntaPesoIdPeso(long catalogoPreguntaPesoIdPeso) {
-        this.catalogoPreguntaPesoIdPeso = catalogoPreguntaPesoIdPeso;
     }
 
     @Override
@@ -89,9 +53,6 @@ public class ChecklistHasCatalogoPreguntaPK implements Serializable {
         int hash = 0;
         hash += (int) checklistIdChecklist;
         hash += (int) catalogoPreguntaIdCatalogoPregunta;
-        hash += (int) catalogoPreguntaPreguntaIdPregunta;
-        hash += (int) catalogoPreguntaCategoriaIdCategoria;
-        hash += (int) catalogoPreguntaPesoIdPeso;
         return hash;
     }
 
@@ -108,21 +69,12 @@ public class ChecklistHasCatalogoPreguntaPK implements Serializable {
         if (this.catalogoPreguntaIdCatalogoPregunta != other.catalogoPreguntaIdCatalogoPregunta) {
             return false;
         }
-        if (this.catalogoPreguntaPreguntaIdPregunta != other.catalogoPreguntaPreguntaIdPregunta) {
-            return false;
-        }
-        if (this.catalogoPreguntaCategoriaIdCategoria != other.catalogoPreguntaCategoriaIdCategoria) {
-            return false;
-        }
-        if (this.catalogoPreguntaPesoIdPeso != other.catalogoPreguntaPesoIdPeso) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "com.cempresariales.servicio.commons.model.entity.ChecklistHasCatalogoPreguntaPK[ checklistIdChecklist=" + checklistIdChecklist + ", catalogoPreguntaIdCatalogoPregunta=" + catalogoPreguntaIdCatalogoPregunta + ", catalogoPreguntaPreguntaIdPregunta=" + catalogoPreguntaPreguntaIdPregunta + ", catalogoPreguntaCategoriaIdCategoria=" + catalogoPreguntaCategoriaIdCategoria + ", catalogoPreguntaPesoIdPeso=" + catalogoPreguntaPesoIdPeso + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.ChecklistHasCatalogoPreguntaPK[ checklistIdChecklist=" + checklistIdChecklist + ", catalogoPreguntaIdCatalogoPregunta=" + catalogoPreguntaIdCatalogoPregunta + " ]";
     }
     
 }
