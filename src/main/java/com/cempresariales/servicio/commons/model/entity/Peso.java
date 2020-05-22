@@ -24,11 +24,9 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 /**
  *
- * @author ADM-DGIP
+ * @author DIGETBI 05
  */
 @Entity
 @Table(name = "peso")
@@ -58,8 +56,7 @@ public class Peso implements Serializable {
     @Column(name = "valor")
     private String valor;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "peso")
-    @JsonBackReference
-    private List<PesoHasPregunta> pesoHasPreguntaList;
+    private List<CatalogoPregunta> catalogoPreguntaList;
 
     public Peso() {
     }
@@ -109,12 +106,12 @@ public class Peso implements Serializable {
     }
 
     @XmlTransient
-    public List<PesoHasPregunta> getPesoHasPreguntaList() {
-        return pesoHasPreguntaList;
+    public List<CatalogoPregunta> getCatalogoPreguntaList() {
+        return catalogoPreguntaList;
     }
 
-    public void setPesoHasPreguntaList(List<PesoHasPregunta> pesoHasPreguntaList) {
-        this.pesoHasPreguntaList = pesoHasPreguntaList;
+    public void setCatalogoPreguntaList(List<CatalogoPregunta> catalogoPreguntaList) {
+        this.catalogoPreguntaList = catalogoPreguntaList;
     }
 
     @Override

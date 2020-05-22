@@ -26,11 +26,9 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 /**
  *
- * @author ADM-DGIP
+ * @author DIGETBI 05
  */
 @Entity
 @Table(name = "pregunta")
@@ -60,16 +58,11 @@ public class Pregunta implements Serializable {
     @Column(name = "respuesta_pregunta")
     private String respuestaPregunta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
-    private List<PesoHasPregunta> pesoHasPreguntaList;
-    @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
-    @ManyToOne(optional = false)
-    @JsonBackReference
-    private Categoria categoriaIdCategoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaIdPregunta")
+    private List<CatalogoPregunta> catalogoPreguntaList;
+    @OneToMany(mappedBy = "preguntaIdPregunta")
     private List<Pregunta> preguntaList;
     @JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta")
     @ManyToOne
-    @JsonBackReference
     private Pregunta preguntaIdPregunta;
 
     public Pregunta() {
@@ -120,20 +113,12 @@ public class Pregunta implements Serializable {
     }
 
     @XmlTransient
-    public List<PesoHasPregunta> getPesoHasPreguntaList() {
-        return pesoHasPreguntaList;
+    public List<CatalogoPregunta> getCatalogoPreguntaList() {
+        return catalogoPreguntaList;
     }
 
-    public void setPesoHasPreguntaList(List<PesoHasPregunta> pesoHasPreguntaList) {
-        this.pesoHasPreguntaList = pesoHasPreguntaList;
-    }
-
-    public Categoria getCategoriaIdCategoria() {
-        return categoriaIdCategoria;
-    }
-
-    public void setCategoriaIdCategoria(Categoria categoriaIdCategoria) {
-        this.categoriaIdCategoria = categoriaIdCategoria;
+    public void setCatalogoPreguntaList(List<CatalogoPregunta> catalogoPreguntaList) {
+        this.catalogoPreguntaList = catalogoPreguntaList;
     }
 
     @XmlTransient

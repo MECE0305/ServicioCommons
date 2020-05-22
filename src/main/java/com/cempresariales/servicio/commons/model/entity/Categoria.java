@@ -8,7 +8,6 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,11 +26,9 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 /**
  *
- * @author ADM-DGIP
+ * @author DIGETBI 05
  */
 @Entity
 @Table(name = "categoria")
@@ -39,9 +36,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @NamedQueries({
     @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c")
     , @NamedQuery(name = "Categoria.findByIdCategoria", query = "SELECT c FROM Categoria c WHERE c.idCategoria = :idCategoria")
-    , @NamedQuery(name = "Categoria.findByNombreCategoria", query = "SELECT c FROM Categoria c WHERE c.nombreCategoria = :nombreCategoria")
     , @NamedQuery(name = "Categoria.findByActivoCategoria", query = "SELECT c FROM Categoria c WHERE c.activoCategoria = :activoCategoria")
-    , @NamedQuery(name = "Categoria.findByCreaCategoria", query = "SELECT c FROM Categoria c WHERE c.creaCategoria = :creaCategoria")})
+    , @NamedQuery(name = "Categoria.findByCreaCategoria", query = "SELECT c FROM Categoria c WHERE c.creaCategoria = :creaCategoria")
+    , @NamedQuery(name = "Categoria.findByNombreCategoria", query = "SELECT c FROM Categoria c WHERE c.nombreCategoria = :nombreCategoria")})
 public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,22 +47,20 @@ public class Categoria implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_categoria")
     private Long idCategoria;
-    @Column(name = "nombre_categoria")
-    private String nombreCategoria;
     @Column(name = "activo_categoria")
     private Short activoCategoria;
     @Column(name = "crea_categoria")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creaCategoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
-    private List<Pregunta> preguntaList;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
+    @Column(name = "nombre_categoria")
+    private String nombreCategoria;
+    @OneToMany(mappedBy = "categoriaIdCategoria")
     private List<Categoria> categoriaList;
     @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria")
     @ManyToOne
-    @JsonBackReference
     private Categoria categoriaIdCategoria;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    private List<CatalogoPregunta> catalogoPreguntaList;
 
     public Categoria() {
     }
@@ -80,14 +75,6 @@ public class Categoria implements Serializable {
 
     public void setIdCategoria(Long idCategoria) {
         this.idCategoria = idCategoria;
-    }
-
-    public String getNombreCategoria() {
-        return nombreCategoria;
-    }
-
-    public void setNombreCategoria(String nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
     }
 
     public Short getActivoCategoria() {
@@ -106,33 +93,41 @@ public class Categoria implements Serializable {
         this.creaCategoria = creaCategoria;
     }
 
-    @XmlTransient
-    public List<Pregunta> getPreguntaList() {
-        return preguntaList;
+    public String getNombreCategoria() {
+        return nombreCategoria;
     }
 
-    public void setPreguntaList(List<Pregunta> preguntaList) {
-        this.preguntaList = preguntaList;
-    }    
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
 
     @XmlTransient
     public List<Categoria> getCategoriaList() {
-		return categoriaList;
-	}
+        return categoriaList;
+    }
 
-	public void setCategoriaList(List<Categoria> categoriaList) {
-		this.categoriaList = categoriaList;
-	}
+    public void setCategoriaList(List<Categoria> categoriaList) {
+        this.categoriaList = categoriaList;
+    }
 
-	public Categoria getCategoriaIdCategoria() {
-		return categoriaIdCategoria;
-	}
+    public Categoria getCategoriaIdCategoria() {
+        return categoriaIdCategoria;
+    }
 
-	public void setCategoriaIdCategoria(Categoria categoriaIdCategoria) {
-		this.categoriaIdCategoria = categoriaIdCategoria;
-	}
+    public void setCategoriaIdCategoria(Categoria categoriaIdCategoria) {
+        this.categoriaIdCategoria = categoriaIdCategoria;
+    }
 
-	@Override
+    @XmlTransient
+    public List<CatalogoPregunta> getCatalogoPreguntaList() {
+        return catalogoPreguntaList;
+    }
+
+    public void setCatalogoPreguntaList(List<CatalogoPregunta> catalogoPreguntaList) {
+        this.catalogoPreguntaList = catalogoPreguntaList;
+    }
+
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (idCategoria != null ? idCategoria.hashCode() : 0);

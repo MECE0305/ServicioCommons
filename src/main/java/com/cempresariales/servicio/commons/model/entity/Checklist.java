@@ -28,14 +28,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ADM-DGIP
+ * @author DIGETBI 05
  */
 @Entity
 @Table(name = "checklist")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Checklist.findAll", query = "SELECT c FROM Checklist c")
-    , @NamedQuery(name = "Checklist.findByIdChecklist", query = "SELECT c FROM Checklist c WHERE c.idChecklist = :idChecklist")})
+    , @NamedQuery(name = "Checklist.findByIdChecklist", query = "SELECT c FROM Checklist c WHERE c.idChecklist = :idChecklist")
+    , @NamedQuery(name = "Checklist.findByActivoChecklist", query = "SELECT c FROM Checklist c WHERE c.activoChecklist = :activoChecklist")
+    , @NamedQuery(name = "Checklist.findByCreaChecklist", query = "SELECT c FROM Checklist c WHERE c.creaChecklist = :creaChecklist")
+    , @NamedQuery(name = "Checklist.findByNombreChecklist", query = "SELECT c FROM Checklist c WHERE c.nombreChecklist = :nombreChecklist")})
 public class Checklist implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,17 +47,17 @@ public class Checklist implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_checklist")
     private Long idChecklist;
-    @Column(name = "nombre_checklist")
-    private String nombreChecklist;
+    @Column(name = "activo_checklist")
+    private Boolean activoChecklist;
     @Column(name = "crea_checklist")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creaChecklist;
-    @Column(name = "activo_checklist")
-    private Boolean activoChecklist;
+    @Column(name = "nombre_checklist")
+    private String nombreChecklist;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
+    private List<ChecklistHasCatalogoPregunta> checklistHasCatalogoPreguntaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
     private List<ChecklistHasEvaluacion> checklistHasEvaluacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "checklist")
-    private List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList;
     @JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol")
     @ManyToOne(optional = false)
     private Rol rolIdRol;
@@ -65,40 +68,46 @@ public class Checklist implements Serializable {
     public Checklist(Long idChecklist) {
         this.idChecklist = idChecklist;
     }
-    
-    
-    
 
-    public String getNombreChecklist() {
-		return nombreChecklist;
-	}
-
-	public void setNombreChecklist(String nombreChecklist) {
-		this.nombreChecklist = nombreChecklist;
-	}
-
-	public Date getCreaChecklist() {
-		return creaChecklist;
-	}
-
-	public void setCreaChecklist(Date creaChecklist) {
-		this.creaChecklist = creaChecklist;
-	}
-
-	public Boolean getActivoChecklist() {
-		return activoChecklist;
-	}
-
-	public void setActivoChecklist(Boolean activoChecklist) {
-		this.activoChecklist = activoChecklist;
-	}
-
-	public Long getIdChecklist() {
+    public Long getIdChecklist() {
         return idChecklist;
     }
 
     public void setIdChecklist(Long idChecklist) {
         this.idChecklist = idChecklist;
+    }
+
+    public Boolean getActivoChecklist() {
+        return activoChecklist;
+    }
+
+    public void setActivoChecklist(Boolean activoChecklist) {
+        this.activoChecklist = activoChecklist;
+    }
+
+    public Date getCreaChecklist() {
+        return creaChecklist;
+    }
+
+    public void setCreaChecklist(Date creaChecklist) {
+        this.creaChecklist = creaChecklist;
+    }
+
+    public String getNombreChecklist() {
+        return nombreChecklist;
+    }
+
+    public void setNombreChecklist(String nombreChecklist) {
+        this.nombreChecklist = nombreChecklist;
+    }
+
+    @XmlTransient
+    public List<ChecklistHasCatalogoPregunta> getChecklistHasCatalogoPreguntaList() {
+        return checklistHasCatalogoPreguntaList;
+    }
+
+    public void setChecklistHasCatalogoPreguntaList(List<ChecklistHasCatalogoPregunta> checklistHasCatalogoPreguntaList) {
+        this.checklistHasCatalogoPreguntaList = checklistHasCatalogoPreguntaList;
     }
 
     @XmlTransient
@@ -108,15 +117,6 @@ public class Checklist implements Serializable {
 
     public void setChecklistHasEvaluacionList(List<ChecklistHasEvaluacion> checklistHasEvaluacionList) {
         this.checklistHasEvaluacionList = checklistHasEvaluacionList;
-    }
-
-    @XmlTransient
-    public List<ChecklistHasPesoHasPregunta> getChecklistHasPesoHasPreguntaList() {
-        return checklistHasPesoHasPreguntaList;
-    }
-
-    public void setChecklistHasPesoHasPreguntaList(List<ChecklistHasPesoHasPregunta> checklistHasPesoHasPreguntaList) {
-        this.checklistHasPesoHasPreguntaList = checklistHasPesoHasPreguntaList;
     }
 
     public Rol getRolIdRol() {
