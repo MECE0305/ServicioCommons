@@ -40,8 +40,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
     , @NamedQuery(name = "Pregunta.findByIdPregunta", query = "SELECT p FROM Pregunta p WHERE p.idPregunta = :idPregunta")
     , @NamedQuery(name = "Pregunta.findByActivoPregunta", query = "SELECT p FROM Pregunta p WHERE p.activoPregunta = :activoPregunta")
     , @NamedQuery(name = "Pregunta.findByCreaPregunta", query = "SELECT p FROM Pregunta p WHERE p.creaPregunta = :creaPregunta")
-    , @NamedQuery(name = "Pregunta.findByNombrePregunta", query = "SELECT p FROM Pregunta p WHERE p.nombrePregunta = :nombrePregunta")
-    , @NamedQuery(name = "Pregunta.findByRespuestaPregunta", query = "SELECT p FROM Pregunta p WHERE p.respuestaPregunta = :respuestaPregunta")})
+    , @NamedQuery(name = "Pregunta.findByNombrePregunta", query = "SELECT p FROM Pregunta p WHERE p.nombrePregunta = :nombrePregunta")})
 public class Pregunta implements Serializable {
 
     private static final long serialVersionUID = 1L;
