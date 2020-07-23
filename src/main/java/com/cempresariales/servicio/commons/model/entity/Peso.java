@@ -8,6 +8,7 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -33,113 +34,123 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "peso")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Peso.findAll", query = "SELECT p FROM Peso p")
-    , @NamedQuery(name = "Peso.findByIdPeso", query = "SELECT p FROM Peso p WHERE p.idPeso = :idPeso")
-    , @NamedQuery(name = "Peso.findByCreaPregunta", query = "SELECT p FROM Peso p WHERE p.creaPregunta = :creaPregunta")
-    , @NamedQuery(name = "Peso.findByPeso", query = "SELECT p FROM Peso p WHERE p.peso = :peso")
-    , @NamedQuery(name = "Peso.findByPorcentaje", query = "SELECT p FROM Peso p WHERE p.porcentaje = :porcentaje")
-    , @NamedQuery(name = "Peso.findByValor", query = "SELECT p FROM Peso p WHERE p.valor = :valor")})
+@NamedQueries({ @NamedQuery(name = "Peso.findAll", query = "SELECT p FROM Peso p"),
+		@NamedQuery(name = "Peso.findByIdPeso", query = "SELECT p FROM Peso p WHERE p.idPeso = :idPeso"),
+		@NamedQuery(name = "Peso.findByCreaPeso", query = "SELECT p FROM Peso p WHERE p.creaPeso = :creaPeso"),
+		@NamedQuery(name = "Peso.findByPeso", query = "SELECT p FROM Peso p WHERE p.peso = :peso"),
+		@NamedQuery(name = "Peso.findByPorcentaje", query = "SELECT p FROM Peso p WHERE p.porcentaje = :porcentaje"),
+		@NamedQuery(name = "Peso.findByValor", query = "SELECT p FROM Peso p WHERE p.valor = :valor") })
 public class Peso implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id_peso")
-    private Long idPeso;
-    @Column(name = "crea_pregunta")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creaPregunta;
-    @Column(name = "peso")
-    private String peso;
-    @Column(name = "porcentaje")
-    private String porcentaje;
-    @Column(name = "valor")
-    private String valor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "peso")
-    @JsonBackReference
-    private List<CatalogoPregunta> catalogoPreguntaList;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id_peso")
+	private Long idPeso;
+	@Column(name = "crea_peso")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creaPeso;
+	@Column(name = "peso")
+	private String peso;
+	@Column(name = "porcentaje")
+	private String porcentaje;
+	@Column(name = "valor")
+	private String valor;
+	@Column(name = "activo_peso")
+	private boolean activoPeso;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "peso")
+	@JsonIgnore
+	private List<CatalogoPregunta> catalogoPreguntaList;
 
-    public Peso() {
-    }
+	public Peso() {
+	}
 
-    public Peso(Long idPeso) {
-        this.idPeso = idPeso;
-    }
+	public Peso(Long idPeso) {
+		this.idPeso = idPeso;
+	}
 
-    public Long getIdPeso() {
-        return idPeso;
-    }
+	public boolean isActivoPeso() {
+		return activoPeso;
+	}
 
-    public void setIdPeso(Long idPeso) {
-        this.idPeso = idPeso;
-    }
+	public void setActivoPeso(boolean activoPeso) {
+		this.activoPeso = activoPeso;
+	}
 
-    public Date getCreaPregunta() {
-        return creaPregunta;
-    }
+	public Long getIdPeso() {
+		return idPeso;
+	}
 
-    public void setCreaPregunta(Date creaPregunta) {
-        this.creaPregunta = creaPregunta;
-    }
+	public void setIdPeso(Long idPeso) {
+		this.idPeso = idPeso;
+	}
 
-    public String getPeso() {
-        return peso;
-    }
+	public Date getCreaPeso() {
+		return creaPeso;
+	}
 
-    public void setPeso(String peso) {
-        this.peso = peso;
-    }
+	public void setCreaPeso(Date creaPeso) {
+		this.creaPeso = creaPeso;
+	}
 
-    public String getPorcentaje() {
-        return porcentaje;
-    }
+	public String getPeso() {
+		return peso;
+	}
 
-    public void setPorcentaje(String porcentaje) {
-        this.porcentaje = porcentaje;
-    }
+	public void setPeso(String peso) {
+		this.peso = peso;
+	}
 
-    public String getValor() {
-        return valor;
-    }
+	public String getPorcentaje() {
+		return porcentaje;
+	}
 
-    public void setValor(String valor) {
-        this.valor = valor;
-    }
+	public void setPorcentaje(String porcentaje) {
+		this.porcentaje = porcentaje;
+	}
 
-    @XmlTransient
-    public List<CatalogoPregunta> getCatalogoPreguntaList() {
-        return catalogoPreguntaList;
-    }
+	public String getValor() {
+		return valor;
+	}
 
-    public void setCatalogoPreguntaList(List<CatalogoPregunta> catalogoPreguntaList) {
-        this.catalogoPreguntaList = catalogoPreguntaList;
-    }
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idPeso != null ? idPeso.hashCode() : 0);
-        return hash;
-    }
+	@XmlTransient
+	public List<CatalogoPregunta> getCatalogoPreguntaList() {
+		return catalogoPreguntaList;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Peso)) {
-            return false;
-        }
-        Peso other = (Peso) object;
-        if ((this.idPeso == null && other.idPeso != null) || (this.idPeso != null && !this.idPeso.equals(other.idPeso))) {
-            return false;
-        }
-        return true;
-    }
+	public void setCatalogoPreguntaList(List<CatalogoPregunta> catalogoPreguntaList) {
+		this.catalogoPreguntaList = catalogoPreguntaList;
+	}
 
-    @Override
-    public String toString() {
-        return "com.cempresariales.servicio.commons.model.entity.Peso[ idPeso=" + idPeso + " ]";
-    }
-    
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (idPeso != null ? idPeso.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Peso)) {
+			return false;
+		}
+		Peso other = (Peso) object;
+		if ((this.idPeso == null && other.idPeso != null)
+				|| (this.idPeso != null && !this.idPeso.equals(other.idPeso))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "com.cempresariales.servicio.commons.model.entity.Peso[ idPeso=" + idPeso + " ]";
+	}
+
 }

@@ -40,26 +40,26 @@ public class Encabezado implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_encabezado")
-    private Integer idEncabezado;
+    private Long idEncabezado;
     @Column(name = "nombre_encabezado")
     private String nombreEncabezado;
     @Column(name = "estado_encabezado")
-    private Short estadoEncabezado;
+    private Boolean estadoEncabezado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encabezado")
     private List<EvaluacionHasEncabezado> evaluacionHasEncabezadoList;
 
     public Encabezado() {
     }
 
-    public Encabezado(Integer idEncabezado) {
+    public Encabezado(Long idEncabezado) {
         this.idEncabezado = idEncabezado;
     }
 
-    public Integer getIdEncabezado() {
+    public Long getIdEncabezado() {
         return idEncabezado;
     }
 
-    public void setIdEncabezado(Integer idEncabezado) {
+    public void setIdEncabezado(Long idEncabezado) {
         this.idEncabezado = idEncabezado;
     }
 
@@ -71,11 +71,11 @@ public class Encabezado implements Serializable {
         this.nombreEncabezado = nombreEncabezado;
     }
 
-    public Short getEstadoEncabezado() {
+    public Boolean getEstadoEncabezado() {
         return estadoEncabezado;
     }
 
-    public void setEstadoEncabezado(Short estadoEncabezado) {
+    public void setEstadoEncabezado(Boolean estadoEncabezado) {
         this.estadoEncabezado = estadoEncabezado;
     }
 

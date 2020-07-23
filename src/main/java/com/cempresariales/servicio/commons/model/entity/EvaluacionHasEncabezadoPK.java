@@ -22,12 +22,12 @@ public class EvaluacionHasEncabezadoPK implements Serializable {
     private long evaluacionIdEvaluacion;
     @Basic(optional = false)
     @Column(name = "encabezado_id_encabezado")
-    private int encabezadoIdEncabezado;
+    private long encabezadoIdEncabezado;
 
     public EvaluacionHasEncabezadoPK() {
     }
 
-    public EvaluacionHasEncabezadoPK(long evaluacionIdEvaluacion, int encabezadoIdEncabezado) {
+    public EvaluacionHasEncabezadoPK(long evaluacionIdEvaluacion, long encabezadoIdEncabezado) {
         this.evaluacionIdEvaluacion = evaluacionIdEvaluacion;
         this.encabezadoIdEncabezado = encabezadoIdEncabezado;
     }
@@ -40,11 +40,11 @@ public class EvaluacionHasEncabezadoPK implements Serializable {
         this.evaluacionIdEvaluacion = evaluacionIdEvaluacion;
     }
 
-    public int getEncabezadoIdEncabezado() {
+    public long getEncabezadoIdEncabezado() {
         return encabezadoIdEncabezado;
     }
 
-    public void setEncabezadoIdEncabezado(int encabezadoIdEncabezado) {
+    public void setEncabezadoIdEncabezado(long encabezadoIdEncabezado) {
         this.encabezadoIdEncabezado = encabezadoIdEncabezado;
     }
 

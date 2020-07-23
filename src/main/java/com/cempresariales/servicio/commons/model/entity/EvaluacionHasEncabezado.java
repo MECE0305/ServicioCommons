@@ -40,7 +40,7 @@ public class EvaluacionHasEncabezado implements Serializable {
 	@Column(name = "valor_encabezado")
 	private String valorEncabezado;
 	@Column(name = "activo")
-	private Short activo;
+	private boolean activo;
 	@JoinColumn(name = "encabezado_id_encabezado", referencedColumnName = "id_encabezado", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	@JsonIgnore
@@ -77,11 +77,11 @@ public class EvaluacionHasEncabezado implements Serializable {
 		this.valorEncabezado = valorEncabezado;
 	}
 
-	public Short getActivo() {
+	public boolean getActivo() {
 		return activo;
 	}
 
-	public void setActivo(Short activo) {
+	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
 

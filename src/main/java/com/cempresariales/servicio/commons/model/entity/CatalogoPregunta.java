@@ -43,8 +43,10 @@ public class CatalogoPregunta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_catalogo_pregunta")
     private long idCatalogoPregunta;
+    @Column(name = "orden_pregunta")
+    private int ordenPregunta;
     @Column(name = "activo_catalogo_pregunta")
-    private Short activoCatalogoPregunta;
+    private boolean activoCatalogoPregunta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogoPregunta")
     private List<ChecklistHasCatalogoPregunta> checklistHasCatalogoPreguntaList;
     @JoinColumn(name = "categoria_id_categoria", referencedColumnName = "id_categoria", insertable = false, updatable = false)
@@ -68,8 +70,19 @@ public class CatalogoPregunta implements Serializable {
         this.catalogoPreguntaPK = catalogoPreguntaPK;
         this.idCatalogoPregunta = idCatalogoPregunta;
     }
+    
+    
+    
 
-    public CatalogoPregunta(long categoriaIdCategoria, long preguntaIdPregunta, long pesoIdPeso) {
+    public int getOrdenPregunta() {
+		return ordenPregunta;
+	}
+
+	public void setOrdenPregunta(int ordenPregunta) {
+		this.ordenPregunta = ordenPregunta;
+	}
+
+	public CatalogoPregunta(long categoriaIdCategoria, long preguntaIdPregunta, long pesoIdPeso) {
         this.catalogoPreguntaPK = new CatalogoPreguntaPK(categoriaIdCategoria, preguntaIdPregunta, pesoIdPeso);
     }
 
@@ -89,11 +102,11 @@ public class CatalogoPregunta implements Serializable {
         this.idCatalogoPregunta = idCatalogoPregunta;
     }
 
-    public Short getActivoCatalogoPregunta() {
+    public boolean getActivoCatalogoPregunta() {
         return activoCatalogoPregunta;
     }
 
-    public void setActivoCatalogoPregunta(Short activoCatalogoPregunta) {
+    public void setActivoCatalogoPregunta(boolean activoCatalogoPregunta) {
         this.activoCatalogoPregunta = activoCatalogoPregunta;
     }
 

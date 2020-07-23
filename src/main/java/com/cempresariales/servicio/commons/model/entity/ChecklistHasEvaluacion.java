@@ -42,7 +42,7 @@ public class ChecklistHasEvaluacion implements Serializable {
     @EmbeddedId
     protected ChecklistHasEvaluacionPK checklistHasEvaluacionPK;
     @Column(name = "activo")
-    private Short activo;
+    private boolean activo;
     @JoinColumn(name = "checklist_id_checklist", referencedColumnName = "id_checklist", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonIgnore
@@ -74,11 +74,11 @@ public class ChecklistHasEvaluacion implements Serializable {
         this.checklistHasEvaluacionPK = checklistHasEvaluacionPK;
     }
 
-    public Short getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(Short activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 

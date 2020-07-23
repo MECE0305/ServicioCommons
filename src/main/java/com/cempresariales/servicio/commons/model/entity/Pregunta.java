@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -57,13 +58,13 @@ public class Pregunta implements Serializable {
     @Column(name = "nombre_pregunta")
     private String nombrePregunta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
-    @JsonBackReference
+    @JsonIgnore
     private List<CatalogoPregunta> catalogoPreguntaList;
     @OneToMany(mappedBy = "preguntaIdPregunta")
+    @JsonBackReference
     private List<Pregunta> preguntaList;
     @JoinColumn(name = "pregunta_id_pregunta", referencedColumnName = "id_pregunta")
     @ManyToOne
-    @JsonBackReference
     private Pregunta preguntaIdPregunta;
 
     public Pregunta() {

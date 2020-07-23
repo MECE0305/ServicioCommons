@@ -78,15 +78,20 @@ public class Evaluacion implements Serializable {
 	@Column(name = "puntaje_evaluacion")
 	private Float puntajeEvaluacion;
 	@Column(name = "atencion_evaluacion")
-	private Integer atencionEvaluacion;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date atencionEvaluacion;
 	@Column(name = "contacto_evaluacion")
-	private Integer contactoEvaluacion;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date contactoEvaluacion;
 	@Column(name = "espera_evaluacion")
-	private Integer esperaEvaluacion;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date esperaEvaluacion;
 	@Column(name = "hora_fin_evaluacion")
-	private Integer horaFinEvaluacion;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date horaFinEvaluacion;
 	@Column(name = "hora_inicio_evaluacion")
-	private Integer horaInicioEvaluacion;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date horaInicioEvaluacion;
 	@Column(name = "video_evaluacion")
 	private String videoEvaluacion;
 	@Column(name = "observacion_evaluacion")
@@ -103,13 +108,21 @@ public class Evaluacion implements Serializable {
 	private Long idEmpleado;
 	@Column(name = "id_evaluacion_historial")
 	private Long idEvaluacionHistorial;
-
+	@Column(name = "id_usuario_crea")
+	private Long idUsuarioCrea;
+	@Column(name = "id_usuario_planifica")
+	private Long idUsuarioPlanifica;
+	@Column(name = "id_usuario_ejecuta")
+	private Long idUsuarioEjecuta;
+	
 	public Evaluacion() {
 	}
 
 	public Evaluacion(Long idEvaluacion) {
 		this.idEvaluacion = idEvaluacion;
 	}
+
+	
 
 	public Long getIdEmpleado() {
 		return idEmpleado;
@@ -126,7 +139,7 @@ public class Evaluacion implements Serializable {
 	public void setIdEvaluacion(Long idEvaluacion) {
 		this.idEvaluacion = idEvaluacion;
 	}
-	
+
 	public Long getIdEvaluacionHistorial() {
 		return idEvaluacionHistorial;
 	}
@@ -191,43 +204,43 @@ public class Evaluacion implements Serializable {
 		this.puntajeEvaluacion = puntajeEvaluacion;
 	}
 
-	public Integer getAtencionEvaluacion() {
+	public Date getAtencionEvaluacion() {
 		return atencionEvaluacion;
 	}
 
-	public void setAtencionEvaluacion(Integer atencionEvaluacion) {
+	public void setAtencionEvaluacion(Date atencionEvaluacion) {
 		this.atencionEvaluacion = atencionEvaluacion;
 	}
 
-	public Integer getContactoEvaluacion() {
+	public Date getContactoEvaluacion() {
 		return contactoEvaluacion;
 	}
 
-	public void setContactoEvaluacion(Integer contactoEvaluacion) {
+	public void setContactoEvaluacion(Date contactoEvaluacion) {
 		this.contactoEvaluacion = contactoEvaluacion;
 	}
 
-	public Integer getEsperaEvaluacion() {
+	public Date getEsperaEvaluacion() {
 		return esperaEvaluacion;
 	}
 
-	public void setEsperaEvaluacion(Integer esperaEvaluacion) {
+	public void setEsperaEvaluacion(Date esperaEvaluacion) {
 		this.esperaEvaluacion = esperaEvaluacion;
 	}
 
-	public Integer getHoraFinEvaluacion() {
+	public Date getHoraFinEvaluacion() {
 		return horaFinEvaluacion;
 	}
 
-	public void setHoraFinEvaluacion(Integer horaFinEvaluacion) {
+	public void setHoraFinEvaluacion(Date horaFinEvaluacion) {
 		this.horaFinEvaluacion = horaFinEvaluacion;
 	}
 
-	public Integer getHoraInicioEvaluacion() {
+	public Date getHoraInicioEvaluacion() {
 		return horaInicioEvaluacion;
 	}
 
-	public void setHoraInicioEvaluacion(Integer horaInicioEvaluacion) {
+	public void setHoraInicioEvaluacion(Date horaInicioEvaluacion) {
 		this.horaInicioEvaluacion = horaInicioEvaluacion;
 	}
 
