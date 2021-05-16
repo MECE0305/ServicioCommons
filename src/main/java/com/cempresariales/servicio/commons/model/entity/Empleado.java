@@ -81,11 +81,27 @@ public class Empleado implements Serializable {
     public Empleado() {
     }
 
-    public Empleado(Long idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
+   
 
-    public Long getIdEmpleado() {
+    public Empleado(Long idEmpleado, Boolean activoEmpleado, String apellidoEmpleado, String ciEmpleado,
+			Date creaEmpleado, String fotoEmpleado, String generoEmpleado, String mailEmpleado, String nombreEmpleado,
+			String telefonoEmpleado) {
+		super();
+		this.idEmpleado = idEmpleado;
+		this.activoEmpleado = activoEmpleado;
+		this.apellidoEmpleado = apellidoEmpleado;
+		this.ciEmpleado = ciEmpleado;
+		this.creaEmpleado = creaEmpleado;
+		this.fotoEmpleado = fotoEmpleado;
+		this.generoEmpleado = generoEmpleado;
+		this.mailEmpleado = mailEmpleado;
+		this.nombreEmpleado = nombreEmpleado;
+		this.telefonoEmpleado = telefonoEmpleado;
+	}
+
+
+
+	public Long getIdEmpleado() {
         return idEmpleado;
     }
 

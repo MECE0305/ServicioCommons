@@ -65,6 +65,7 @@ public class Agencia implements Serializable {
 	private String ceoAgencia;
 	@JoinColumn(name = "ciudad_id_ciudad", referencedColumnName = "id_ciudad")
 	@ManyToOne(optional = false)
+	@JsonBackReference
 	private Ciudad ciudadIdCiudad;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agenciaIdAgencia")
 	@JsonBackReference
