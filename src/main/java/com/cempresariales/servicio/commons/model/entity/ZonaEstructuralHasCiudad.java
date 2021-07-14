@@ -6,17 +6,13 @@
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -38,6 +34,9 @@ public class ZonaEstructuralHasCiudad implements Serializable {
     protected ZonaEstructuralHasCiudadPK zonaEstructuralHasCiudadPK;
     @Column(name = "activo_zona_estructural_has_ciudad")
     private Boolean activoZonaEstructuralHasCiudad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructuralHasCiudad")
+    @JsonBackReference
+    private List<Agencia> agenciaList;
     @JoinColumn(name = "zona_estructural_id_ciudad", referencedColumnName = "id_ciudad", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonIgnore
@@ -46,6 +45,7 @@ public class ZonaEstructuralHasCiudad implements Serializable {
     @ManyToOne(optional = false)
     @JsonIgnore
     private ZonaEstructural zonaEstructural;
+
 
     public ZonaEstructuralHasCiudad() {
     }
@@ -74,14 +74,14 @@ public class ZonaEstructuralHasCiudad implements Serializable {
         this.activoZonaEstructuralHasCiudad = activoZonaEstructuralHasCiudad;
     }
 
-    public Ciudad getCiudad() {
-        return ciudad;
+    @XmlTransient
+    public List<Agencia> getAgenciaList() {
+        return agenciaList;
     }
 
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setAgenciaList(List<Agencia> agenciaList) {
+        this.agenciaList = agenciaList;
     }
-
     public ZonaEstructural getZonaEstructural() {
         return zonaEstructural;
     }

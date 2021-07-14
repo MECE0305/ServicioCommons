@@ -5,24 +5,14 @@
  */
 package com.cempresariales.servicio.commons.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,7 +25,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
-    , @NamedQuery(name = "Empleado.findByIdEmpleado", query = "SELECT e FROM Empleado e WHERE e.idEmpleado = :idEmpleado")
     , @NamedQuery(name = "Empleado.findByActivoEmpleado", query = "SELECT e FROM Empleado e WHERE e.activoEmpleado = :activoEmpleado")
     , @NamedQuery(name = "Empleado.findByApellidoEmpleado", query = "SELECT e FROM Empleado e WHERE e.apellidoEmpleado = :apellidoEmpleado")
     , @NamedQuery(name = "Empleado.findByCiEmpleado", query = "SELECT e FROM Empleado e WHERE e.ciEmpleado = :ciEmpleado")
@@ -48,11 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id_empleado")
-    private Long idEmpleado;
+    @EmbeddedId
+    protected EmpleadoPK empleadoPK;
     @Column(name = "activo_empleado")
     private Boolean activoEmpleado;
     @Column(name = "apellido_empleado")
@@ -72,41 +58,34 @@ public class Empleado implements Serializable {
     private String nombreEmpleado;
     @Column(name = "telefono_empleado")
     private String telefonoEmpleado;
-    @JoinColumn(name = "agencia_id_agencia", referencedColumnName = "id_agencia")
+    @JoinColumns({
+            @JoinColumn(name = "agencia_id_agencia", referencedColumnName = "id_agencia", insertable = false, updatable = false)
+            , @JoinColumn(name = "agencia_zona_estructural_id_ciudad", referencedColumnName = "zona_estructural_id_ciudad", insertable = false, updatable = false)
+            , @JoinColumn(name = "agencia_zona_estructural_id_zona_estructural", referencedColumnName = "zona_estructural_id_zona_estructural", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
-    private Agencia agenciaIdAgencia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    @JsonIgnore
+    @NotFound(action= NotFoundAction.IGNORE)
+    private Agencia agencia;
+    @OneToMany(mappedBy = "empleado")
     private List<RolHasEmpleado> rolHasEmpleadoList;
 
     public Empleado() {
     }
 
-   
-
-    public Empleado(Long idEmpleado, Boolean activoEmpleado, String apellidoEmpleado, String ciEmpleado,
-			Date creaEmpleado, String fotoEmpleado, String generoEmpleado, String mailEmpleado, String nombreEmpleado,
-			String telefonoEmpleado) {
-		super();
-		this.idEmpleado = idEmpleado;
-		this.activoEmpleado = activoEmpleado;
-		this.apellidoEmpleado = apellidoEmpleado;
-		this.ciEmpleado = ciEmpleado;
-		this.creaEmpleado = creaEmpleado;
-		this.fotoEmpleado = fotoEmpleado;
-		this.generoEmpleado = generoEmpleado;
-		this.mailEmpleado = mailEmpleado;
-		this.nombreEmpleado = nombreEmpleado;
-		this.telefonoEmpleado = telefonoEmpleado;
-	}
-
-
-
-	public Long getIdEmpleado() {
-        return idEmpleado;
+    public Empleado(EmpleadoPK empleadoPK) {
+        this.empleadoPK = empleadoPK;
     }
 
-    public void setIdEmpleado(Long idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public Empleado(long idEmpleado, long agenciaIdAgencia, long agenciaZonaEstructuralIdCiudad, long agenciaZonaEstructuralIdZonaEstructural) {
+        this.empleadoPK = new EmpleadoPK(idEmpleado, agenciaIdAgencia, agenciaZonaEstructuralIdCiudad, agenciaZonaEstructuralIdZonaEstructural);
+    }
+
+    public EmpleadoPK getEmpleadoPK() {
+        return empleadoPK;
+    }
+
+    public void setEmpleadoPK(EmpleadoPK empleadoPK) {
+        this.empleadoPK = empleadoPK;
     }
 
     public Boolean getActivoEmpleado() {
@@ -181,12 +160,12 @@ public class Empleado implements Serializable {
         this.telefonoEmpleado = telefonoEmpleado;
     }
 
-    public Agencia getAgenciaIdAgencia() {
-        return agenciaIdAgencia;
+    public Agencia getAgencia() {
+        return agencia;
     }
 
-    public void setAgenciaIdAgencia(Agencia agenciaIdAgencia) {
-        this.agenciaIdAgencia = agenciaIdAgencia;
+    public void setAgencia(Agencia agencia) {
+        this.agencia = agencia;
     }
 
     @XmlTransient
@@ -201,7 +180,7 @@ public class Empleado implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idEmpleado != null ? idEmpleado.hashCode() : 0);
+        hash += (empleadoPK != null ? empleadoPK.hashCode() : 0);
         return hash;
     }
 
@@ -212,7 +191,7 @@ public class Empleado implements Serializable {
             return false;
         }
         Empleado other = (Empleado) object;
-        if ((this.idEmpleado == null && other.idEmpleado != null) || (this.idEmpleado != null && !this.idEmpleado.equals(other.idEmpleado))) {
+        if ((this.empleadoPK == null && other.empleadoPK != null) || (this.empleadoPK != null && !this.empleadoPK.equals(other.empleadoPK))) {
             return false;
         }
         return true;
@@ -220,7 +199,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.cempresariales.servicio.commons.model.entity.Empleado[ idEmpleado=" + idEmpleado + " ]";
+        return "com.mycompany.mavenproject1.Empleado[ empleadoPK=" + empleadoPK + " ]";
     }
-    
+
 }

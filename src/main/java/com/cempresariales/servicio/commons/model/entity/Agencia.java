@@ -8,25 +8,13 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
  *
@@ -36,61 +24,85 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "agencia")
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "Agencia.findAll", query = "SELECT a FROM Agencia a"),
-		@NamedQuery(name = "Agencia.findByIdAgencia", query = "SELECT a FROM Agencia a WHERE a.idAgencia = :idAgencia"),
+		@NamedQuery(name = "Agencia.findByIdAgencia", query = "SELECT a FROM Agencia a WHERE a.agenciaPK.idAgencia = :idAgencia"),
 		@NamedQuery(name = "Agencia.findByActivoAgencia", query = "SELECT a FROM Agencia a WHERE a.activoAgencia = :activoAgencia"),
 		@NamedQuery(name = "Agencia.findByCreaAgencia", query = "SELECT a FROM Agencia a WHERE a.creaAgencia = :creaAgencia"),
 		@NamedQuery(name = "Agencia.findByNombreAgencia", query = "SELECT a FROM Agencia a WHERE a.nombreAgencia = :nombreAgencia") })
 public class Agencia implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
-	@Column(name = "id_agencia")
-	private Long idAgencia;
+	@EmbeddedId
+	protected AgenciaPK agenciaPK;
 	@Column(name = "activo_agencia")
 	private Boolean activoAgencia;
+	@Column(name = "ceo_agencia")
+	private String ceoAgencia;
 	@Column(name = "crea_agencia")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creaAgencia;
-	@Column(name = "nombre_agencia")
-	private String nombreAgencia;
 	@Column(name = "direccion_agencia")
 	private String direccionAgencia;
 	@Column(name = "email_agencia")
 	private String emailAgencia;
+	@Column(name = "id_zona_estructural")
+	private Long idZonaEstructural;
+	@Column(name = "nombre_agencia")
+	private String nombreAgencia;
 	@Column(name = "telefono_agencia")
 	private String telefonoAgencia;
-	@Column(name = "ceo_agencia")
-	private String ceoAgencia;
-	@JoinColumn(name = "ciudad_id_ciudad", referencedColumnName = "id_ciudad")
-	@ManyToOne(optional = false)
-	@JsonBackReference
-	private Ciudad ciudadIdCiudad;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agenciaIdAgencia")
-	@JsonBackReference
-	private List<Empleado> empleadoList;
 	@JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")
 	@ManyToOne(optional = false)
 	private Empresa empresaIdEmpresa;
-	@Column(name = "id_zona_estructural")
-	private Long idZonaEstructural;
+	@JoinColumns({
+			@JoinColumn(name = "zona_estructural_id_ciudad", referencedColumnName = "zona_estructural_id_ciudad", insertable = false, updatable = false)
+			, @JoinColumn(name = "zona_estructural_id_zona_estructural", referencedColumnName = "zona_estructural_id_zona_estructural", insertable = false, updatable = false)})
+	@ManyToOne(optional = false)
+	@NotFound(action= NotFoundAction.IGNORE)
+	private ZonaEstructuralHasCiudad zonaEstructuralHasCiudad;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
+	private List<Empleado> empleadoList;
 
 	public Agencia() {
 	}
 
-	public Agencia(Long idAgencia) {
-		this.idAgencia = idAgencia;
-	}
-	
-	
-
-	public Long getIdZonaEstructural() {
-		return idZonaEstructural;
+	public Agencia(AgenciaPK agenciaPK) {
+		this.agenciaPK = agenciaPK;
 	}
 
-	public void setIdZonaEstructural(Long idZonaEstructural) {
-		this.idZonaEstructural = idZonaEstructural;
+	public Agencia(long idAgencia, long zonaEstructuralIdCiudad, long zonaEstructuralIdZonaEstructural) {
+		this.agenciaPK = new AgenciaPK(idAgencia, zonaEstructuralIdCiudad, zonaEstructuralIdZonaEstructural);
+	}
+
+	public AgenciaPK getAgenciaPK() {
+		return agenciaPK;
+	}
+
+	public void setAgenciaPK(AgenciaPK agenciaPK) {
+		this.agenciaPK = agenciaPK;
+	}
+
+	public Boolean getActivoAgencia() {
+		return activoAgencia;
+	}
+
+	public void setActivoAgencia(Boolean activoAgencia) {
+		this.activoAgencia = activoAgencia;
+	}
+
+	public String getCeoAgencia() {
+		return ceoAgencia;
+	}
+
+	public void setCeoAgencia(String ceoAgencia) {
+		this.ceoAgencia = ceoAgencia;
+	}
+
+	public Date getCreaAgencia() {
+		return creaAgencia;
+	}
+
+	public void setCreaAgencia(Date creaAgencia) {
+		this.creaAgencia = creaAgencia;
 	}
 
 	public String getDireccionAgencia() {
@@ -109,52 +121,12 @@ public class Agencia implements Serializable {
 		this.emailAgencia = emailAgencia;
 	}
 
-	public String getTelefonoAgencia() {
-		return telefonoAgencia;
+	public Long getIdZonaEstructural() {
+		return idZonaEstructural;
 	}
 
-	public void setTelefonoAgencia(String telefonoAgencia) {
-		this.telefonoAgencia = telefonoAgencia;
-	}
-
-	public String getCeoAgencia() {
-		return ceoAgencia;
-	}
-
-	public void setCeoAgencia(String ceoAgencia) {
-		this.ceoAgencia = ceoAgencia;
-	}
-
-	public Empresa getEmpresaIdEmpresa() {
-		return empresaIdEmpresa;
-	}
-
-	public void setEmpresaIdEmpresa(Empresa empresaIdEmpresa) {
-		this.empresaIdEmpresa = empresaIdEmpresa;
-	}
-
-	public Long getIdAgencia() {
-		return idAgencia;
-	}
-
-	public void setIdAgencia(Long idAgencia) {
-		this.idAgencia = idAgencia;
-	}
-
-	public Boolean getActivoAgencia() {
-		return activoAgencia;
-	}
-
-	public void setActivoAgencia(Boolean activoAgencia) {
-		this.activoAgencia = activoAgencia;
-	}
-
-	public Date getCreaAgencia() {
-		return creaAgencia;
-	}
-
-	public void setCreaAgencia(Date creaAgencia) {
-		this.creaAgencia = creaAgencia;
+	public void setIdZonaEstructural(Long idZonaEstructural) {
+		this.idZonaEstructural = idZonaEstructural;
 	}
 
 	public String getNombreAgencia() {
@@ -165,12 +137,28 @@ public class Agencia implements Serializable {
 		this.nombreAgencia = nombreAgencia;
 	}
 
-	public Ciudad getCiudadIdCiudad() {
-		return ciudadIdCiudad;
+	public String getTelefonoAgencia() {
+		return telefonoAgencia;
 	}
 
-	public void setCiudadIdCiudad(Ciudad ciudadIdCiudad) {
-		this.ciudadIdCiudad = ciudadIdCiudad;
+	public void setTelefonoAgencia(String telefonoAgencia) {
+		this.telefonoAgencia = telefonoAgencia;
+	}
+
+	public Empresa getEmpresaIdEmpresa() {
+		return empresaIdEmpresa;
+	}
+
+	public void setEmpresaIdEmpresa(Empresa empresaIdEmpresa) {
+		this.empresaIdEmpresa = empresaIdEmpresa;
+	}
+
+	public ZonaEstructuralHasCiudad getZonaEstructuralHasCiudad() {
+		return zonaEstructuralHasCiudad;
+	}
+
+	public void setZonaEstructuralHasCiudad(ZonaEstructuralHasCiudad zonaEstructuralHasCiudad) {
+		this.zonaEstructuralHasCiudad = zonaEstructuralHasCiudad;
 	}
 
 	@XmlTransient
@@ -185,7 +173,7 @@ public class Agencia implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 0;
-		hash += (idAgencia != null ? idAgencia.hashCode() : 0);
+		hash += (agenciaPK != null ? agenciaPK.hashCode() : 0);
 		return hash;
 	}
 
@@ -196,8 +184,7 @@ public class Agencia implements Serializable {
 			return false;
 		}
 		Agencia other = (Agencia) object;
-		if ((this.idAgencia == null && other.idAgencia != null)
-				|| (this.idAgencia != null && !this.idAgencia.equals(other.idAgencia))) {
+		if ((this.agenciaPK == null && other.agenciaPK != null) || (this.agenciaPK != null && !this.agenciaPK.equals(other.agenciaPK))) {
 			return false;
 		}
 		return true;
@@ -205,7 +192,7 @@ public class Agencia implements Serializable {
 
 	@Override
 	public String toString() {
-		return "com.cempresariales.servicio.commons.model.entity.Agencia[ idAgencia=" + idAgencia + " ]";
+		return "com.mycompany.mavenproject1.Agencia[ agenciaPK=" + agenciaPK + " ]";
 	}
 
 }

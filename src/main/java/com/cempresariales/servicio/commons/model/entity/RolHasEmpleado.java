@@ -6,17 +6,12 @@
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
  *
@@ -27,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "RolHasEmpleado.findAll", query = "SELECT r FROM RolHasEmpleado r"),
 		@NamedQuery(name = "RolHasEmpleado.findByRolIdRol", query = "SELECT r FROM RolHasEmpleado r WHERE r.rolHasEmpleadoPK.rolIdRol = :rolIdRol"),
-		@NamedQuery(name = "RolHasEmpleado.findByEmpleadoIdEmpleado", query = "SELECT r FROM RolHasEmpleado r WHERE r.rolHasEmpleadoPK.empleadoIdEmpleado = :empleadoIdEmpleado"),
 		@NamedQuery(name = "RolHasEmpleado.findByActivo", query = "SELECT r FROM RolHasEmpleado r WHERE r.activo = :activo") })
 public class RolHasEmpleado implements Serializable {
 
@@ -36,9 +30,14 @@ public class RolHasEmpleado implements Serializable {
 	protected RolHasEmpleadoPK rolHasEmpleadoPK;
 	@Column(name = "activo")
 	private Boolean activo;
-	@JoinColumn(name = "empleado_id_empleado", referencedColumnName = "id_empleado", insertable = false, updatable = false)
+	@JoinColumns({
+			@JoinColumn(name = "empleado_id_empleado", referencedColumnName = "id_empleado", insertable = false, updatable = false)
+			, @JoinColumn(name = "empleado_agencia_id_agencia", referencedColumnName = "agencia_id_agencia", insertable = false, updatable = false)
+			, @JoinColumn(name = "zona_estructural_id_ciudad", referencedColumnName = "agencia_zona_estructural_id_ciudad", insertable = false, updatable = false)
+			, @JoinColumn(name = "zona_estructural_id_zona_estructural", referencedColumnName = "agencia_zona_estructural_id_zona_estructural", insertable = false, updatable = false)})
 	@ManyToOne(optional = false)
 	@JsonIgnore
+	@NotFound(action= NotFoundAction.IGNORE)
 	private Empleado empleado;
 	@JoinColumn(name = "rol_id_rol", referencedColumnName = "id_rol", insertable = false, updatable = false)
 	@ManyToOne(optional = false)

@@ -56,9 +56,9 @@ public class Ciudad implements Serializable {
     private Date creaCiudad;
     @Column(name = "nombre_ciudad")
     private String nombreCiudad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudadIdCiudad")
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudadIdCiudad")
     @JsonBackReference
-    private List<Agencia> agenciaList;
+    private List<Agencia> agenciaList;*/
     @JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia")
     @ManyToOne(optional = false)
     private Provincia provinciaIdProvincia;
@@ -104,7 +104,7 @@ public class Ciudad implements Serializable {
         this.nombreCiudad = nombreCiudad;
     }
 
-    @XmlTransient
+   /* @XmlTransient
     public List<Agencia> getAgenciaList() {
         return agenciaList;
     }
@@ -112,7 +112,7 @@ public class Ciudad implements Serializable {
     public void setAgenciaList(List<Agencia> agenciaList) {
         this.agenciaList = agenciaList;
     }
-
+*/
     public Provincia getProvinciaIdProvincia() {
         return provinciaIdProvincia;
     }
