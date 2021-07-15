@@ -14,56 +14,47 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
- *
  * @author ADM-DGIP
  */
 @Entity
 @Table(name = "zona_estructural_has_ciudad")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ZonaEstructuralHasCiudad.findAll", query = "SELECT z FROM ZonaEstructuralHasCiudad z")
-    , @NamedQuery(name = "ZonaEstructuralHasCiudad.findByZonaEstructuralIdZonaEstructural", query = "SELECT z FROM ZonaEstructuralHasCiudad z WHERE z.zonaEstructuralHasCiudadPK.zonaEstructuralIdZonaEstructural = :zonaEstructuralIdZonaEstructural")
-    , @NamedQuery(name = "ZonaEstructuralHasCiudad.findByZonaEstructuralIdCiudad", query = "SELECT z FROM ZonaEstructuralHasCiudad z WHERE z.zonaEstructuralHasCiudadPK.zonaEstructuralIdCiudad = :zonaEstructuralIdCiudad")
-    , @NamedQuery(name = "ZonaEstructuralHasCiudad.findByActivoZonaEstructuralHasCiudad", query = "SELECT z FROM ZonaEstructuralHasCiudad z WHERE z.activoZonaEstructuralHasCiudad = :activoZonaEstructuralHasCiudad")})
+        @NamedQuery(name = "ZonaEstructuralHasCiudad.findAll", query = "SELECT z FROM ZonaEstructuralHasCiudad z")
+        , @NamedQuery(name = "ZonaEstructuralHasCiudad.findByActivoZonaEstructuralHasCiudad", query = "SELECT z FROM ZonaEstructuralHasCiudad z WHERE z.activoZonaEstructuralHasCiudad = :activoZonaEstructuralHasCiudad")
+        , @NamedQuery(name = "ZonaEstructuralHasCiudad.findByIdZonaCiudad", query = "SELECT z FROM ZonaEstructuralHasCiudad z WHERE z.idZonaCiudad = :idZonaCiudad")})
+
 public class ZonaEstructuralHasCiudad implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ZonaEstructuralHasCiudadPK zonaEstructuralHasCiudadPK;
     @Column(name = "activo_zona_estructural_has_ciudad")
     private Boolean activoZonaEstructuralHasCiudad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructuralHasCiudad")
-    @JsonBackReference
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_zona_ciudad")
+    private Integer idZonaCiudad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructuralHasCiudadIdZonaCiudad")
+    @JsonIgnore
     private List<Agencia> agenciaList;
-    @JoinColumn(name = "zona_estructural_id_ciudad", referencedColumnName = "id_ciudad", insertable = false, updatable = false)
+    @JoinColumn(name = "zona_estructural_id_ciudad", referencedColumnName = "id_ciudad")
     @ManyToOne(optional = false)
     @JsonIgnore
-    private Ciudad ciudad;
-    @JoinColumn(name = "zona_estructural_id_zona_estructural", referencedColumnName = "id_zona_estructural", insertable = false, updatable = false)
+    private Ciudad zonaEstructuralIdCiudad;
+    @JoinColumn(name = "zona_estructural_id_zona_estructural", referencedColumnName = "id_zona_estructural")
     @ManyToOne(optional = false)
     @JsonIgnore
-    private ZonaEstructural zonaEstructural;
-
+    private ZonaEstructural zonaEstructuralIdZonaEstructural;
 
     public ZonaEstructuralHasCiudad() {
     }
 
-    public ZonaEstructuralHasCiudad(ZonaEstructuralHasCiudadPK zonaEstructuralHasCiudadPK) {
-        this.zonaEstructuralHasCiudadPK = zonaEstructuralHasCiudadPK;
-    }
-
-    public ZonaEstructuralHasCiudad(int zonaEstructuralIdZonaEstructural, long ciudadIdCiudad) {
-        this.zonaEstructuralHasCiudadPK = new ZonaEstructuralHasCiudadPK(zonaEstructuralIdZonaEstructural, ciudadIdCiudad);
-    }
-
-    public ZonaEstructuralHasCiudadPK getZonaEstructuralHasCiudadPK() {
-        return zonaEstructuralHasCiudadPK;
-    }
-
-    public void setZonaEstructuralHasCiudadPK(ZonaEstructuralHasCiudadPK zonaEstructuralHasCiudadPK) {
-        this.zonaEstructuralHasCiudadPK = zonaEstructuralHasCiudadPK;
+    public ZonaEstructuralHasCiudad(Integer idZonaCiudad) {
+        this.idZonaCiudad = idZonaCiudad;
     }
 
     public Boolean getActivoZonaEstructuralHasCiudad() {
@@ -74,6 +65,14 @@ public class ZonaEstructuralHasCiudad implements Serializable {
         this.activoZonaEstructuralHasCiudad = activoZonaEstructuralHasCiudad;
     }
 
+    public Integer getIdZonaCiudad() {
+        return idZonaCiudad;
+    }
+
+    public void setIdZonaCiudad(Integer idZonaCiudad) {
+        this.idZonaCiudad = idZonaCiudad;
+    }
+
     @XmlTransient
     public List<Agencia> getAgenciaList() {
         return agenciaList;
@@ -82,18 +81,27 @@ public class ZonaEstructuralHasCiudad implements Serializable {
     public void setAgenciaList(List<Agencia> agenciaList) {
         this.agenciaList = agenciaList;
     }
-    public ZonaEstructural getZonaEstructural() {
-        return zonaEstructural;
+
+    public Ciudad getZonaEstructuralIdCiudad() {
+        return zonaEstructuralIdCiudad;
     }
 
-    public void setZonaEstructural(ZonaEstructural zonaEstructural) {
-        this.zonaEstructural = zonaEstructural;
+    public void setZonaEstructuralIdCiudad(Ciudad zonaEstructuralIdCiudad) {
+        this.zonaEstructuralIdCiudad = zonaEstructuralIdCiudad;
+    }
+
+    public ZonaEstructural getZonaEstructuralIdZonaEstructural() {
+        return zonaEstructuralIdZonaEstructural;
+    }
+
+    public void setZonaEstructuralIdZonaEstructural(ZonaEstructural zonaEstructuralIdZonaEstructural) {
+        this.zonaEstructuralIdZonaEstructural = zonaEstructuralIdZonaEstructural;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (zonaEstructuralHasCiudadPK != null ? zonaEstructuralHasCiudadPK.hashCode() : 0);
+        hash += (idZonaCiudad != null ? idZonaCiudad.hashCode() : 0);
         return hash;
     }
 
@@ -104,7 +112,7 @@ public class ZonaEstructuralHasCiudad implements Serializable {
             return false;
         }
         ZonaEstructuralHasCiudad other = (ZonaEstructuralHasCiudad) object;
-        if ((this.zonaEstructuralHasCiudadPK == null && other.zonaEstructuralHasCiudadPK != null) || (this.zonaEstructuralHasCiudadPK != null && !this.zonaEstructuralHasCiudadPK.equals(other.zonaEstructuralHasCiudadPK))) {
+        if ((this.idZonaCiudad == null && other.idZonaCiudad != null) || (this.idZonaCiudad != null && !this.idZonaCiudad.equals(other.idZonaCiudad))) {
             return false;
         }
         return true;
@@ -112,7 +120,6 @@ public class ZonaEstructuralHasCiudad implements Serializable {
 
     @Override
     public String toString() {
-        return "com.cempresariales.servicio.commons.model.entity.ZonaEstructuralHasCiudad[ zonaEstructuralHasCiudadPK=" + zonaEstructuralHasCiudadPK + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.ZonaEstructuralHasCiudad[ idZonaCiudad=" + idZonaCiudad + " ]";
     }
-    
 }

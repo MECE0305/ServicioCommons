@@ -37,8 +37,11 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected EmpleadoPK empleadoPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_empleado")
+    private Long idEmpleado;
     @Column(name = "activo_empleado")
     private Boolean activoEmpleado;
     @Column(name = "apellido_empleado")
@@ -58,34 +61,25 @@ public class Empleado implements Serializable {
     private String nombreEmpleado;
     @Column(name = "telefono_empleado")
     private String telefonoEmpleado;
-    @JoinColumns({
-            @JoinColumn(name = "agencia_id_agencia", referencedColumnName = "id_agencia", insertable = false, updatable = false)
-            , @JoinColumn(name = "agencia_zona_estructural_id_ciudad", referencedColumnName = "zona_estructural_id_ciudad", insertable = false, updatable = false)
-            , @JoinColumn(name = "agencia_zona_estructural_id_zona_estructural", referencedColumnName = "zona_estructural_id_zona_estructural", insertable = false, updatable = false)})
+    @JoinColumn(name = "agencia_id_agencia", referencedColumnName = "id_agencia")
     @ManyToOne(optional = false)
-    @JsonIgnore
-    @NotFound(action= NotFoundAction.IGNORE)
-    private Agencia agencia;
+    private Agencia agenciaIdAgencia;
     @OneToMany(mappedBy = "empleado")
     private List<RolHasEmpleado> rolHasEmpleadoList;
 
     public Empleado() {
     }
 
-    public Empleado(EmpleadoPK empleadoPK) {
-        this.empleadoPK = empleadoPK;
+    public Empleado(Long idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
-    public Empleado(long idEmpleado, long agenciaIdAgencia, long agenciaZonaEstructuralIdCiudad, long agenciaZonaEstructuralIdZonaEstructural) {
-        this.empleadoPK = new EmpleadoPK(idEmpleado, agenciaIdAgencia, agenciaZonaEstructuralIdCiudad, agenciaZonaEstructuralIdZonaEstructural);
+    public Long getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public EmpleadoPK getEmpleadoPK() {
-        return empleadoPK;
-    }
-
-    public void setEmpleadoPK(EmpleadoPK empleadoPK) {
-        this.empleadoPK = empleadoPK;
+    public void setIdEmpleado(Long idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public Boolean getActivoEmpleado() {
@@ -160,12 +154,12 @@ public class Empleado implements Serializable {
         this.telefonoEmpleado = telefonoEmpleado;
     }
 
-    public Agencia getAgencia() {
-        return agencia;
+    public Agencia getAgenciaIdAgencia() {
+        return agenciaIdAgencia;
     }
 
-    public void setAgencia(Agencia agencia) {
-        this.agencia = agencia;
+    public void setAgenciaIdAgencia(Agencia agenciaIdAgencia) {
+        this.agenciaIdAgencia = agenciaIdAgencia;
     }
 
     @XmlTransient
@@ -180,7 +174,7 @@ public class Empleado implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (empleadoPK != null ? empleadoPK.hashCode() : 0);
+        hash += (idEmpleado != null ? idEmpleado.hashCode() : 0);
         return hash;
     }
 
@@ -191,7 +185,7 @@ public class Empleado implements Serializable {
             return false;
         }
         Empleado other = (Empleado) object;
-        if ((this.empleadoPK == null && other.empleadoPK != null) || (this.empleadoPK != null && !this.empleadoPK.equals(other.empleadoPK))) {
+        if ((this.idEmpleado == null && other.idEmpleado != null) || (this.idEmpleado != null && !this.idEmpleado.equals(other.idEmpleado))) {
             return false;
         }
         return true;
@@ -199,7 +193,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject1.Empleado[ empleadoPK=" + empleadoPK + " ]";
+        return "com.cempresariales.servicio.commons.model.entity.Empleado[ idEmpleado=" + idEmpleado + " ]";
     }
 
 }

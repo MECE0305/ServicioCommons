@@ -62,7 +62,7 @@ public class Ciudad implements Serializable {
     @JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia")
     @ManyToOne(optional = false)
     private Provincia provinciaIdProvincia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudad")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructuralIdCiudad")
     private List<ZonaEstructuralHasCiudad> zonaEstructuralHasCiudadList;
 
     public Ciudad() {

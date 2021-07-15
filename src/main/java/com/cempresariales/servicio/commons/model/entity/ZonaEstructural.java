@@ -46,17 +46,17 @@ public class ZonaEstructural implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_zona_estructural")
     private Long idZonaEstructural;
-    @Column(name = "nombre_zona_estructural")
-    private String nombreZonaEstructural;
-    @Column(name = "fecha_creacion_zona_estructural")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacionZonaEstructural;
+    @Column(name = "activo_zona_estructural")
+    private Boolean activoZonaEstructural;
     @Column(name = "fecha_actualiza_zona_estructural")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizaZonaEstructural;
-    @Column(name = "activo_zona_estructural")
-    private Boolean activoZonaEstructural;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructural")
+    @Column(name = "fecha_creacion_zona_estructural")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacionZonaEstructural;
+    @Column(name = "nombre_zona_estructural")
+    private String nombreZonaEstructural;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructuralIdZonaEstructural")
     private List<ZonaEstructuralHasCiudad> zonaEstructuralHasCiudadList;
 
     public ZonaEstructural() {
@@ -74,20 +74,12 @@ public class ZonaEstructural implements Serializable {
         this.idZonaEstructural = idZonaEstructural;
     }
 
-    public String getNombreZonaEstructural() {
-        return nombreZonaEstructural;
+    public Boolean getActivoZonaEstructural() {
+        return activoZonaEstructural;
     }
 
-    public void setNombreZonaEstructural(String nombreZonaEstructural) {
-        this.nombreZonaEstructural = nombreZonaEstructural;
-    }
-
-    public Date getFechaCreacionZonaEstructural() {
-        return fechaCreacionZonaEstructural;
-    }
-
-    public void setFechaCreacionZonaEstructural(Date fechaCreacionZonaEstructural) {
-        this.fechaCreacionZonaEstructural = fechaCreacionZonaEstructural;
+    public void setActivoZonaEstructural(Boolean activoZonaEstructural) {
+        this.activoZonaEstructural = activoZonaEstructural;
     }
 
     public Date getFechaActualizaZonaEstructural() {
@@ -98,12 +90,20 @@ public class ZonaEstructural implements Serializable {
         this.fechaActualizaZonaEstructural = fechaActualizaZonaEstructural;
     }
 
-    public Boolean getActivoZonaEstructural() {
-        return activoZonaEstructural;
+    public Date getFechaCreacionZonaEstructural() {
+        return fechaCreacionZonaEstructural;
     }
 
-    public void setActivoZonaEstructural(Boolean activoZonaEstructural) {
-        this.activoZonaEstructural = activoZonaEstructural;
+    public void setFechaCreacionZonaEstructural(Date fechaCreacionZonaEstructural) {
+        this.fechaCreacionZonaEstructural = fechaCreacionZonaEstructural;
+    }
+
+    public String getNombreZonaEstructural() {
+        return nombreZonaEstructural;
+    }
+
+    public void setNombreZonaEstructural(String nombreZonaEstructural) {
+        this.nombreZonaEstructural = nombreZonaEstructural;
     }
 
     @XmlTransient
@@ -139,5 +139,5 @@ public class ZonaEstructural implements Serializable {
     public String toString() {
         return "com.cempresariales.servicio.commons.model.entity.ZonaEstructural[ idZonaEstructural=" + idZonaEstructural + " ]";
     }
-    
+
 }

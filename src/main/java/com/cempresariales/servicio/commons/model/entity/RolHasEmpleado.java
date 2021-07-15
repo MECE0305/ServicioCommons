@@ -30,11 +30,7 @@ public class RolHasEmpleado implements Serializable {
 	protected RolHasEmpleadoPK rolHasEmpleadoPK;
 	@Column(name = "activo")
 	private Boolean activo;
-	@JoinColumns({
-			@JoinColumn(name = "empleado_id_empleado", referencedColumnName = "id_empleado", insertable = false, updatable = false)
-			, @JoinColumn(name = "empleado_agencia_id_agencia", referencedColumnName = "agencia_id_agencia", insertable = false, updatable = false)
-			, @JoinColumn(name = "zona_estructural_id_ciudad", referencedColumnName = "agencia_zona_estructural_id_ciudad", insertable = false, updatable = false)
-			, @JoinColumn(name = "zona_estructural_id_zona_estructural", referencedColumnName = "agencia_zona_estructural_id_zona_estructural", insertable = false, updatable = false)})
+	@JoinColumn(name = "empleado_id_empleado", referencedColumnName = "id_empleado", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	@JsonIgnore
 	@NotFound(action= NotFoundAction.IGNORE)
@@ -101,8 +97,7 @@ public class RolHasEmpleado implements Serializable {
 			return false;
 		}
 		RolHasEmpleado other = (RolHasEmpleado) object;
-		if ((this.rolHasEmpleadoPK == null && other.rolHasEmpleadoPK != null)
-				|| (this.rolHasEmpleadoPK != null && !this.rolHasEmpleadoPK.equals(other.rolHasEmpleadoPK))) {
+		if ((this.rolHasEmpleadoPK == null && other.rolHasEmpleadoPK != null) || (this.rolHasEmpleadoPK != null && !this.rolHasEmpleadoPK.equals(other.rolHasEmpleadoPK))) {
 			return false;
 		}
 		return true;
@@ -110,8 +105,7 @@ public class RolHasEmpleado implements Serializable {
 
 	@Override
 	public String toString() {
-		return "com.cempresariales.servicio.commons.model.entity.RolHasEmpleado[ rolHasEmpleadoPK=" + rolHasEmpleadoPK
-				+ " ]";
+		return "com.cempresariales.servicio.commons.model.entity.RolHasEmpleado[ rolHasEmpleadoPK=" + rolHasEmpleadoPK + " ]";
 	}
 
 }

@@ -76,5 +76,5 @@ public class RolHasEmpleadoPK implements Serializable {
     public String toString() {
         return "com.cempresariales.servicio.commons.model.entity.RolHasEmpleadoPK[ rolIdRol=" + rolIdRol + ", empleadoIdEmpleado=" + empleadoIdEmpleado + " ]";
     }
-    
+
 }
