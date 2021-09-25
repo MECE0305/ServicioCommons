@@ -5,6 +5,8 @@
  */
 package com.cempresariales.servicio.commons.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +59,7 @@ public class ZonaEstructural implements Serializable {
     @Column(name = "nombre_zona_estructural")
     private String nombreZonaEstructural;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructuralIdZonaEstructural")
+    @JsonIgnore
     private List<ZonaEstructuralHasCiudad> zonaEstructuralHasCiudadList;
 
     public ZonaEstructural() {

@@ -12,10 +12,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 /**
  *
@@ -59,8 +56,7 @@ public class Agencia implements Serializable {
 	private Empresa empresaIdEmpresa;
 	@JoinColumn(name = "id_zona_ciudad", referencedColumnName = "id_zona_ciudad")
 	@ManyToOne(optional = false)
-	@JsonIgnore
-	private ZonaEstructuralHasCiudad zonaEstructuralHasCiudadIdZonaCiudad;
+	private ZonaEstructuralHasCiudad zonaCiudad;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agenciaIdAgencia")
 	@JsonIgnore
 	private List<Empleado> empleadoList;
@@ -152,12 +148,12 @@ public class Agencia implements Serializable {
 		this.empresaIdEmpresa = empresaIdEmpresa;
 	}
 
-	public ZonaEstructuralHasCiudad getZonaEstructuralHasCiudadIdZonaCiudad() {
-		return zonaEstructuralHasCiudadIdZonaCiudad;
+	public ZonaEstructuralHasCiudad getZonaCiudad() {
+		return zonaCiudad;
 	}
 
-	public void setZonaEstructuralHasCiudadIdZonaCiudad(ZonaEstructuralHasCiudad zonaEstructuralHasCiudadIdZonaCiudad) {
-		this.zonaEstructuralHasCiudadIdZonaCiudad = zonaEstructuralHasCiudadIdZonaCiudad;
+	public void setZonaCiudad(ZonaEstructuralHasCiudad zonaEstructuralHasCiudadIdZonaCiudad) {
+		this.zonaCiudad = zonaEstructuralHasCiudadIdZonaCiudad;
 	}
 
 	@XmlTransient

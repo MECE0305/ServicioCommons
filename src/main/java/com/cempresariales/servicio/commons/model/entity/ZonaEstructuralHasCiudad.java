@@ -12,10 +12,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 /**
  * @author ADM-DGIP
@@ -37,23 +34,21 @@ public class ZonaEstructuralHasCiudad implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_zona_ciudad")
-    private Integer idZonaCiudad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructuralHasCiudadIdZonaCiudad")
+    private Long idZonaCiudad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaCiudad")
     @JsonIgnore
     private List<Agencia> agenciaList;
     @JoinColumn(name = "zona_estructural_id_ciudad", referencedColumnName = "id_ciudad")
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Ciudad zonaEstructuralIdCiudad;
     @JoinColumn(name = "zona_estructural_id_zona_estructural", referencedColumnName = "id_zona_estructural")
     @ManyToOne(optional = false)
-    @JsonIgnore
     private ZonaEstructural zonaEstructuralIdZonaEstructural;
 
     public ZonaEstructuralHasCiudad() {
     }
 
-    public ZonaEstructuralHasCiudad(Integer idZonaCiudad) {
+    public ZonaEstructuralHasCiudad(Long idZonaCiudad) {
         this.idZonaCiudad = idZonaCiudad;
     }
 
@@ -65,11 +60,11 @@ public class ZonaEstructuralHasCiudad implements Serializable {
         this.activoZonaEstructuralHasCiudad = activoZonaEstructuralHasCiudad;
     }
 
-    public Integer getIdZonaCiudad() {
+    public Long getIdZonaCiudad() {
         return idZonaCiudad;
     }
 
-    public void setIdZonaCiudad(Integer idZonaCiudad) {
+    public void setIdZonaCiudad(Long idZonaCiudad) {
         this.idZonaCiudad = idZonaCiudad;
     }
 

@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -63,6 +64,7 @@ public class Ciudad implements Serializable {
     @ManyToOne(optional = false)
     private Provincia provinciaIdProvincia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zonaEstructuralIdCiudad")
+    @JsonIgnore
     private List<ZonaEstructuralHasCiudad> zonaEstructuralHasCiudadList;
 
     public Ciudad() {
